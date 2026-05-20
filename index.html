@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="icon" href="./core/favicon.png" type="image/png">
     <title>ef 1.2 260514</title>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script type="importmap">
@@ -567,7 +567,7 @@
 
     window.onload = async () => {
         try {
-            const response = await fetch('./catalog.json?t=' + Date.now());
+            const response = await fetch('./core/data.json?t=' + Date.now());
             if (!response.ok) throw new Error('Network response was not ok');
             
             const rawData = await response.json();
@@ -611,7 +611,7 @@
             renderCatalog();
         } catch (error) {
             console.error('Failed to load catalog data:', error);
-            getEl('catalogContainer').innerHTML = '<p class="empty-cart" style="color: #ef4444;">[ERROR] Failed to load catalog.json</p>';
+            getEl('catalogContainer').innerHTML = '<p class="empty-cart" style="color: #ef4444;">[ERROR] Failed to load core/data.json</p>';
         }
     };
 
@@ -715,7 +715,7 @@
 
     function loadModel() {
         new GLTFLoader().load(
-            './model.glb?t=' + Date.now(),
+            './core/model.glb?t=' + Date.now(),
             gltf => {
                 model = gltf.scene;
                 fitModel(model);

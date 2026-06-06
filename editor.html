@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <link rel="icon" href="./assets/favicon.png" type="image/png">
+    <link rel="stylesheet" href="./assets/css/base.css">
+    <link rel="stylesheet" href="./assets/css/editor.css">
+    <title>Catalog Editor</title>
+</head>
+<body class="editor-page">
+    <header class="editor-header">
+        <div>
+            <a class="editor-back" href="./index.html">&lt; BACK</a>
+            <h1>Catalog Editor</h1>
+        </div>
+        <div class="editor-actions">
+            <button id="reloadButton" class="editor-button" type="button">RELOAD</button>
+            <button id="downloadCategoryButton" class="editor-button" type="button">DOWNLOAD CATEGORY</button>
+            <button id="copyManifestButton" class="editor-button" type="button">COPY MANIFEST</button>
+            <button id="copyCategoryButton" class="editor-button editor-button--primary" type="button">COPY CATEGORY</button>
+        </div>
+    </header>
+
+    <main class="editor-layout">
+        <aside class="editor-sidebar">
+            <section class="editor-panel">
+                <h2>Categories</h2>
+                <div id="categoryList" class="editor-list" aria-live="polite"></div>
+            </section>
+            <section class="editor-panel">
+                <h2>Entries</h2>
+                <div class="editor-entry-actions">
+                    <button id="addItemButton" class="editor-button" type="button">+ ITEM</button>
+                    <button id="addDropdownButton" class="editor-button" type="button">+ DROPDOWN</button>
+                    <button id="addChoicesButton" class="editor-button" type="button">+ CHOICES</button>
+                    <button id="addFormulaButton" class="editor-button" type="button">+ FORMULA</button>
+                </div>
+                <div id="entryList" class="editor-list" aria-live="polite"></div>
+            </section>
+        </aside>
+
+        <section class="editor-main">
+            <section class="editor-panel">
+                <h2>Category</h2>
+                <form id="categoryForm" class="editor-form"></form>
+            </section>
+            <section class="editor-panel">
+                <h2>Entry</h2>
+                <div class="editor-entry-actions">
+                    <button id="deleteEntryButton" class="editor-button editor-button--danger" type="button">DELETE ENTRY</button>
+                </div>
+                <form id="entryForm" class="editor-form"></form>
+            </section>
+            <section class="editor-panel">
+                <h2>Preview JSON</h2>
+                <div class="editor-preview-actions">
+                    <button id="showManifestButton" class="editor-button" type="button">SHOW MANIFEST</button>
+                    <button id="showCategoryButton" class="editor-button" type="button">SHOW CATEGORY</button>
+                    <button id="copyPreviewButton" class="editor-button" type="button">COPY PREVIEW</button>
+                </div>
+                <p id="previewLabel" class="editor-preview-label"></p>
+                <pre id="jsonPreview" class="editor-preview"></pre>
+            </section>
+        </section>
+    </main>
+
+    <p id="editorStatus" class="editor-status" role="status"></p>
+
+    <script src="./assets/js/editor.js" type="module"></script>
+</body>
+</html>

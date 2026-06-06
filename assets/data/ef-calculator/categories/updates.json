@@ -1,0 +1,62 @@
+{
+  "id": "updates",
+  "title": "1.3新增内容",
+  "badge": "NEW!",
+  "expanded": true,
+  "entries": [
+    {
+      "type": "dropdown",
+      "id": "updates-story",
+      "label": "剧情故事",
+      "title": "主支线任务",
+      "expanded": true,
+      "options": [
+        {
+          "id": "ns1",
+          "label": "[主线] 藏剑与谷",
+          "price": 20
+        },
+        {
+          "id": "ns2",
+          "label": "[弥弗个人剧情] 疑云",
+          "price": 20
+        },
+        {
+          "id": "ns3",
+          "label": "[支线] 古崖论剑",
+          "price": 3
+        }
+      ]
+    },
+    {
+      "type": "dropdown",
+      "id": "updates-exploration",
+      "label": "藏剑谷探索",
+      "title": "全收集基建探索",
+      "expanded": true,
+      "options": [
+        {
+          "id": "ne1",
+          "label": "地图全收集",
+          "price": 40
+        },
+        {
+          "id": "ne2",
+          "label": "拉线",
+          "price": 12
+        },
+        {
+          "id": "ne3",
+          "label": "滑索 材料点",
+          "price": 20
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "id": "n6",
+      "label": "基建进度需 1.2毕业 (具体看账号进度)",
+      "price": 5
+    }
+  ]
+}

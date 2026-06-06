@@ -1,0 +1,298 @@
+{
+  "id": "side-quests",
+  "title": "支线剧情任务",
+  "entries": [
+    {
+      "type": "dropdown",
+      "id": "side-important",
+      "label": "重要任务",
+      "title": "重要任务",
+      "expanded": false,
+      "options": [
+        {
+          "id": "um1",
+          "label": "驰援采石场系列（开图任务，还包括修复大兴起重机，深层管理区救援）",
+          "price": 20
+        },
+        {
+          "id": "um2",
+          "label": "无色印记系列（2天）",
+          "price": 10
+        },
+        {
+          "id": "um3",
+          "label": "帮人帮到底",
+          "price": 3
+        },
+        {
+          "id": "um4",
+          "label": "希望与代价",
+          "price": 3
+        },
+        {
+          "id": "um5",
+          "label": "再访基地系列（还包括重振士气，流言蜚语，使命虽小，再访问基地终）",
+          "price": 8
+        },
+        {
+          "id": "um6",
+          "label": "稼穑不易",
+          "price": 3
+        },
+        {
+          "id": "um7",
+          "label": "环带来客（2天）",
+          "price": 10
+        },
+        {
+          "id": "um8",
+          "label": "紧急求助",
+          "price": 3
+        },
+        {
+          "id": "um9",
+          "label": "晚安大树系列（2天）",
+          "price": 10
+        },
+        {
+          "id": "um10",
+          "label": "商路难走系列（还包括生意难做，好人难寻）（2天）",
+          "price": 10
+        },
+        {
+          "id": "um11",
+          "label": "机器人之梦",
+          "price": 3
+        },
+        {
+          "id": "um12",
+          "label": "内部敌人（2天）",
+          "price": 10
+        },
+        {
+          "id": "um13",
+          "label": "科学兴农",
+          "price": 3
+        },
+        {
+          "id": "um14",
+          "label": "驮兽与我",
+          "price": 8
+        },
+        {
+          "id": "um15",
+          "label": "虫不语系列",
+          "price": 20
+        },
+        {
+          "id": "um16",
+          "label": "泉中客系列",
+          "price": 10
+        },
+        {
+          "id": "um17",
+          "label": "夺宝奇兵系列",
+          "price": 10
+        },
+        {
+          "id": "um18",
+          "label": "重逢故人",
+          "price": 8
+        },
+        {
+          "id": "um19",
+          "label": "同袍系列（3天）",
+          "price": 15
+        },
+        {
+          "id": "um20",
+          "label": "重要的街角（3天）",
+          "price": 15
+        },
+        {
+          "id": "um21",
+          "label": "老人与潮（2天）",
+          "price": 10
+        },
+        {
+          "id": "um22",
+          "label": "再引春来系列（开图）",
+          "price": 20
+        },
+        {
+          "id": "side-important-option-23",
+          "label": "藏剑与谷",
+          "price": 20
+        }
+      ]
+    },
+    {
+      "type": "dropdown",
+      "id": "side-minor",
+      "label": "次要任务",
+      "title": "次要任务",
+      "expanded": false,
+      "options": [
+        {
+          "id": "im1",
+          "label": "风雨欲来系列",
+          "price": 15
+        },
+        {
+          "id": "im2",
+          "label": "机械救星系列(还包括三脚架之家)",
+          "price": 15
+        },
+        {
+          "id": "im3",
+          "label": "职责所在",
+          "price": 3
+        },
+        {
+          "id": "im4",
+          "label": "尘封归档",
+          "price": 3
+        },
+        {
+          "id": "im5",
+          "label": "爆破救援（需要爆炸物）",
+          "price": 3
+        },
+        {
+          "id": "im6",
+          "label": "照常升起",
+          "price": 3
+        },
+        {
+          "id": "im7",
+          "label": "幻觉",
+          "price": 3
+        },
+        {
+          "id": "im8",
+          "label": "高空救援",
+          "price": 3
+        },
+        {
+          "id": "im9",
+          "label": "维修总动员",
+          "price": 8
+        },
+        {
+          "id": "im10",
+          "label": "漏网之虫",
+          "price": 3
+        },
+        {
+          "id": "im11",
+          "label": "古董无人机",
+          "price": 3
+        },
+        {
+          "id": "im12",
+          "label": "消失的爱人",
+          "price": 3
+        },
+        {
+          "id": "im13",
+          "label": "追逐的脚步",
+          "price": 8
+        },
+        {
+          "id": "im14",
+          "label": "钟鸣三到（需要 1000 息壤）",
+          "price": 3
+        },
+        {
+          "id": "im15",
+          "label": "出师三剑",
+          "price": 3
+        },
+        {
+          "id": "im16",
+          "label": "检修无小事",
+          "price": 3
+        },
+        {
+          "id": "im17",
+          "label": "水中诡事",
+          "price": 8
+        },
+        {
+          "id": "im18",
+          "label": "安桩不易",
+          "price": 3
+        },
+        {
+          "id": "im19",
+          "label": "池中宝（需抽水）",
+          "price": 15
+        },
+        {
+          "id": "im20",
+          "label": "侵蚀中的呼救",
+          "price": 3
+        },
+        {
+          "id": "im21",
+          "label": "粉丝见面会",
+          "price": 5
+        },
+        {
+          "id": "im22",
+          "label": "致后来人",
+          "price": 3
+        },
+        {
+          "id": "im23",
+          "label": "分忧解难（需抽水）",
+          "price": 15
+        },
+        {
+          "id": "side-minor-option-24",
+          "label": "谷崖论剑",
+          "price": 3
+        }
+      ]
+    },
+    {
+      "type": "dropdown",
+      "id": "side-character",
+      "label": "角色故事",
+      "title": "角色故事",
+      "expanded": false,
+      "options": [
+        {
+          "id": "om1",
+          "label": "离群之狼",
+          "price": 20
+        },
+        {
+          "id": "om2",
+          "label": "爱呐喊和原型机",
+          "price": 20
+        },
+        {
+          "id": "om3",
+          "label": "追忆之痕（比较长）",
+          "price": 25
+        },
+        {
+          "id": "om4",
+          "label": "信使的信",
+          "price": 20
+        },
+        {
+          "id": "om5",
+          "label": "红骑士",
+          "price": 20
+        },
+        {
+          "id": "side-character-option-6",
+          "label": "以拳问心",
+          "price": 20
+        }
+      ]
+    }
+  ]
+}

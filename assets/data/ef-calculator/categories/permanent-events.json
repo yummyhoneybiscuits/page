@@ -1,0 +1,263 @@
+{
+  "id": "permanent-events",
+  "title": "版本常驻活动",
+  "entries": [
+    {
+      "type": "dropdown",
+      "id": "event-echoes",
+      "label": "蚀像寻遗",
+      "title": "任务 刻度 宝箱全清",
+      "expanded": true,
+      "options": [
+        {
+          "id": "xy01",
+          "label": "1-3区",
+          "price": 45
+        },
+        {
+          "id": "xy02",
+          "label": "4 区",
+          "price": 15
+        },
+        {
+          "id": "xy03",
+          "label": "5-6区",
+          "price": 40
+        }
+      ],
+      "offer": {
+        "id": "xy2",
+        "price": 95
+      }
+    },
+    {
+      "type": "dropdown",
+      "id": "event-secret-01",
+      "label": "[一期] 密境行者",
+      "title": "密境行者 - 密境初显",
+      "expanded": false,
+      "options": [
+        {
+          "id": "mj01",
+          "label": "压力感应",
+          "price": 3
+        },
+        {
+          "id": "mj02",
+          "label": "吊装辅助",
+          "price": 3
+        },
+        {
+          "id": "mj03",
+          "label": "乘风",
+          "price": 3
+        },
+        {
+          "id": "mj04",
+          "label": "工业化迷宫",
+          "price": 3
+        },
+        {
+          "id": "mj05",
+          "label": "高热拦截",
+          "price": 3
+        },
+        {
+          "id": "mj06",
+          "label": "外部起爆",
+          "price": 3
+        },
+        {
+          "id": "mj07",
+          "label": "长耳兽的邀请",
+          "price": 3
+        },
+        {
+          "id": "mj08",
+          "label": "轰鸣喜乐",
+          "price": 3
+        },
+        {
+          "id": "mj09",
+          "label": "游于光焰",
+          "price": 3
+        }
+      ],
+      "offer": {
+        "id": "mj1",
+        "price": 27
+      }
+    },
+    {
+      "type": "dropdown",
+      "id": "event-secret-02",
+      "label": "[二期] 密境行者",
+      "title": "密境行者 - 行探险窟",
+      "expanded": false,
+      "options": [
+        {
+          "id": "mj11",
+          "label": "驱水行路",
+          "price": 5
+        },
+        {
+          "id": "mj12",
+          "label": "需水阵列",
+          "price": 5
+        },
+        {
+          "id": "mj13",
+          "label": "转轮与桥梁",
+          "price": 5
+        },
+        {
+          "id": "mj14",
+          "label": "秋水横渡",
+          "price": 5
+        },
+        {
+          "id": "mj15",
+          "label": "归家",
+          "price": 5
+        },
+        {
+          "id": "mj16",
+          "label": "小虫之旅",
+          "price": 5
+        }
+      ],
+      "offer": {
+        "id": "mj2",
+        "price": 30
+      }
+    },
+    {
+      "type": "dropdown",
+      "id": "event-monument-01",
+      "label": "[一期] 影拓丰碑",
+      "title": "影拓丰碑 - 大地的弃子",
+      "expanded": false,
+      "options": [
+        {
+          "id": "fb01",
+          "label": "毒雾求生",
+          "price": 4
+        },
+        {
+          "id": "fb02",
+          "label": "旁门外道",
+          "price": 4
+        },
+        {
+          "id": "fb03",
+          "label": "弩斧相应",
+          "price": 4
+        }
+      ],
+      "offer": {
+        "id": "fb1",
+        "price": 12
+      }
+    },
+    {
+      "type": "dropdown",
+      "id": "event-monument-02",
+      "label": "[二期] 影拓丰碑",
+      "title": "影拓丰碑 - 无机造物",
+      "expanded": false,
+      "options": [
+        {
+          "id": "fb11",
+          "label": "矢影环伺",
+          "price": 4
+        },
+        {
+          "id": "fb12",
+          "label": "狂冲盾止",
+          "price": 4
+        },
+        {
+          "id": "fb13",
+          "label": "安于磐石",
+          "price": 4
+        }
+      ],
+      "offer": {
+        "id": "fb2",
+        "price": 12
+      }
+      
+    },
+    {
+      "type": "dropdown",
+      "id": "event-monument-03",
+      "label": "[三期] 影拓丰碑",
+      "title": "影拓丰碑 - 灼痛疤痕",
+      "expanded": false,
+      "options": [
+        {
+          "id": "fb21",
+          "label": "怨憎雾海",
+          "price": 4
+        },
+        {
+          "id": "fb22",
+          "label": "血肉熔点",
+          "price": 4
+        },
+        {
+          "id": "fb23",
+          "label": "呼吼炽焰",
+          "price": 4
+        }
+      ],
+      "offer": {
+        "id": "fb3",
+        "price": 12
+      }
+    },
+    {
+      "type": "dropdown",
+      "id": "event-monument-04",
+      "label": "[四期] 影拓丰碑",
+      "title": "影拓丰碑 - 浊流具现",
+      "expanded": false,
+      "options": [
+        {
+          "id": "fb31",
+          "label": "沉寂视界",
+          "price": 4
+        },
+        {
+          "id": "fb32",
+          "label": "枯竭海退",
+          "price": 4
+        },
+        {
+          "id": "fb33",
+          "label": "潮涌遗恨",
+          "price": 4
+        },
+        {
+          "id": "fb34",
+          "label": "污浊血脉",
+          "price": 4
+        },
+        {
+          "id": "fb35",
+          "label": "潜流绝窟",
+          "price": 4
+        },
+        {
+          "id": "fb36",
+          "label": "霜冻联结",
+          "price": 4
+        }
+      ],
+      "offer": {
+        "id": "fb4",
+        "price": 24
+      }
+    }
+  ]
+}

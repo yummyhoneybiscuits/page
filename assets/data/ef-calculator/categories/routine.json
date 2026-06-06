@@ -1,0 +1,99 @@
+{
+  "id": "routine",
+  "title": "日常托管",
+  "expanded": true,
+  "entries": [
+    {
+      "type": "package-matrix",
+      "id": "routine-packages",
+      "title": "套餐服务 (理智养成可指定)",
+      "features": [
+        "日活",
+        "周常",
+        "帝江号",
+        "信用点",
+        "理智",
+        "倒货+稳定物质",
+        "送货+拍照+演武台",
+        "武陵稀有材料",
+        "版本限时活动",
+        "资源规划",
+        "角色养成"
+      ],
+      "options": [
+        {
+          "id": "routine-standard",
+          "label": "基础体托",
+          "price": 78,
+          "priceText": "78￥/月",
+          "features": [
+            "日活",
+            "周常",
+            "帝江号",
+            "信用点",
+            "理智"
+          ]
+        },
+        {
+          "id": "routine-advanced",
+          "label": "进阶精托",
+          "price": 168,
+          "priceText": "168￥/月",
+          "features": [
+            "日活",
+            "周常",
+            "帝江号",
+            "信用点",
+            "理智",
+            "倒货+稳定物质",
+            "送货+拍照+演武台"
+          ]
+        },
+        {
+          "id": "routine-premium",
+          "label": "终极全托",
+          "price": 268,
+          "priceText": "268￥/月",
+          "features": [
+            "日活",
+            "周常",
+            "帝江号",
+            "信用点",
+            "理智",
+            "倒货+稳定物质",
+            "送货+拍照+演武台",
+            "武陵稀有材料",
+            "版本限时活动",
+            "资源规划",
+            "角色养成"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "choices",
+      "id": "routine-addons",
+      "title": "<限时活动><收菜>均可单独算价 具体价格可根据老板实际需求调整",
+      "options": [
+        {
+          "id": "routine-addon-harvest",
+          "label": "种地",
+          "priceText": "15￥/月",
+          "price": 15
+        },
+        {
+          "id": "routine-addons-option-2",
+          "label": "稀有材料有滑索",
+          "priceText": "15￥/趟",
+          "price": 15
+        },
+        {
+          "id": "routine-addons-option-3",
+          "label": "稀有材料无滑索",
+          "priceText": "30￥/趟",
+          "price": 15
+        }
+      ]
+    }
+  ]
+}

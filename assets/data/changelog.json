@@ -1,0 +1,40 @@
+{
+  "title": "CHANGELOG",
+  "description": "maintenance .",
+  "sections": [
+    {
+      "id": "features",
+      "title": "现有功能",
+      "type": "list",
+      "items": [
+        "ef计价器",
+        "支持<正则搜索> 可搜索分组目录 支持<购物车><总计><导出图片>及<价格码>导入与导出"
+      ]
+    },
+    {
+      "id": "history",
+      "title": "Change History",
+      "type": "history",
+      "entries": [
+        {
+          "date": "2026-06-10",
+          "title": "计价器1.3数据更新",
+          "items": [
+            "更新目前全部1.3数据",
+            "修复截图价格位置偏移问题",
+            "添加数据编辑器功能"
+
+          ]
+        },
+        {
+          "date": "2026-06-06",
+          "title": "计价器更新1.3数据 重构部分功能",
+          "items": [
+            "1.3部分数据更新",
+            "添加sale模式 重构组件样式"
+          ]
+        }
+      ]
+    }
+  ]
+}

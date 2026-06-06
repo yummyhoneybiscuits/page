@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <link rel="icon" href="./assets/favicon.png" type="image/png">
+    <link rel="stylesheet" href="./assets/css/base.css">
+    <link rel="stylesheet" href="./assets/css/ef-calculator.css?v=12">
+    <title>EF Calculator</title>
+</head>
+<body>
+    <header class="app-header">
+        <h1 class="app-title">Endfield 1.3</h1>
+    </header>
+
+    <main class="calculator-layout">
+        <section class="panel" aria-labelledby="catalogTitle">
+            <div class="search-box">
+                <label class="visually-hidden" for="searchInput">Search</label>
+                <input
+                    id="searchInput"
+                    type="search"
+                    placeholder="support regex search..."
+                    autocomplete="off"
+                >
+                <button
+                    id="regexHelpButton"
+                    class="button button--icon"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="regexHelpPanel"
+                    data-html2canvas-ignore="true"
+                >?</button>
+            </div>
+            <section
+                id="regexHelpPanel"
+                class="regex-help"
+                aria-label="Regex cheat sheet"
+                hidden
+            >
+                <div class="regex-help__grid">
+                    <p><code>regex-help</code><span>正则表达式速查表</span></p>
+                    <p><code>| 或者</code><span>主线|支线 匹配主线 或 支线</span></p>
+                    <p><code>^ 开头</code><span>^第一章 匹配以第一章开头</span></p>
+                    <p><code>$ 结尾</code><span>探索$ 匹配以探索结尾</span></p>
+                    <p><code>\. 字面点号</code><span>1\.3 匹配字面 1.3</span></p>
+                    <p><code>[] 多选一</code><span>第[一二三]章 匹配第一/二/三章</span></p>
+                    <p><code>.* 任意内容</code><span>剧情.*探索 匹配剧情后面还有探索</span></p>
+                </div>
+            </section>
+            <div id="catalogStatus" class="status-message" role="status">LOADING...</div>
+            <div id="catalogContainer"></div>
+        </section>
+
+        <aside class="panel">
+            <section id="exportArea" class="export-area" aria-labelledby="invoiceTitle">
+                <header class="export-header">
+                    <h2 id="invoiceTitle">invoice</h2>
+                    <div class="action-buttons" data-html2canvas-ignore="true">
+                        <button id="clearCartButton" class="button button--fixed" type="button">CLEAR</button>
+                        <button id="exportButton" class="button button--export button--fixed" type="button">EXPORT</button>
+                    </div>
+                </header>
+                <div id="cartContainer" aria-live="polite">
+                    <p class="empty-message">NO ITEMS SELECTED</p>
+                </div>
+                <output id="totalPrice" class="total-price">TOTAL: ¥0.00</output>
+            </section>
+
+            <section class="code-section" aria-labelledby="codeTitle">
+                <div class="input-action">
+                    <label class="visually-hidden" for="generatedCode">Generated pricing code</label>
+                    <input
+                        id="generatedCode"
+                        type="text"
+                        placeholder="GENERATED CODE WILL APPEAR HERE"
+                        readonly
+                    >
+                    <button id="copyCodeButton" class="button" type="button">COPY</button>
+                </div>
+
+                <hr>
+
+                <div class="input-action">
+                    <label class="visually-hidden" for="loadCodeInput">Pricing code to load</label>
+                    <input
+                        id="loadCodeInput"
+                        type="text"
+                        placeholder="ENTER PRICING CODE..."
+                        autocomplete="off"
+                    >
+                    <button id="loadCodeButton" class="button" type="button">LOAD</button>
+                </div>
+                <p id="codeStatus" class="status-message" role="status" aria-live="polite"></p>
+            </section>
+        </aside>
+    </main>
+
+    <script src="./assets/js/ef-calculator/app.js?v=12" type="module"></script>
+    <script src="./assets/js/watermark.js" type="module"></script>
+</body>
+</html>

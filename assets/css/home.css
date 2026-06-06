@@ -1,0 +1,73 @@
+.home-page {
+    min-height: 100vh;
+    padding: 20px;
+    display: grid;
+    place-items: center;
+}
+
+.tool-directory {
+    position: relative;
+    width: min(100%, 560px);
+    padding-bottom: 28px;
+}
+
+.tool-directory h1 {
+    margin: 0 0 30px;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.tool-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    padding: 18px 0;
+    border-bottom: 1px dashed var(--color-border);
+    color: var(--color-text);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: padding 120ms ease, color 120ms ease, background 120ms ease;
+}
+
+.tool-link:last-child {
+    border-bottom: 1;
+}
+
+.tool-link:hover,
+.tool-link:focus-visible {
+    padding-inline: 12px;
+    background: var(--color-text);
+    color: var(--color-background);
+    outline: none;
+}
+
+.tool-link__arrow {
+    flex: 0 0 auto;
+    font-size: 1.2rem;
+}
+
+.subtle-links {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: grid;
+    gap: 4px;
+}
+
+.subtle-link {
+    color: var(--color-muted);
+    font-size: 0.75rem;
+    text-decoration: none;
+    text-transform: lowercase;
+}
+
+.subtle-link:hover,
+.subtle-link:focus-visible {
+    color: var(--color-text);
+    outline: #ffffff dashed 1px;
+}
+.tool-directory {
+   padding-bottom: 40px;
+    }

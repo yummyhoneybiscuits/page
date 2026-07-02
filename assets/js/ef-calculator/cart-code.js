@@ -5,24 +5,32 @@ function decodeBase64(code) {
     return decodeURIComponent(escape(window.atob(code)));
 }
 
-function addResolvedEntry(cart, entry, quantity, inputValue) {
+function addResolvedEntry(cart, formulaValues, entry, quantity, inputValue) {
     if (entry.type === 'dropdown') {
         entry.options.forEach(option => cart.set(option.id, { quantity: 1 }));
         return;
     }
 
-    const line = { quantity: Math.min(quantity, entry.maxQuantity) };
+    const maxQuantity = Number.isInteger(entry.maxQuantity) ? entry.maxQuantity : quantity;
+    const line = { quantity: Math.min(quantity, maxQuantity) };
     if (entry.type === 'formula') {
         line.inputValue = clampFormulaInput(entry, inputValue);
-        state.formulaValues.set(entry.id, line.inputValue);
+        formulaValues.set(entry.id, line.inputValue);
     }
     cart.set(entry.id, line);
 }
 
 function buildCart(records) {
+    if (!Array.isArray(records)) {
+        throw new TypeError('Pricing code records must be an array.');
+    }
+
     const cart = new Map();
+    const formulaValues = new Map(state.formulaValues);
 
     records.forEach(record => {
+        if (!record || typeof record !== 'object') return;
+
         const id = String(record.id || '');
         const quantity = Number(record.quantity);
         if (!id || !Number.isInteger(quantity) || quantity <= 0) return;
@@ -32,12 +40,14 @@ function buildCart(records) {
             || state.aliases.get(id);
         if (!entry) return;
 
-        addResolvedEntry(cart, entry, quantity, Number(record.inputValue));
+        addResolvedEntry(cart, formulaValues, entry, quantity, Number(record.inputValue));
     });
 
     if (cart.size === 0) {
         throw new TypeError('Pricing code contains no valid items.');
     }
+
+    state.formulaValues = formulaValues;
     return cart;
 }
 
@@ -84,7 +94,10 @@ export function encodePricingCode() {
 }
 
 export function parsePricingCode(code) {
-    const decoded = decodeBase64(code);
+    const decoded = decodeBase64(String(code || '').trim()).trim();
+    if (!decoded) {
+        throw new TypeError('Pricing code is empty.');
+    }
 
     if (decoded.startsWith('[')) {
         return buildCart(parseLegacyArrayRecords(JSON.parse(decoded)));

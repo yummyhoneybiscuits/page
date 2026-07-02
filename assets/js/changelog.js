@@ -87,6 +87,11 @@ function renderChangelog(data) {
             return;
         }
 
+        if (section.type && section.type !== 'list') {
+            console.warn(`Unknown changelog section type: ${section.type}`);
+            return;
+        }
+
         elements.content.append(renderListSection(section));
     });
 }

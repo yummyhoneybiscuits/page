@@ -87,13 +87,19 @@ window.addEventListener('resize', () => {
     render();
 });
 
-reduceMotion.addEventListener('change', () => {
+const handleReduceMotionChange = () => {
     if (reduceMotion.matches) {
         stop();
     } else {
         start();
     }
-});
+};
+
+if (typeof reduceMotion.addEventListener === 'function') {
+    reduceMotion.addEventListener('change', handleReduceMotionChange);
+} else {
+    reduceMotion.addListener(handleReduceMotionChange);
+}
 
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) {

@@ -161,8 +161,15 @@ function handleCatalogInput(event) {
     const value = clampFormulaInput(entry, input.value);
     state.formulaValues.set(entry.id, value);
 
+    const cartLine = state.cart.get(entry.id);
+    if (cartLine) {
+        state.cart.set(entry.id, { ...cartLine, inputValue: value });
+        renderCart(elements);
+    }
+
     const formulaEntry = input.closest('.formula-entry');
-    formulaEntry.querySelector('.formula-price').textContent = formatPrice(getUnitPrice(entry));
+    const priceOutput = formulaEntry?.querySelector('.formula-price');
+    if (priceOutput) priceOutput.textContent = formatPrice(getUnitPrice(entry));
 }
 
 function handleCartClick(event) {

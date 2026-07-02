@@ -1,5 +1,5 @@
 export function getCalculatorElements() {
-    return {
+    const elements = {
         catalog: document.querySelector('#catalogContainer'),
         catalogStatus: document.querySelector('#catalogStatus'),
         search: document.querySelector('#searchInput'),
@@ -16,4 +16,19 @@ export function getCalculatorElements() {
         loadButton: document.querySelector('#loadCodeButton'),
         exportArea: document.querySelector('#exportArea')
     };
+
+    const optionalKeys = new Set(['regexHelpButton', 'regexHelpPanel']);
+    const missing = Object.entries(elements)
+        .filter(([key, element]) => !optionalKeys.has(key) && !element)
+        .map(([key]) => key);
+
+    if (Boolean(elements.regexHelpButton) !== Boolean(elements.regexHelpPanel)) {
+        missing.push(elements.regexHelpButton ? 'regexHelpPanel' : 'regexHelpButton');
+    }
+
+    if (missing.length > 0) {
+        throw new Error(`Calculator DOM initialization failed. Missing element keys: ${missing.join(', ')}`);
+    }
+
+    return elements;
 }

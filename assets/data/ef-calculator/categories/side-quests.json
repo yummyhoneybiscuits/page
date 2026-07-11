@@ -260,7 +260,7 @@
       "id": "side-character",
       "label": "角色故事",
       "title": "角色故事",
-      "expanded": false,
+      "expanded": true,
       "options": [
         {
           "id": "om1",

@@ -19,7 +19,7 @@
       "type": "dropdown",
       "id": "exploration-basic-valley",
       "title": "基础探索 包括宝箱,谜质,采录桩,[大情报],机器人",
-      "expanded": false,
+      "expanded": true,
       "options": [
         {
           "id": "gttdts1",
@@ -62,7 +62,7 @@
       "type": "dropdown",
       "id": "exploration-basic-wuling",
       "title": "基础探索 包括宝箱,谜质,采录桩,[大情报],机器人",
-      "expanded": false,
+      "expanded": true,
       "options": [
         {
           "id": "wlc1",

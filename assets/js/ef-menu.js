@@ -4,6 +4,9 @@ const HTML2CANVAS_URL = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/htm
 const WATERMARK_TEXT = 'wechat@ shiroi333';
 const catalogElement = document.getElementById('menuCatalog');
 const exportButton = document.getElementById('menuExportButton');
+const exportDialog = document.getElementById('menuExportDialog');
+const exportForm = document.getElementById('menuExportForm');
+const exportAreas = document.getElementById('menuExportAreas');
 let html2canvasPromise;
 
 function escapeHtml(value) {
@@ -159,11 +162,21 @@ async function initialize() {
     }
 }
 
-async function exportMenu() {
+async function exportMenu(selectedIds) {
     exportButton.disabled = true;
     const sheet = document.createElement('div');
     sheet.className = 'menu-export-sheet';
     const catalogClone = catalogElement.cloneNode(true);
+    const totalSectionCount = catalogClone.querySelectorAll('.menu-section').length;
+    catalogClone.querySelectorAll('.menu-section').forEach(section => {
+        if (!selectedIds.has(section.id)) section.remove();
+    });
+    catalogClone.querySelectorAll('.menu-column').forEach(column => {
+        if (!column.querySelector('.menu-section')) column.remove();
+    });
+    const sectionCount = catalogClone.querySelectorAll('.menu-section').length;
+    sheet.classList.toggle('is-partial', sectionCount < totalSectionCount);
+    sheet.classList.toggle('is-single-section', sectionCount === 1);
     catalogClone.querySelectorAll('details.menu-group').forEach(details => {
         const group = document.createElement('div');
         group.className = `${details.className}${details.open ? ' is-open' : ''}`;
@@ -182,7 +195,7 @@ async function exportMenu() {
         }
         details.replaceWith(group);
     });
-    sheet.append(document.querySelector('.menu-header').cloneNode(true), catalogClone);
+    sheet.append(catalogClone);
     const watermark = document.createElement('div');
     watermark.className = 'menu-export-watermark';
     watermark.setAttribute('aria-hidden', 'true');
@@ -227,5 +240,39 @@ async function exportMenu() {
     }
 }
 
-exportButton.addEventListener('click', exportMenu);
+function openExportDialog() {
+    exportAreas.innerHTML = [...catalogElement.querySelectorAll('.menu-section')].map(section => {
+        const number = section.querySelector('.menu-section__header > span')?.textContent || '';
+        const title = section.querySelector('.menu-section__header h2')?.textContent || section.id;
+        return `
+            <label>
+                <input type="checkbox" name="area" value="${escapeHtml(section.id)}" checked>
+                <span>${escapeHtml(number)}</span>
+                <strong>${escapeHtml(title)}</strong>
+            </label>
+        `;
+    }).join('');
+    exportDialog.showModal();
+}
+
+exportButton.addEventListener('click', openExportDialog);
+exportDialog.addEventListener('click', event => {
+    if (event.target === exportDialog) exportDialog.close();
+    const command = event.target.closest('[data-export-command]')?.dataset.exportCommand;
+    if (command === 'cancel') exportDialog.close();
+    if (command === 'all' || command === 'none') {
+        exportAreas.querySelectorAll('input[name="area"]').forEach(input => {
+            input.checked = command === 'all';
+        });
+    }
+});
+exportForm.addEventListener('submit', event => {
+    event.preventDefault();
+    const selectedIds = new Set(
+        [...exportAreas.querySelectorAll('input[name="area"]:checked')].map(input => input.value)
+    );
+    if (!selectedIds.size) return;
+    exportDialog.close();
+    exportMenu(selectedIds);
+});
 initialize();

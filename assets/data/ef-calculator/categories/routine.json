@@ -73,7 +73,7 @@
     {
       "type": "choices",
       "id": "routine-addons",
-      "title": "<限时活动><收菜>均可单独算价 具体价格可根据老板实际需求调整",
+      "title": "<限时活动><收菜>均可单独算价",
       "options": [
         {
           "id": "routine-addon-harvest",

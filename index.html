@@ -10,10 +10,6 @@
     <title>moe</title>
 </head>
 <body class="menu-page">
-    <header class="menu-header">
-        <h1>endfield 1.3 </h1>
-    </header>
-
     <main id="menuCatalog" class="menu-catalog"></main>
     <footer class="menu-footer">
         <div>
@@ -23,6 +19,21 @@
         </div>
         <a class="menu-footer__calculator" href="./ef-calculator.html">calculator &gt;</a>
     </footer>
+
+    <dialog id="menuExportDialog" class="menu-export-dialog">
+        <form id="menuExportForm" method="dialog">
+            <header>
+                <h2>export areas</h2>
+                <button type="button" value="cancel" data-export-command="cancel">x</button>
+            </header>
+            <div id="menuExportAreas" class="menu-export-areas"></div>
+            <footer>
+                <button type="button" data-export-command="all">all</button>
+                <button type="button" data-export-command="none">none</button>
+                <button type="submit" value="export">export</button>
+            </footer>
+        </form>
+    </dialog>
 
     <script src="./assets/js/ef-menu.js" type="module"></script>
     <script src="./assets/js/watermark.js" type="module"></script>

@@ -6,19 +6,21 @@
       "type": "item",
       "id": "mm1",
       "label": "主线全包",
-      "price": 468
+      "price": 468,
+      "maxQuantity": 1
     },
     {
       "type": "item",
       "id": "mm2",
       "label": "序章",
-      "price": 15
+      "price": 15,
+      "maxQuantity": 1
     },
     {
       "type": "dropdown",
       "id": "main-story-01",
       "label": "第一章进程一",
-      "title": "第一章进程一",
+      "title": "[1.0]到罗丹boss",
       "expanded": false,
       "options": [
         {
@@ -72,7 +74,7 @@
       "type": "dropdown",
       "id": "main-story-02",
       "label": "第一章进程二",
-      "title": "第一章进程二",
+      "title": "[1.0]帝江基建",
       "expanded": false,
       "options": [
         {
@@ -86,7 +88,7 @@
       "type": "dropdown",
       "id": "main-story-03",
       "label": "第一章进程三",
-      "title": "第一章进程三",
+      "title": "[1.0]三位一体boss",
       "expanded": false,
       "options": [
         {
@@ -140,7 +142,7 @@
       "type": "dropdown",
       "id": "main-story-04",
       "label": "第一章进程四",
-      "title": "第一章进程四",
+      "title": "[1.0]白垩boss",
       "expanded": false,
       "options": [
         {
@@ -189,7 +191,7 @@
       "type": "dropdown",
       "id": "main-story-05",
       "label": "第二章进程一",
-      "title": "第二章进程一",
+      "title": "[1.0]初入武陵",
       "expanded": false,
       "options": [
         {
@@ -218,7 +220,7 @@
       "type": "dropdown",
       "id": "main-story-06",
       "label": "第二章进程二",
-      "title": "第二章进程二",
+      "title": "[1.0]清波寨基地解锁",
       "expanded": false,
       "options": [
         {
@@ -247,7 +249,7 @@
       "type": "dropdown",
       "id": "main-story-07",
       "label": "第二章进程三",
-      "title": "第二章进程三",
+      "title": "[1.1]清波寨 + 阮一boss",
       "expanded": false,
       "options": [
         {
@@ -291,7 +293,7 @@
       "type": "dropdown",
       "id": "main-story-08",
       "label": "第二章进程四",
-      "title": "第二章进程四",
+      "title": "[1.2]首墩副基地解锁",
       "expanded": false,
       "options": [
         {
@@ -335,7 +337,7 @@
       "type": "dropdown",
       "id": "main-story-09",
       "label": "第二章进程五,六",
-      "title": "第二章进程五,六",
+      "title": "[1.2]聂菲斯boss + 庄剧情",
       "expanded": false,
       "options": [
         {

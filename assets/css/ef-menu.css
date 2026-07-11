@@ -4,31 +4,17 @@ html {
 
 .menu-page {
     min-height: 100vh;
-    padding: 20px;
+    padding: 14px;
 }
-
-.menu-header,
 .menu-catalog,
 .menu-footer {
-    width: min(100%, 1280px);
+    width: min(100%, 1100px);
     margin-inline: auto;
 }
-
-.menu-header {
-    padding: 10px 0 22px;
-    border-bottom: 1px solid var(--color-border);
-}
-
-.menu-header h1 {
-    margin: 0;
-    font-size: 2rem;
-    text-align: center;
-}
-
 .menu-catalog {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 48px;
+    gap: 24px;
 }
 
 .menu-column {
@@ -38,17 +24,17 @@ html {
 .menu-section {
     width: 100%;
     min-width: 0;
-    padding: 30px 0;
+    padding: 22px 0;
     border-bottom: 1px solid var(--color-border);
     scroll-margin-top: 20px;
 }
 
 .menu-section__header {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: baseline;
-    gap: 10px;
+    gap: 8px;
 }
 
 .menu-section__header span,
@@ -65,15 +51,15 @@ html {
 .menu-section__content,
 .menu-group__items {
     display: grid;
-    gap: 12px;
+    gap: 10px;
 }
 
 .menu-item {
     min-width: 0;
     display: grid;
-    grid-template-columns: auto minmax(20px, 1fr) auto;
+    grid-template-columns: auto minmax(16px, 1fr) auto;
     align-items: end;
-    gap: 8px;
+    gap: 6px;
 }
 
 .menu-item__name {
@@ -272,6 +258,92 @@ html {
     text-transform: uppercase;
 }
 
+.menu-export-dialog {
+    width: min(calc(100% - 24px), 460px);
+    padding: 0;
+    border: 1px solid var(--color-border);
+    background: var(--color-background);
+    color: var(--color-text);
+}
+
+.menu-export-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.menu-export-dialog form {
+    padding: 14px;
+}
+
+.menu-export-dialog header,
+.menu-export-dialog footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.menu-export-dialog header {
+    justify-content: space-between;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.menu-export-dialog h2 {
+    margin: 0;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+.menu-export-dialog button {
+    min-height: 30px;
+    padding: 5px 10px;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    cursor: pointer;
+}
+
+.menu-export-dialog button:hover,
+.menu-export-dialog button:focus-visible {
+    background: var(--color-text);
+    color: var(--color-background);
+    outline: none;
+}
+
+.menu-export-areas {
+    padding: 12px 0;
+    display: grid;
+    gap: 6px;
+}
+
+.menu-export-areas label {
+    padding: 8px;
+    display: grid;
+    grid-template-columns: auto 24px minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.menu-export-areas label:hover {
+    border-color: var(--color-border);
+}
+
+.menu-export-areas input {
+    margin: 0;
+    accent-color: var(--color-success);
+}
+
+.menu-export-areas span {
+    color: var(--color-muted);
+}
+
+.menu-export-dialog footer {
+    justify-content: flex-end;
+    padding-top: 12px;
+    border-top: 1px solid var(--color-border);
+}
+
 .menu-export-sheet {
     position: fixed;
     top: 0;
@@ -281,16 +353,23 @@ html {
     background: var(--color-background);
     color: var(--color-text);
 }
-
-.menu-export-sheet .menu-header,
 .menu-export-sheet .menu-catalog {
     width: 100%;
-}
-
-.menu-export-sheet .menu-catalog {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 48px;
+    gap: 28px;
+}
+
+.menu-export-sheet.is-partial {
+    width: 960px;
+}
+
+.menu-export-sheet.is-single-section {
+    width: 560px;
+}
+
+.menu-export-sheet .menu-catalog:has(.menu-column:only-child) {
+    grid-template-columns: 1fr;
 }
 
 .menu-export-sheet .menu-column {

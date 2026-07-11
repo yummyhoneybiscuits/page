@@ -186,7 +186,6 @@
         "id": "fb2",
         "price": 12
       }
-      
     },
     {
       "type": "dropdown",
@@ -258,6 +257,49 @@
         "id": "fb4",
         "price": 24
       }
+    },
+    {
+      "type": "dropdown",
+      "id": "dropdown-1",
+      "label": "[五期] 影拓丰碑",
+      "title": "影拓丰碑 - 死寂争鸣",
+      "expanded": false,
+      "offer": {
+        "id": "fb5",
+        "price": 24
+      },
+      "options": [
+        {
+          "id": "fb37",
+          "label": "刺痛盾阵",
+          "price": 4
+        },
+        {
+          "id": "fb38",
+          "label": "溶解窥看",
+          "price": 4
+        },
+        {
+          "id": "fb39",
+          "label": "仪式旋流",
+          "price": 4
+        },
+        {
+          "id": "fb40",
+          "label": "冯河断水",
+          "price": 4
+        },
+        {
+          "id": "fb41",
+          "label": "死寂表象",
+          "price": 4
+        },
+        {
+          "id": "fb42",
+          "label": "忿鼓咆声",
+          "price": 4
+        }
+      ]
     }
   ]
 }

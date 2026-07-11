@@ -5,7 +5,7 @@
     "dropdownFullSelectionDiscount": {
       "enabled": true,
       "label": "SALE",
-      "rate": 0.9
+      "rate": 1
     }
   },
   "categories": [

@@ -16,10 +16,10 @@
             <h1>Catalog Editor</h1>
         </div>
         <div class="editor-actions">
-            <button id="reloadButton" class="editor-button" type="button">RELOAD</button>
-            <button id="downloadCategoryButton" class="editor-button" type="button">DOWNLOAD CATEGORY</button>
-            <button id="copyManifestButton" class="editor-button" type="button">COPY MANIFEST</button>
-            <button id="copyCategoryButton" class="editor-button editor-button--primary" type="button">COPY CATEGORY</button>
+            <button class="editor-button" type="button" data-editor-command="reload">RELOAD</button>
+            <button class="editor-button" type="button" data-editor-command="download-category">DOWNLOAD CATEGORY</button>
+            <button class="editor-button" type="button" data-editor-command="copy-manifest">COPY MANIFEST</button>
+            <button class="editor-button editor-button--primary" type="button" data-editor-command="copy-category">COPY CATEGORY</button>
         </div>
     </header>
 
@@ -32,11 +32,11 @@
             <section class="editor-panel">
                 <h2>Entries</h2>
                 <div class="editor-entry-actions">
-                    <button id="addItemButton" class="editor-button" type="button">+ ITEM</button>
-                    <button id="addDropdownButton" class="editor-button" type="button">+ DROPDOWN</button>
-                    <button id="addChoicesButton" class="editor-button" type="button">+ CHOICES</button>
-                    <button id="addPackageMatrixButton" class="editor-button" type="button">+ PACKAGE MATRIX</button>
-                    <button id="addFormulaButton" class="editor-button" type="button">+ FORMULA</button>
+                    <button class="editor-button" type="button" data-add-entry="item">+ ITEM</button>
+                    <button class="editor-button" type="button" data-add-entry="dropdown">+ DROPDOWN</button>
+                    <button class="editor-button" type="button" data-add-entry="choices">+ CHOICES</button>
+                    <button class="editor-button" type="button" data-add-entry="package-matrix">+ PACKAGE MATRIX</button>
+                    <button class="editor-button" type="button" data-add-entry="formula">+ FORMULA</button>
                 </div>
                 <div id="entryList" class="editor-list" aria-live="polite"></div>
             </section>
@@ -50,16 +50,16 @@
             <section class="editor-panel">
                 <h2>Entry</h2>
                 <div class="editor-entry-actions">
-                    <button id="deleteEntryButton" class="editor-button editor-button--danger" type="button">DELETE ENTRY</button>
+                    <button class="editor-button editor-button--danger" type="button" data-editor-command="delete-entry">DELETE ENTRY</button>
                 </div>
                 <form id="entryForm" class="editor-form"></form>
             </section>
             <section class="editor-panel">
                 <h2>Preview JSON</h2>
                 <div class="editor-preview-actions">
-                    <button id="showManifestButton" class="editor-button" type="button">SHOW MANIFEST</button>
-                    <button id="showCategoryButton" class="editor-button" type="button">SHOW CATEGORY</button>
-                    <button id="copyPreviewButton" class="editor-button" type="button">COPY PREVIEW</button>
+                    <button class="editor-button" type="button" data-editor-command="show-manifest">SHOW MANIFEST</button>
+                    <button class="editor-button" type="button" data-editor-command="show-category">SHOW CATEGORY</button>
+                    <button class="editor-button" type="button" data-editor-command="copy-preview">COPY PREVIEW</button>
                 </div>
                 <p id="previewLabel" class="editor-preview-label"></p>
                 <pre id="jsonPreview" class="editor-preview"></pre>

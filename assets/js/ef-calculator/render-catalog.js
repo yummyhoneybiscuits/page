@@ -1,13 +1,17 @@
-import { state } from './state.js';
 import {
+    createMatcher,
+    escapeHtml,
+    formatPrice,
     formatFormulaExpression,
     getFormulaInput,
     getDropdownOriginalTotal,
     getDropdownSaleTotal,
     getUnitPrice,
-    isDropdownFullySelected
-} from './pricing.js';
-import { createMatcher, escapeHtml, formatPrice, roundPrice, setStatus } from './utils.js';
+    isDropdownFullySelected,
+    roundPrice,
+    setStatus,
+    state
+} from './core.js';
 
 const packageMatrixSelectionHistory = new Map();
 
@@ -87,39 +91,41 @@ function renderDropdown(dropdown, context) {
 
     return `
         <section class="dropdown-card${isOpen ? ' is-open' : ''}${parentMatches ? ' is-highlighted' : ''}" data-dropdown-id="${escapeHtml(dropdown.id)}">
-            <div class="dropdown-offer">
-                <span class="dropdown-offer__title">${escapeHtml(dropdown.label)}</span>
-                <span class="dropdown-offer__price">
+            <div class="dropdown-summary">
+                <div class="dropdown-summary__copy">
+                    <h4 class="dropdown-summary__title">${escapeHtml(dropdown.label)}</h4>
+                    <button
+                        class="dropdown-title"
+                        type="button"
+                        data-action="toggle-dropdown"
+                        aria-expanded="${isOpen}"
+                    >
+                        <span
+                            class="dropdown-toggle-icon"
+                            aria-hidden="true"
+                            style="rotate: ${isOpen ? 90 : 0}deg"
+                        >&gt;</span>
+                        <span>${escapeHtml(dropdown.title)}</span>
+                    </button>
+                </div>
+                <div class="dropdown-summary__price">
                     ${hasSale
                         ? `
                             <span class="original-price-wrap">
                                 <span class="sale-label">${escapeHtml(dropdown.discount.label)}</span>
                                 <span class="price-original">${formatPrice(originalTotal)}</span>
                             </span>
-                            <span class="price-sale">${formatPrice(displayPrice)}</span>
+                            <strong class="price-sale">${formatPrice(displayPrice)}</strong>
                         `
-                        : `<span class="price-current">${formatPrice(displayPrice)}</span>`
+                        : `<strong class="price-current">${formatPrice(displayPrice)}</strong>`
                     }
-                </span>
-                ${renderToggleButton({
-                    selected: fullySelected,
-                    action: 'toggle-dropdown-options'
-                })}
-            </div>
-            <div class="dropdown-subheader">
-                <button
-                    class="dropdown-title"
-                    type="button"
-                    data-action="toggle-dropdown"
-                    aria-expanded="${isOpen}"
-                >
-                    <span
-                        class="dropdown-toggle-icon"
-                        aria-hidden="true"
-                        style="rotate: ${isOpen ? 0 : -90}deg"
-                    >▼</span>
-                    <span>${escapeHtml(dropdown.title)}</span>
-                </button>
+                </div>
+                <div class="dropdown-summary__actions">
+                    ${renderToggleButton({
+                        selected: fullySelected,
+                        action: 'toggle-dropdown-options'
+                    })}
+                </div>
             </div>
             <div class="dropdown-options">
                 ${visibleOptions.map(option => `
@@ -334,7 +340,7 @@ export function renderCatalog(elements) {
                 >
                     ${badgeHtml}
                     <h3>${escapeHtml(category.title)}</h3>
-                    <span class="toggle-icon" aria-hidden="true">▼</span>
+                    <span class="toggle-icon" aria-hidden="true">&gt;</span>
                 </button>
                 <div class="group-content">${entriesHtml}</div>
             </section>

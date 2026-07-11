@@ -1,4 +1,4 @@
-const MANIFEST_URL = './assets/data/ef-calculator/manifest.json';
+import { loadCatalogFiles } from './catalog-loader.js';
 
 const elements = {
     categoryList: document.getElementById('categoryList'),
@@ -7,20 +7,7 @@ const elements = {
     entryForm: document.getElementById('entryForm'),
     preview: document.getElementById('jsonPreview'),
     previewLabel: document.getElementById('previewLabel'),
-    status: document.getElementById('editorStatus'),
-    reloadButton: document.getElementById('reloadButton'),
-    downloadCategoryButton: document.getElementById('downloadCategoryButton'),
-    copyManifestButton: document.getElementById('copyManifestButton'),
-    copyCategoryButton: document.getElementById('copyCategoryButton'),
-    copyPreviewButton: document.getElementById('copyPreviewButton'),
-    showManifestButton: document.getElementById('showManifestButton'),
-    showCategoryButton: document.getElementById('showCategoryButton'),
-    addItemButton: document.getElementById('addItemButton'),
-    addDropdownButton: document.getElementById('addDropdownButton'),
-    addChoicesButton: document.getElementById('addChoicesButton'),
-    addPackageMatrixButton: document.getElementById('addPackageMatrixButton'),
-    addFormulaButton: document.getElementById('addFormulaButton'),
-    deleteEntryButton: document.getElementById('deleteEntryButton')
+    status: document.getElementById('editorStatus')
 };
 
 const state = {
@@ -48,28 +35,8 @@ function escapeHtml(value) {
         .replaceAll("'", '&#039;');
 }
 
-async function fetchJson(url) {
-    const response = await fetch(url, { cache: 'no-store' });
-    if (!response.ok) {
-        throw new Error(`Failed to load ${url}: ${response.status}`);
-    }
-    return response.json();
-}
-
 async function loadCatalog() {
-    const manifestUrl = new URL(MANIFEST_URL, window.location.href);
-    const manifest = await fetchJson(manifestUrl);
-    const categories = await Promise.all(
-        manifest.categories.map(async categoryRef => {
-            const fileUrl = new URL(categoryRef.file, manifestUrl);
-            const category = await fetchJson(fileUrl);
-            return {
-                ref: { ...categoryRef },
-                file: categoryRef.file,
-                data: category
-            };
-        })
-    );
+    const { manifest, categories } = await loadCatalogFiles();
 
     state.manifest = manifest;
     state.categories = categories;
@@ -144,15 +111,15 @@ function renderCategoryForm() {
     elements.categoryForm.innerHTML = `
         <div class="editor-field">
             <label for="categoryTitle">Title</label>
-            <input id="categoryTitle" name="title" value="${escapeHtml(data.title || '')}">
+            <input id="categoryTitle" data-category-field="title" value="${escapeHtml(data.title || '')}">
         </div>
         <div class="editor-field">
             <label for="categoryBadge">Badge</label>
-            <input id="categoryBadge" name="badge" value="${escapeHtml(data.badge || '')}">
+            <input id="categoryBadge" data-category-field="badge" value="${escapeHtml(data.badge || '')}">
         </div>
         <div class="editor-field">
             <label for="categoryExpanded">Expanded</label>
-            <select id="categoryExpanded" name="expanded">
+            <select id="categoryExpanded" data-category-field="expanded">
                 <option value="true"${data.expanded ? ' selected' : ''}>true</option>
                 <option value="false"${!data.expanded ? ' selected' : ''}>false</option>
             </select>
@@ -273,7 +240,7 @@ function renderEntryForm() {
             <div class="editor-entry-grid editor-entry-grid--shared">
                 <div class="editor-field">
                     <label for="entryId">ID</label>
-                    <input id="entryId" name="id" value="${escapeHtml(entry.id || '')}">
+                    <input id="entryId" data-entry-field="id" value="${escapeHtml(entry.id || '')}">
                 </div>
                 <div class="editor-field">
                     <label for="entryType">Type</label>
@@ -287,15 +254,15 @@ function renderEntryForm() {
         elements.entryForm.innerHTML = `
             <div class="editor-field">
                 <label for="entryLabel">Title</label>
-                <input id="entryLabel" name="label" value="${escapeHtml(entry.label || '')}">
+                <input id="entryLabel" data-entry-field="label" value="${escapeHtml(entry.label || '')}">
             </div>
             <div class="editor-field">
                 <label for="entryPrice">Price</label>
-                <input id="entryPrice" name="price" type="number" step="0.01" value="${escapeHtml(entry.price ?? '')}">
+                <input id="entryPrice" data-entry-field="price" type="number" step="0.01" value="${escapeHtml(entry.price ?? '')}">
             </div>
             <div class="editor-field">
                 <label for="entryMaxQuantity">Max</label>
-                <input id="entryMaxQuantity" name="maxQuantity" type="number" step="1" min="1" value="${escapeHtml(entry.maxQuantity ?? 1)}">
+                <input id="entryMaxQuantity" data-entry-field="maxQuantity" type="number" step="1" min="1" value="${escapeHtml(entry.maxQuantity ?? 1)}">
             </div>
             ${advanced}
         `;
@@ -306,27 +273,27 @@ function renderEntryForm() {
         elements.entryForm.innerHTML = `
             <div class="editor-field">
                 <label for="entryTitle">Title</label>
-                <input id="entryTitle" name="title" value="${escapeHtml(entry.title || '')}">
+                <input id="entryTitle" data-entry-field="title" value="${escapeHtml(entry.title || '')}">
             </div>
             <div class="editor-field">
                 <label for="entryTotalQuantity">Total</label>
-                <input id="entryTotalQuantity" name="totalQuantity" type="number" step="1" value="${escapeHtml(entry.totalQuantity ?? '')}">
+                <input id="entryTotalQuantity" data-entry-field="totalQuantity" type="number" step="1" value="${escapeHtml(entry.totalQuantity ?? '')}">
             </div>
             <div class="editor-field">
                 <label for="entryUnitPrice">Unit</label>
-                <input id="entryUnitPrice" name="unitPrice" type="number" step="0.01" value="${escapeHtml(entry.unitPrice ?? '')}">
+                <input id="entryUnitPrice" data-entry-field="unitPrice" type="number" step="0.01" value="${escapeHtml(entry.unitPrice ?? '')}">
             </div>
             <div class="editor-field">
                 <label for="entryMinimum">Minimum</label>
-                <input id="entryMinimum" name="minimum" type="number" step="1" value="${escapeHtml(entry.minimum ?? 0)}">
+                <input id="entryMinimum" data-entry-field="minimum" type="number" step="1" value="${escapeHtml(entry.minimum ?? 0)}">
             </div>
             <div class="editor-field">
                 <label for="entryMaximum">Maximum</label>
-                <input id="entryMaximum" name="maximum" type="number" step="1" value="${escapeHtml(entry.maximum ?? entry.totalQuantity ?? '')}">
+                <input id="entryMaximum" data-entry-field="maximum" type="number" step="1" value="${escapeHtml(entry.maximum ?? entry.totalQuantity ?? '')}">
             </div>
             <div class="editor-field">
                 <label for="entryDefaultValue">Default</label>
-                <input id="entryDefaultValue" name="defaultValue" type="number" step="1" value="${escapeHtml(entry.defaultValue ?? entry.minimum ?? 0)}">
+                <input id="entryDefaultValue" data-entry-field="defaultValue" type="number" step="1" value="${escapeHtml(entry.defaultValue ?? entry.minimum ?? 0)}">
             </div>
             ${renderTextList('aliases', entry.aliases || [], 'Aliases')}
             ${advanced}
@@ -338,7 +305,7 @@ function renderEntryForm() {
         elements.entryForm.innerHTML = `
             <div class="editor-field">
                 <label for="entryTitle">Title</label>
-                <input id="entryTitle" name="title" value="${escapeHtml(entry.title || '')}">
+                <input id="entryTitle" data-entry-field="title" value="${escapeHtml(entry.title || '')}">
             </div>
             ${renderFeatureBlocks(entry.features || [])}
             <div class="editor-options">
@@ -354,36 +321,36 @@ function renderEntryForm() {
     elements.entryForm.innerHTML = `
         <div class="editor-field">
             <label for="entryLabel">Title</label>
-            <input id="entryLabel" name="label" value="${escapeHtml(entry.label || '')}">
+            <input id="entryLabel" data-entry-field="label" value="${escapeHtml(entry.label || '')}">
         </div>
         <div class="editor-field">
             <label for="entryTitle">Sub</label>
-            <input id="entryTitle" name="title" value="${escapeHtml(entry.title || '')}">
+            <input id="entryTitle" data-entry-field="title" value="${escapeHtml(entry.title || '')}">
         </div>
         ${entry.type === 'dropdown' ? `
             <div class="editor-field">
                 <label for="entryExpanded">Expanded</label>
-                <select id="entryExpanded" name="expanded">
+                <select id="entryExpanded" data-entry-field="expanded">
                     <option value="true"${entry.expanded ? ' selected' : ''}>true</option>
                     <option value="false"${!entry.expanded ? ' selected' : ''}>false</option>
                 </select>
             </div>
             <div class="editor-field">
                 <label for="entryOfferId">Offer ID</label>
-                <input id="entryOfferId" name="offerId" value="${escapeHtml(offer.id || '')}">
+                <input id="entryOfferId" data-entry-field="offerId" value="${escapeHtml(offer.id || '')}">
             </div>
             <div class="editor-field">
                 <label for="entryOfferLabel">Offer</label>
-                <input id="entryOfferLabel" name="offerLabel" value="${escapeHtml(offer.label || '')}">
+                <input id="entryOfferLabel" data-entry-field="offerLabel" value="${escapeHtml(offer.label || '')}">
             </div>
             <div class="editor-field">
                 <label for="entryOfferPrice">Price</label>
-                <input id="entryOfferPrice" name="offerPrice" type="number" step="0.01" value="${escapeHtml(offer.price ?? '')}">
+                <input id="entryOfferPrice" data-entry-field="offerPrice" type="number" step="0.01" value="${escapeHtml(offer.price ?? '')}">
             </div>
             <button class="editor-button editor-button--danger" type="button" data-action="clear-offer">CLEAR OFFER</button>
             <div class="editor-field">
                 <label for="entryDiscountEnabled">Discount</label>
-                <select id="entryDiscountEnabled" name="discountEnabled">
+                <select id="entryDiscountEnabled" data-entry-field="discountEnabled">
                     <option value="inherit"${!entry.fullSelectionDiscount ? ' selected' : ''}>inherit default</option>
                     <option value="true"${entry.fullSelectionDiscount?.enabled === true ? ' selected' : ''}>enabled</option>
                     <option value="false"${entry.fullSelectionDiscount?.enabled === false ? ' selected' : ''}>disabled</option>
@@ -391,11 +358,11 @@ function renderEntryForm() {
             </div>
             <div class="editor-field">
                 <label for="entryDiscountLabel">Label</label>
-                <input id="entryDiscountLabel" name="discountLabel" value="${escapeHtml(entry.fullSelectionDiscount?.label || '')}">
+                <input id="entryDiscountLabel" data-entry-field="discountLabel" value="${escapeHtml(entry.fullSelectionDiscount?.label || '')}">
             </div>
             <div class="editor-field">
                 <label for="entryDiscountRate">Rate</label>
-                <input id="entryDiscountRate" name="discountRate" type="number" step="0.01" min="0" max="1" value="${escapeHtml(entry.fullSelectionDiscount?.rate ?? '')}">
+                <input id="entryDiscountRate" data-entry-field="discountRate" type="number" step="0.01" min="0" max="1" value="${escapeHtml(entry.fullSelectionDiscount?.rate ?? '')}">
             </div>
         ` : ''}
         <div class="editor-options">
@@ -832,8 +799,10 @@ function getDraggedFeatureName(entry) {
 }
 
 function clearFeatureDragUi() {
-    elements.entryForm
-        .querySelectorAll('.is-drop-target, .is-delete-target, .is-included-highlight, .is-drag-match, .is-dragging-feature')
+    [
+        elements.entryForm,
+        ...elements.entryForm.querySelectorAll('.is-drop-target, .is-delete-target, .is-included-highlight, .is-drag-match, .is-dragging-feature')
+    ]
         .forEach(element => element.classList.remove(
             'is-drop-target',
             'is-delete-target',
@@ -977,10 +946,11 @@ function handleCategoryFormInput(event) {
     const category = getSelectedCategory();
     if (!category) return;
 
-    const field = event.target.name;
+    const field = event.target.dataset.categoryField;
+    if (!field) return;
+
     if (field === 'id') {
         category.data.id = event.target.value;
-        category.ref.id = event.target.value;
         state.selectedCategoryId = event.target.value;
         renderCategoryList();
     } else if (field === 'expanded') {
@@ -1009,21 +979,17 @@ function handleEntryFormInput(event) {
     if (optionIndex !== undefined && optionField) {
         const option = entry.options?.[Number(optionIndex)];
         if (!option) return;
-        if (optionField === 'price') {
-            option[optionField] = parseNumber(event.target.value);
-        } else if (optionField === 'features') {
-            option[optionField] = event.target.value
-                .split('\n')
-                .map(item => item.trim())
-                .filter(Boolean);
-        } else {
-            option[optionField] = event.target.value;
-        }
+        option[optionField] = optionField === 'price'
+            ? parseNumber(event.target.value)
+            : event.target.value;
         renderPreview();
         return;
     }
 
-    switch (event.target.name) {
+    const field = event.target.dataset.entryField;
+    if (!field) return;
+
+    switch (field) {
         case 'id':
             entry.id = event.target.value;
             state.selectedEntryId = event.target.value;
@@ -1035,7 +1001,7 @@ function handleEntryFormInput(event) {
         case 'minimum':
         case 'maximum':
         case 'defaultValue':
-            entry[event.target.name] = parseNumber(event.target.value);
+            entry[field] = parseNumber(event.target.value);
             break;
         case 'maxQuantity':
             entry.maxQuantity = Math.trunc(parseNumber(event.target.value));
@@ -1074,7 +1040,7 @@ function handleEntryFormInput(event) {
             entry.offer.label = event.target.value;
             break;
         default:
-            entry[event.target.name] = event.target.value;
+            entry[field] = event.target.value;
     }
 
     renderPreview();
@@ -1320,7 +1286,9 @@ elements.entryList.addEventListener('dragover', handleEntryDragOver);
 elements.entryList.addEventListener('drop', handleEntryDrop);
 
 elements.categoryForm.addEventListener('input', handleCategoryFormInput);
+elements.categoryForm.addEventListener('change', handleCategoryFormInput);
 elements.entryForm.addEventListener('input', handleEntryFormInput);
+elements.entryForm.addEventListener('change', handleEntryFormInput);
 elements.entryForm.addEventListener('dragstart', handleFeatureDragStart);
 document.addEventListener('dragover', handleFeatureDragOver);
 document.addEventListener('dragend', handleFeatureDragEnd, true);
@@ -1350,54 +1318,44 @@ elements.entryForm.addEventListener('click', event => {
     const button = event.target.closest('button[data-action]');
     if (!button) return;
 
-    if (button.dataset.action === 'add-option') {
-        addOption();
-        return;
-    }
-
-    if (button.dataset.action === 'remove-option') {
-        removeOption(Number(button.dataset.optionIndex));
-        return;
-    }
-
-    if (button.dataset.action === 'add-list-item') {
-        addListItem(button.dataset.listField);
-        return;
-    }
-
-    if (button.dataset.action === 'add-feature') {
-        addFeature();
-        return;
-    }
-
-    if (button.dataset.action === 'clear-offer') {
-        clearOffer();
-        return;
-    }
-
-    if (button.dataset.action === 'remove-list-item') {
-        removeListItem(button.dataset.listField, Number(button.dataset.listIndex));
-    }
+    const actions = {
+        'add-option': addOption,
+        'remove-option': () => removeOption(Number(button.dataset.optionIndex)),
+        'add-list-item': () => addListItem(button.dataset.listField),
+        'remove-list-item': () => removeListItem(button.dataset.listField, Number(button.dataset.listIndex)),
+        'add-feature': addFeature,
+        'clear-offer': clearOffer
+    };
+    actions[button.dataset.action]?.();
 });
 
-elements.reloadButton.addEventListener('click', initialize);
-elements.downloadCategoryButton.addEventListener('click', downloadSelectedCategory);
-elements.copyManifestButton.addEventListener('click', () => copyText(buildManifestPreview(), 'Manifest copied'));
-elements.copyCategoryButton.addEventListener('click', copySelectedCategory);
-elements.copyPreviewButton.addEventListener('click', () => copyText(elements.preview.textContent, 'Preview copied'));
-elements.showManifestButton.addEventListener('click', () => {
-    state.previewMode = 'manifest';
-    renderPreview();
+document.addEventListener('click', event => {
+    const addEntryButton = event.target.closest('button[data-add-entry]');
+    if (addEntryButton) {
+        addEntry(addEntryButton.dataset.addEntry);
+        return;
+    }
+
+    const commandButton = event.target.closest('button[data-editor-command]');
+    if (!commandButton) return;
+
+    const commands = {
+        reload: initialize,
+        'download-category': downloadSelectedCategory,
+        'copy-manifest': () => copyText(buildManifestPreview(), 'Manifest copied'),
+        'copy-category': copySelectedCategory,
+        'copy-preview': () => copyText(elements.preview.textContent, 'Preview copied'),
+        'delete-entry': deleteSelectedEntry,
+        'show-manifest': () => {
+            state.previewMode = 'manifest';
+            renderPreview();
+        },
+        'show-category': () => {
+            state.previewMode = 'category';
+            renderPreview();
+        }
+    };
+    commands[commandButton.dataset.editorCommand]?.();
 });
-elements.showCategoryButton.addEventListener('click', () => {
-    state.previewMode = 'category';
-    renderPreview();
-});
-elements.addItemButton.addEventListener('click', () => addEntry('item'));
-elements.addDropdownButton.addEventListener('click', () => addEntry('dropdown'));
-elements.addChoicesButton.addEventListener('click', () => addEntry('choices'));
-elements.addPackageMatrixButton.addEventListener('click', () => addEntry('package-matrix'));
-elements.addFormulaButton.addEventListener('click', () => addEntry('formula'));
-elements.deleteEntryButton.addEventListener('click', deleteSelectedEntry);
 
 initialize();

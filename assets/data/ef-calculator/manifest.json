@@ -9,29 +9,11 @@
     }
   },
   "categories": [
-    {
-      "id": "updates",
-      "file": "categories/updates.json"
-    },
-    {
-      "id": "routine",
-      "file": "categories/routine.json"
-    },
-    {
-      "id": "main-story",
-      "file": "categories/main-story.json"
-    },
-    {
-      "id": "side-quests",
-      "file": "categories/side-quests.json"
-    },
-    {
-      "id": "permanent-events",
-      "file": "categories/permanent-events.json"
-    },
-    {
-      "id": "world-exploration",
-      "file": "categories/world-exploration.json"
-    }
+    "categories/updates.json",
+    "categories/routine.json",
+    "categories/main-story.json",
+    "categories/side-quests.json",
+    "categories/permanent-events.json",
+    "categories/world-exploration.json"
   ]
 }

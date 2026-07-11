@@ -19,7 +19,7 @@
       "type": "dropdown",
       "id": "exploration-basic-valley",
       "title": "基础探索 包括宝箱,谜质,采录桩,[大情报],机器人",
-      "expanded": true,
+      "expanded": false,
       "options": [
         {
           "id": "gttdts1",
@@ -62,7 +62,7 @@
       "type": "dropdown",
       "id": "exploration-basic-wuling",
       "title": "基础探索 包括宝箱,谜质,采录桩,[大情报],机器人",
-      "expanded": true,
+      "expanded": false,
       "options": [
         {
           "id": "wlc1",
@@ -110,7 +110,7 @@
       "type": "dropdown",
       "id": "exploration-ultimate-valley",
       "title": "包括宝箱,谜质,采录桩,大情报,[小情报],机器人,[采集点]",
-      "expanded": true,
+      "expanded": false,
       "options": [
         {
           "id": "gdtt2",
@@ -153,7 +153,7 @@
       "type": "dropdown",
       "id": "exploration-ultimate-wuling",
       "title": " 包括宝箱,谜质,采录桩,大情报,[小情报],机器人,[采集点]",
-      "expanded": true,
+      "expanded": false,
       "options": [
         {
           "id": "wlc2",
@@ -197,5 +197,6 @@
       },
       "label": "武陵终极探索"
     }
-  ]
+  ],
+  "expanded": false
 }

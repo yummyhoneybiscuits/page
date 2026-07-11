@@ -1,19 +1,21 @@
 import { getCalculatorElements } from './dom.js';
-import { HTML2CANVAS_URL } from './constants.js';
-import { loadRawCatalog } from './load-catalog.js';
+import { loadRawCatalog } from '../catalog-loader.js';
 import { normalizeCatalog } from './normalize-catalog.js';
-import { parsePricingCode } from './cart-code.js';
 import {
     clampFormulaInput,
     findDropdown,
     getFormulaInput,
     getUnitPrice,
-    isDropdownFullySelected
-} from './pricing.js';
-import { renderCart } from './render-cart.js';
+    HTML2CANVAS_URL,
+    isDropdownFullySelected,
+    parsePricingCode,
+    renderCart,
+    state,
+    flash,
+    formatPrice,
+    setStatus
+} from './core.js';
 import { renderCatalog } from './render-catalog.js';
-import { state } from './state.js';
-import { flash, formatPrice, setStatus } from './utils.js';
 
 const elements = getCalculatorElements();
 let html2canvasPromise;
@@ -113,7 +115,7 @@ function toggleDropdown(button) {
     button.setAttribute('aria-expanded', String(isOpen));
     const icon = button.querySelector('.dropdown-toggle-icon');
     if (icon) {
-        icon.style.rotate = `${isOpen ? 0 : -90}deg`;
+        icon.style.rotate = `${isOpen ? 90 : 0}deg`;
     }
 }
 

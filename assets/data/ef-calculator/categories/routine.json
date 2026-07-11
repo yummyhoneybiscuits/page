@@ -24,8 +24,8 @@
         {
           "id": "routine-standard",
           "label": "基础体托",
-          "price": 78,
-          "priceText": "78￥/月",
+          "price": 60,
+          "priceText": "60￥/月",
           "features": [
             "日活",
             "周常",
@@ -37,8 +37,8 @@
         {
           "id": "routine-advanced",
           "label": "进阶精托",
-          "price": 168,
-          "priceText": "168￥/月",
+          "price": 80,
+          "priceText": "80￥/月",
           "features": [
             "日活",
             "周常",
@@ -52,8 +52,8 @@
         {
           "id": "routine-premium",
           "label": "终极全托",
-          "price": 268,
-          "priceText": "268￥/月",
+          "price": 120,
+          "priceText": "120￥/月",
           "features": [
             "日活",
             "周常",

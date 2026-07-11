@@ -1,4 +1,4 @@
-import { CODE_VERSION } from './constants.js';
+import { CODE_VERSION } from './core.js';
 
 function requireString(value, location) {
     if (typeof value !== 'string' || value.trim() === '') {

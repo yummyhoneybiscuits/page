@@ -35,7 +35,7 @@ function normalizeDiscount(rawDiscount) {
     }
 
     const rate = Number(rawDiscount.rate);
-    if (!Number.isFinite(rate) || rate <= 0 || rate >= 1) {
+    if (!Number.isFinite(rate) || rate <= 0 || rate >= 100) {
         throw new TypeError('Dropdown discount rate must be greater than 0 and less than 1.');
     }
 

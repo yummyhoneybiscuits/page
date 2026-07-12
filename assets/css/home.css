@@ -1,0 +1,45 @@
+.home-page {
+    min-height: 100vh;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.home-word {
+    display: block;
+    padding: 14px;
+    font-size: clamp(2rem, 8vw, 3rem);
+    font-weight: 200;
+    line-height: 1;
+    pointer-events: none;
+    text-align: center;
+}
+
+.home-links {
+    width: auto;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.home-links a {
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    color: var(--color-muted);
+    font-size: 0.75rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.home-links a:hover,
+.home-links a:focus-visible {
+    color: var(--color-text);
+    outline: none;
+}

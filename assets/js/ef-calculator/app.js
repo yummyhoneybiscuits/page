@@ -1,12 +1,11 @@
-import { getCalculatorElements } from './dom.js';
 import { loadRawCatalog } from '../catalog-loader.js';
+import { copyText, loadHtml2Canvas } from '../site.js';
 import { normalizeCatalog } from './normalize-catalog.js';
 import {
     clampFormulaInput,
     findDropdown,
     getFormulaInput,
     getUnitPrice,
-    HTML2CANVAS_URL,
     isDropdownFullySelected,
     parsePricingCode,
     renderCart,
@@ -17,8 +16,41 @@ import {
 } from './core.js';
 import { renderCatalog } from './render-catalog.js';
 
+function getCalculatorElements() {
+    const selectors = {
+        catalog: '#catalogContainer',
+        categoryNav: '#categoryNavItems',
+        catalogStatus: '#catalogStatus',
+        search: '#searchInput',
+        regexHelpButton: '#regexHelpButton',
+        regexHelpPanel: '#regexHelpPanel',
+        cart: '#cartContainer',
+        total: '#totalPrice',
+        generatedCode: '#generatedCode',
+        loadCode: '#loadCodeInput',
+        codeStatus: '#codeStatus',
+        clearButton: '#clearCartButton',
+        exportButton: '#exportButton',
+        copyButton: '#copyCodeButton',
+        loadButton: '#loadCodeButton',
+        exportArea: '#exportArea',
+        cartDialog: '#cartDialog',
+        openCartButton: '#openCartButton',
+        closeCartButton: '#closeCartButton'
+    };
+    const elements = Object.fromEntries(
+        Object.entries(selectors).map(([key, selector]) => [key, document.querySelector(selector)])
+    );
+    const missing = Object.entries(elements)
+        .filter(([, element]) => !element)
+        .map(([key]) => key);
+    if (missing.length) {
+        throw new Error(`Calculator DOM initialization failed: ${missing.join(', ')}`);
+    }
+    return elements;
+}
+
 const elements = getCalculatorElements();
-let html2canvasPromise;
 
 function refresh() {
     renderCatalog(elements);
@@ -190,12 +222,7 @@ function handleCartClick(event) {
 
 async function copyPricingCode() {
     if (!elements.generatedCode.value) return;
-    try {
-        await navigator.clipboard.writeText(elements.generatedCode.value);
-    } catch {
-        elements.generatedCode.select();
-        document.execCommand('copy');
-    }
+    await copyText(elements.generatedCode.value);
     flash(elements.generatedCode);
     setStatus(elements.codeStatus, 'CODE COPIED');
 }
@@ -224,21 +251,8 @@ async function exportInvoice() {
     elements.exportButton.disabled = true;
     elements.exportArea.classList.add('is-exporting');
     try {
-        if (typeof window.html2canvas !== 'function') {
-            html2canvasPromise ??= new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                script.src = HTML2CANVAS_URL;
-                script.onload = resolve;
-                script.onerror = reject;
-                document.head.append(script);
-            });
-            await html2canvasPromise;
-        }
-        if (typeof window.html2canvas !== 'function') {
-            throw new TypeError('html2canvas failed to initialize.');
-        }
-
-        const canvas = await window.html2canvas(elements.exportArea, {
+        const html2canvas = await loadHtml2Canvas();
+        const canvas = await html2canvas(elements.exportArea, {
             scale: 2,
             backgroundColor: '#000000',
             useCORS: true
@@ -248,7 +262,6 @@ async function exportInvoice() {
         link.href = canvas.toDataURL('image/png');
         link.click();
     } catch (error) {
-        html2canvasPromise = undefined;
         console.error('Failed to export invoice:', error);
         setStatus(elements.codeStatus, 'EXPORT FAILED', true);
     } finally {
@@ -290,6 +303,23 @@ async function loadCatalog() {
 
 function bindEvents() {
     elements.search.addEventListener('input', () => renderCatalog(elements));
+    elements.categoryNav.addEventListener('click', event => {
+        const button = event.target.closest('button[data-category-nav]');
+        if (!button) return;
+        state.openCategories.add(button.dataset.categoryNav);
+        renderCatalog(elements);
+        requestAnimationFrame(() => {
+            const heading = document.getElementById(`category-${button.dataset.categoryNav}`);
+            const group = heading?.closest('.group');
+            if (group) {
+                const top = window.scrollY + group.getBoundingClientRect().top - 14;
+                window.scrollTo({ top, behavior: 'smooth' });
+            }
+            heading?.focus({ preventScroll: true });
+            group?.classList.remove('is-navigation-flash');
+            requestAnimationFrame(() => group?.classList.add('is-navigation-flash'));
+        });
+    });
     elements.regexHelpButton?.addEventListener('click', () => {
         const isHidden = elements.regexHelpPanel.hasAttribute('hidden');
         if (isHidden) {
@@ -312,6 +342,11 @@ function bindEvents() {
         if (event.key === 'Enter') loadPricingCode();
     });
     elements.exportButton.addEventListener('click', exportInvoice);
+    elements.openCartButton.addEventListener('click', () => elements.cartDialog.showModal());
+    elements.closeCartButton.addEventListener('click', () => elements.cartDialog.close());
+    elements.cartDialog.addEventListener('click', event => {
+        if (event.target === elements.cartDialog) elements.cartDialog.close();
+    });
 }
 
 bindEvents();

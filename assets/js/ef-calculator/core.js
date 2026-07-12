@@ -1,4 +1,5 @@
-export const HTML2CANVAS_URL = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+import { escapeHtml } from '../site.js';
+
 export const CODE_VERSION = 2;
 
 export const state = {
@@ -12,15 +13,6 @@ export const state = {
     openDropdowns: new Set(),
     formulaValues: new Map()
 };
-
-export function escapeHtml(value) {
-    return String(value)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
-}
 
 export function roundPrice(value) {
     return Math.round((value + Number.EPSILON) * 100) / 100;

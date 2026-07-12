@@ -1,12 +1,6 @@
-export const CATALOG_MANIFEST_URL = './assets/data/ef-calculator/manifest.json';
+import { fetchJson } from './site.js';
 
-export async function fetchJson(url) {
-    const response = await fetch(url, { cache: 'no-store' });
-    if (!response.ok) {
-        throw new Error(`JSON request failed: ${response.status} ${url}`);
-    }
-    return response.json();
-}
+export const CATALOG_MANIFEST_URL = './assets/data/ef-calculator/manifest.json';
 
 export async function loadCatalogFiles(manifestUrl = CATALOG_MANIFEST_URL) {
     const url = new URL(manifestUrl, window.location.href);

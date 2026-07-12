@@ -95,11 +95,7 @@ const handleReduceMotionChange = () => {
     }
 };
 
-if (typeof reduceMotion.addEventListener === 'function') {
-    reduceMotion.addEventListener('change', handleReduceMotionChange);
-} else {
-    reduceMotion.addListener(handleReduceMotionChange);
-}
+reduceMotion.addEventListener('change', handleReduceMotionChange);
 
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) {

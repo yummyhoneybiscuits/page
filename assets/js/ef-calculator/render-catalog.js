@@ -1,6 +1,5 @@
 import {
     createMatcher,
-    escapeHtml,
     formatPrice,
     formatFormulaExpression,
     getFormulaInput,
@@ -12,6 +11,7 @@ import {
     setStatus,
     state
 } from './core.js';
+import { escapeHtml } from '../site.js';
 
 const packageMatrixSelectionHistory = new Map();
 
@@ -235,7 +235,7 @@ function renderPackageMatrix(entry, context) {
                 }).join('')}
             </div>
             <div
-                class="package-table-wrap${hasActiveColumn ? ' has-active-column' : ''}${shouldAnimateColumn ? ' is-moving' : ''}"
+                class="package-table-wrap${shouldAnimateColumn ? ' is-moving' : ''}"
                 style="--package-option-count: ${entry.options.length};"
             >
                 <table class="package-table">
@@ -310,8 +310,17 @@ export function renderCatalog(elements) {
     const isSearching = query.length > 0;
     const { matches, isValid } = createMatcher(query);
     elements.search.setAttribute('aria-invalid', String(!isValid));
+    elements.categoryNav.innerHTML = state.categories.map(category => `
+        <button
+            type="button"
+            data-category-nav="${escapeHtml(category.id)}"
+        >
+            <span>${escapeHtml(category.title)}</span>
+            ${category.badge ? `<small>${escapeHtml(category.badge)}</small>` : ''}
+        </button>
+    `).join('');
 
-    const catalogHtml = state.categories.map(category => {
+    const renderCategory = category => {
         const categoryMatches = matches(category.title);
         const entriesHtml = category.entries.map(entry => {
             if (isSearching && !categoryMatches && !entryMatches(entry, matches)) return '';
@@ -337,6 +346,7 @@ export function renderCatalog(elements) {
                     type="button"
                     data-action="toggle-category"
                     aria-expanded="${isOpen}"
+                    id="category-${escapeHtml(category.id)}"
                 >
                     ${badgeHtml}
                     <h3>${escapeHtml(category.title)}</h3>
@@ -345,7 +355,15 @@ export function renderCatalog(elements) {
                 <div class="group-content">${entriesHtml}</div>
             </section>
         `;
-    }).join('');
+    };
+    const catalogHtml = [0, 1].map(column => `
+        <div class="catalog-column">
+            ${state.categories
+                .filter((_, index) => index % 2 === column)
+                .map(renderCategory)
+                .join('')}
+        </div>
+    `).join('');
 
     elements.catalog.innerHTML = catalogHtml;
     setStatus(elements.catalogStatus, catalogHtml ? '' : 'NO MATCHING ITEMS');

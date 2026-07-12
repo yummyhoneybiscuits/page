@@ -1,6 +1,7 @@
 {
   "id": "world-exploration",
   "title": "大世界收集探索",
+  "expanded": true,
   "entries": [
     {
       "type": "formula",
@@ -197,6 +198,5 @@
       },
       "label": "武陵终极探索"
     }
-  ],
-  "expanded": false
+  ]
 }

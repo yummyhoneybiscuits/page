@@ -196,9 +196,7 @@ function normalizePackageMatrix(rawEntry, common, location, entriesById, nextSor
 
 function normalizeFormula(rawEntry, common, location, entriesById, aliases) {
     const minimum = Number.isFinite(rawEntry.minimum) ? rawEntry.minimum : 0;
-    const totalQuantity = Number.isFinite(rawEntry.totalQuantity)
-        ? rawEntry.totalQuantity
-        : rawEntry.basePrice;
+    const totalQuantity = rawEntry.totalQuantity;
     const maximum = Number.isFinite(rawEntry.maximum)
         ? rawEntry.maximum
         : totalQuantity;
@@ -211,10 +209,7 @@ function normalizeFormula(rawEntry, common, location, entriesById, aliases) {
         title: requireString(rawEntry.title, `${location}.title`),
         label: requireString(rawEntry.title, `${location}.title`),
         totalQuantity: requirePrice(totalQuantity, `${location}.totalQuantity`),
-        unitPrice: requirePrice(
-            Number.isFinite(rawEntry.unitPrice) ? rawEntry.unitPrice : rawEntry.deductionPerUnit,
-            `${location}.unitPrice`
-        ),
+        unitPrice: requirePrice(rawEntry.unitPrice, `${location}.unitPrice`),
         minimum,
         maximum,
         defaultValue: Number.isFinite(rawEntry.defaultValue)

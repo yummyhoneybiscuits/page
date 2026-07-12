@@ -1,6 +1,7 @@
 {
   "id": "main-story",
   "title": "主线剧情任务",
+  "expanded": true,
   "entries": [
     {
       "type": "item",

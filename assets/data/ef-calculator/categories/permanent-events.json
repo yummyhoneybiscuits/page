@@ -1,6 +1,7 @@
 {
   "id": "permanent-events",
   "title": "版本常驻活动",
+  "expanded": true,
   "entries": [
     {
       "type": "dropdown",

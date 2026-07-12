@@ -6,16 +6,12 @@
     <meta name="color-scheme" content="dark">
     <link rel="icon" href="./assets/favicon.png" type="image/png">
     <link rel="stylesheet" href="./assets/css/base.css">
-    <link rel="stylesheet" href="./assets/css/ef-calculator.css?v=12">
+    <link rel="stylesheet" href="./assets/css/ef-calculator.css">
     <title>EF Calculator</title>
 </head>
-<body>
-    <header class="app-header">
-        <h1 class="app-title">Endfield 1.3</h1>
-    </header>
-
+<body class="calculator-page">
     <main class="calculator-layout">
-        <section class="panel" aria-labelledby="catalogTitle">
+        <section class="catalog-panel" aria-label="Services">
             <div class="search-box">
                 <label class="visually-hidden" for="searchInput">Search</label>
                 <input
@@ -50,10 +46,26 @@
                 </div>
             </section>
             <div id="catalogStatus" class="status-message" role="status">LOADING...</div>
-            <div id="catalogContainer"></div>
+            <div class="catalog-browser">
+                <nav class="category-nav" aria-label="Categories">
+                    <div id="categoryNavItems" class="category-nav__items"></div>
+                    <div class="category-nav__actions">
+                        <a class="button" href="./index.html">&lt; back</a>
+                        <button id="openCartButton" class="button button--export" type="button">cart &gt;</button>
+                    </div>
+                </nav>
+                <div id="catalogContainer" class="catalog-content"></div>
+            </div>
         </section>
+    </main>
 
-        <aside class="panel">
+    <dialog id="cartDialog" class="cart-dialog">
+        <div class="cart-dialog__shell">
+            <header class="cart-dialog__header">
+                <h2>cart</h2>
+                <button id="closeCartButton" class="button button--icon" type="button" aria-label="Close cart">x</button>
+            </header>
+            <div class="cart-dialog__content">
             <section id="exportArea" class="export-area" aria-labelledby="invoiceTitle">
                 <header class="export-header">
                     <h2 id="invoiceTitle">invoice</h2>
@@ -94,10 +106,11 @@
                 </div>
                 <p id="codeStatus" class="status-message" role="status" aria-live="polite"></p>
             </section>
-        </aside>
-    </main>
+            </div>
+        </div>
+    </dialog>
 
-    <script src="./assets/js/ef-calculator/app.js?v=12" type="module"></script>
+    <script src="./assets/js/ef-calculator/app.js" type="module"></script>
     <script src="./assets/js/watermark.js" type="module"></script>
 </body>
 </html>

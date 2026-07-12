@@ -111,8 +111,7 @@
 }
 
 .editor-form.is-delete-target,
-.editor-option-card.is-delete-target,
-.editor-included-feature-blocks.is-delete-target {
+.editor-option-card.is-delete-target {
     border-color: var(--color-danger);
     box-shadow: 0 0 0 2px var(--color-danger);
 }
@@ -226,11 +225,6 @@
     cursor: grabbing;
 }
 
-.editor-feature-block.is-drop-target {
-    border-color: var(--color-success);
-    background: rgba(16, 185, 129, 0.16);
-}
-
 .editor-feature-block.is-included-highlight {
     border-color: var(--color-success);
     background: rgba(16, 185, 129, 0.24);
@@ -269,11 +263,6 @@
     flex-wrap: wrap;
     gap: 8px;
     border: 1px dashed var(--color-border);
-}
-
-.editor-included-feature-blocks.is-drop-target {
-    border-color: var(--color-success);
-    background: rgba(16, 185, 129, 0.16);
 }
 
 .editor-included-feature-block {

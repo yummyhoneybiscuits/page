@@ -1,22 +1,12 @@
 import { loadRawCatalog } from './catalog-loader.js';
+import { escapeHtml, loadHtml2Canvas } from './site.js';
 
-const HTML2CANVAS_URL = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
 const WATERMARK_TEXT = 'wechat@ shiroi333';
 const catalogElement = document.getElementById('menuCatalog');
 const exportButton = document.getElementById('menuExportButton');
 const exportDialog = document.getElementById('menuExportDialog');
 const exportForm = document.getElementById('menuExportForm');
 const exportAreas = document.getElementById('menuExportAreas');
-let html2canvasPromise;
-
-function escapeHtml(value) {
-    return String(value)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
-}
 
 function formatPrice(value, currency) {
     const rounded = Math.round((Number(value) + Number.EPSILON) * 100) / 100;
@@ -210,19 +200,9 @@ async function exportMenu(selectedIds) {
     document.body.append(sheet);
 
     try {
-        if (typeof window.html2canvas !== 'function') {
-            html2canvasPromise ??= new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                script.src = HTML2CANVAS_URL;
-                script.onload = resolve;
-                script.onerror = reject;
-                document.head.append(script);
-            });
-            await html2canvasPromise;
-        }
-
+        const html2canvas = await loadHtml2Canvas();
         await document.fonts?.ready;
-        const canvas = await window.html2canvas(sheet, {
+        const canvas = await html2canvas(sheet, {
             scale: 2,
             backgroundColor: '#000000',
             useCORS: true
@@ -232,7 +212,6 @@ async function exportMenu(selectedIds) {
         link.href = canvas.toDataURL('image/png');
         link.click();
     } catch (error) {
-        html2canvasPromise = undefined;
         console.error('Failed to export menu:', error);
     } finally {
         sheet.remove();

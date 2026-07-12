@@ -1,6 +1,7 @@
 {
   "id": "side-quests",
   "title": "支线剧情任务",
+  "expanded": true,
   "entries": [
     {
       "type": "dropdown",

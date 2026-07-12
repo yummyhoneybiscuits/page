@@ -1,4 +1,6 @@
-const DATA_URL = './assets/data/changelog.json?v=1';
+import { fetchJson } from './site.js';
+
+const DATA_URL = './assets/data/changelog.json';
 
 const elements = {
     title: document.getElementById('pageTitle'),
@@ -98,9 +100,7 @@ function renderChangelog(data) {
 
 async function loadChangelog() {
     try {
-        const response = await fetch(DATA_URL);
-        if (!response.ok) throw new Error(`Failed to load changelog data: ${response.status}`);
-        renderChangelog(await response.json());
+        renderChangelog(await fetchJson(DATA_URL));
     } catch (error) {
         console.error(error);
         elements.description.textContent = 'Failed to load maintenance notes.';

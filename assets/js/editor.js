@@ -1,4 +1,5 @@
 import { loadCatalogFiles } from './catalog-loader.js';
+import { copyText as copyToClipboard, escapeHtml } from './site.js';
 
 const elements = {
     categoryList: document.getElementById('categoryList'),
@@ -24,15 +25,6 @@ const state = {
 function setStatus(message, isError = false) {
     elements.status.textContent = message;
     elements.status.classList.toggle('is-error', isError);
-}
-
-function escapeHtml(value) {
-    return String(value)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
 }
 
 async function loadCatalog() {
@@ -949,11 +941,7 @@ function handleCategoryFormInput(event) {
     const field = event.target.dataset.categoryField;
     if (!field) return;
 
-    if (field === 'id') {
-        category.data.id = event.target.value;
-        state.selectedCategoryId = event.target.value;
-        renderCategoryList();
-    } else if (field === 'expanded') {
+    if (field === 'expanded') {
         category.data.expanded = event.target.value === 'true';
     } else {
         category.data[field] = event.target.value;
@@ -1047,19 +1035,7 @@ function handleEntryFormInput(event) {
 }
 
 async function copyText(text, successMessage) {
-    try {
-        await navigator.clipboard.writeText(text);
-    } catch {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.setAttribute('readonly', '');
-        textarea.style.position = 'absolute';
-        textarea.style.left = '-9999px';
-        document.body.append(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        textarea.remove();
-    }
+    await copyToClipboard(text);
     setStatus(successMessage);
 }
 

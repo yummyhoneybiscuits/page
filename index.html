@@ -6,36 +6,37 @@
     <meta name="color-scheme" content="dark">
     <link rel="icon" href="./assets/favicon.png" type="image/png">
     <link rel="stylesheet" href="./assets/css/base.css">
-    <link rel="stylesheet" href="./assets/css/ef-menu.css">
+    <link rel="stylesheet" href="./assets/css/home.css">
     <title>moe</title>
 </head>
-<body class="menu-page">
-    <main id="menuCatalog" class="menu-catalog"></main>
-    <footer class="menu-footer">
-        <div>
-            <button id="menuExportButton" class="menu-export" type="button">export</button>
-            <a href="./editor.html">data editor</a>
-            <a href="./changelog.html">changelog</a>
-        </div>
-        <a class="menu-footer__calculator" href="./ef-calculator.html">calculator &gt;</a>
-    </footer>
-
-    <dialog id="menuExportDialog" class="menu-export-dialog">
-        <form id="menuExportForm" method="dialog">
-            <header>
-                <h2>export areas</h2>
-                <button type="button" value="cancel" data-export-command="cancel">x</button>
-            </header>
-            <div id="menuExportAreas" class="menu-export-areas"></div>
-            <footer>
-                <button type="button" data-export-command="all">all</button>
-                <button type="button" data-export-command="none">none</button>
-                <button type="submit" value="export">export</button>
-            </footer>
-        </form>
-    </dialog>
-
-    <script src="./assets/js/ef-menu.js" type="module"></script>
-    <script src="./assets/js/watermark.js" type="module"></script>
+<body class="home-page">
+    <output id="homeWord" class="home-word" aria-live="polite">Ceobe</output>
+    <main class="home-links" aria-label="Tools">
+        <a href="./menu.html">
+            <span>价格表</span>
+        </a>
+        <a href="./ef-calculator.html">
+            <span>计价器</span>
+        </a>
+    </main>
+    <script>
+        const word = document.getElementById('homeWord');
+        const frames = ['Ceobe.moe', 'cEobe.moe', 'ceObe.moe', 'ceoBe.moe', 'ceobE.moe', 'ceobe.Moe', 'ceobe.mOe', 'ceobe.moE', 'ceobe.moe'];
+        let frame = 0;
+        const animationTimer = window.setInterval(() => {
+            frame += 1;
+            if (frame >= 50) {
+                window.clearInterval(animationTimer);
+                window.location.href = './ef-calculator.html';
+                return;
+            }
+            word.textContent = frames[frame % frames.length];
+        }, 100);
+        document.querySelectorAll('.home-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                window.clearInterval(animationTimer);
+            }, { once: true });
+        });
+    </script>
 </body>
 </html>

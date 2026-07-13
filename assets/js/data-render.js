@@ -10,12 +10,13 @@ import {
     roundPrice,
     setStatus,
     state
-} from './core.js';
-import { escapeHtml } from '../site.js';
+} from './ef-calculator-core.js';
+import { escapeHtml } from './site.js';
 
 const packageMatrixSelectionHistory = new Map();
 
 function renderPrice(entry) {
+    if (entry.description) return `<span class="price-current">${escapeHtml(entry.description)}</span>`;
     const effectivePrice = getUnitPrice(entry);
     const hasDiscount = entry.type === 'dropdown-option' && effectivePrice !== entry.price;
 
@@ -60,9 +61,9 @@ function renderToggleButton({ selected, action, entryId = '' }) {
 function renderItem(entry, highlighted) {
     const isSelected = state.cart.has(entry.id);
     return `
-        <div class="catalog-row${highlighted ? ' is-highlighted' : ''}">
-            <span class="catalog-row__title">${escapeHtml(entry.label)}</span>
-            <span class="catalog-row__price">${renderPrice(entry)}</span>
+        <div class="data-row${highlighted ? ' is-highlighted' : ''}">
+            <span class="data-row__title">${escapeHtml(entry.label)}</span>
+            <span class="data-row__price">${renderPrice(entry)}</span>
             ${renderToggleButton({
                 selected: isSelected,
                 action: 'toggle-item',
@@ -159,7 +160,7 @@ function renderChoices(entry, context) {
                         aria-pressed="${state.cart.has(option.id)}"
                     >
                         <span>${escapeHtml(option.label)}</span>
-                        <span>${escapeHtml(option.priceText || formatPrice(option.price))}</span>
+                        <span>${escapeHtml(option.description || formatPrice(option.price))}</span>
                     </button>
                 `).join('')}
             </div>
@@ -180,7 +181,7 @@ function renderPackageHeader(option, selectedOptionId, slideFrom) {
             ${isActive ? `style="--package-slide-from: ${slideFrom};"` : ''}
         >
             <span>${escapeHtml(option.label)}</span>
-            <small>${escapeHtml(option.priceText || formatPrice(option.price))}</small>
+            <small>${escapeHtml(option.description || formatPrice(option.price))}</small>
         </th>
     `;
 }
@@ -229,7 +230,7 @@ function renderPackageMatrix(entry, context) {
                             aria-pressed="${isSelected}"
                         >
                             <span>${escapeHtml(option.label)}</span>
-                            <strong>${escapeHtml(option.priceText || formatPrice(option.price))}</strong>
+                            <strong>${escapeHtml(option.description || formatPrice(option.price))}</strong>
                         </button>
                     `;
                 }).join('')}
@@ -305,7 +306,7 @@ function renderEntry(entry, context) {
     return renderFormula(entry, context.highlighted);
 }
 
-export function renderCatalog(elements) {
+export function renderPricingData(elements) {
     const query = elements.search.value.trim();
     const isSearching = query.length > 0;
     const { matches, isValid } = createMatcher(query);
@@ -356,8 +357,8 @@ export function renderCatalog(elements) {
             </section>
         `;
     };
-    const catalogHtml = [0, 1].map(column => `
-        <div class="catalog-column">
+    const dataHtml = [0, 1].map(column => `
+        <div class="data-column">
             ${state.categories
                 .filter((_, index) => index % 2 === column)
                 .map(renderCategory)
@@ -365,6 +366,6 @@ export function renderCatalog(elements) {
         </div>
     `).join('');
 
-    elements.catalog.innerHTML = catalogHtml;
-    setStatus(elements.catalogStatus, catalogHtml ? '' : 'NO MATCHING ITEMS');
+    elements.data.innerHTML = dataHtml;
+    setStatus(elements.dataStatus, dataHtml ? '' : 'NO MATCHING ITEMS');
 }

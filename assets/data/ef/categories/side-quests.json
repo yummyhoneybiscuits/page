@@ -1,0 +1,302 @@
+{
+  "id": "side-quests",
+  "name": "支线剧情任务",
+  "Expanded": true,
+  "items": [
+    {
+      "kind": "Items",
+      "id": "side-quests-01",
+      "name": "重要任务",
+      "description": "重要任务",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "options": [
+        {
+          "id": "side-quests-01-option-01",
+          "name": "驰援采石场系列（开图任务，还包括修复大兴起重机，深层管理区救援）",
+          "price": 20
+        },
+        {
+          "id": "side-quests-01-option-02",
+          "name": "无色印记系列（2天）",
+          "price": 10
+        },
+        {
+          "id": "side-quests-01-option-03",
+          "name": "帮人帮到底",
+          "price": 3
+        },
+        {
+          "id": "side-quests-01-option-04",
+          "name": "希望与代价",
+          "price": 3
+        },
+        {
+          "id": "side-quests-01-option-05",
+          "name": "再访基地系列（还包括重振士气，流言蜚语，使命虽小，再访问基地终）",
+          "price": 8
+        },
+        {
+          "id": "side-quests-01-option-06",
+          "name": "稼穑不易",
+          "price": 3
+        },
+        {
+          "id": "side-quests-01-option-07",
+          "name": "环带来客（2天）",
+          "price": 10
+        },
+        {
+          "id": "side-quests-01-option-08",
+          "name": "紧急求助",
+          "price": 3
+        },
+        {
+          "id": "side-quests-01-option-09",
+          "name": "晚安大树系列（2天）",
+          "price": 10
+        },
+        {
+          "id": "side-quests-01-option-10",
+          "name": "商路难走系列（还包括生意难做，好人难寻）（2天）",
+          "price": 10
+        },
+        {
+          "id": "side-quests-01-option-11",
+          "name": "机器人之梦",
+          "price": 3
+        },
+        {
+          "id": "side-quests-01-option-12",
+          "name": "内部敌人（2天）",
+          "price": 10
+        },
+        {
+          "id": "side-quests-01-option-13",
+          "name": "科学兴农",
+          "price": 3
+        },
+        {
+          "id": "side-quests-01-option-14",
+          "name": "驮兽与我",
+          "price": 8
+        },
+        {
+          "id": "side-quests-01-option-15",
+          "name": "虫不语系列",
+          "price": 20
+        },
+        {
+          "id": "side-quests-01-option-16",
+          "name": "泉中客系列",
+          "price": 10
+        },
+        {
+          "id": "side-quests-01-option-17",
+          "name": "夺宝奇兵系列",
+          "price": 10
+        },
+        {
+          "id": "side-quests-01-option-18",
+          "name": "重逢故人",
+          "price": 8
+        },
+        {
+          "id": "side-quests-01-option-19",
+          "name": "同袍系列（3天）",
+          "price": 15
+        },
+        {
+          "id": "side-quests-01-option-20",
+          "name": "重要的街角（3天）",
+          "price": 15
+        },
+        {
+          "id": "side-quests-01-option-21",
+          "name": "老人与潮（2天）",
+          "price": 10
+        },
+        {
+          "id": "side-quests-01-option-22",
+          "name": "再引春来系列（开图）",
+          "price": 20
+        },
+        {
+          "id": "side-quests-01-option-23",
+          "name": "藏剑与谷",
+          "price": 20
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "side-quests-02",
+      "name": "次要任务",
+      "description": "次要任务",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "options": [
+        {
+          "id": "side-quests-02-option-01",
+          "name": "风雨欲来系列",
+          "price": 15
+        },
+        {
+          "id": "side-quests-02-option-02",
+          "name": "机械救星系列(还包括三脚架之家)",
+          "price": 15
+        },
+        {
+          "id": "side-quests-02-option-03",
+          "name": "职责所在",
+          "price": 3
+        },
+        {
+          "id": "side-quests-02-option-04",
+          "name": "尘封归档",
+          "price": 3
+        },
+        {
+          "id": "side-quests-02-option-05",
+          "name": "爆破救援（需要爆炸物）",
+          "price": 3
+        },
+        {
+          "id": "side-quests-02-option-06",
+          "name": "照常升起",
+          "price": 3
+        },
+        {
+          "id": "side-quests-02-option-07",
+          "name": "幻觉",
+          "price": 3
+        },
+        {
+          "id": "side-quests-02-option-08",
+          "name": "高空救援",
+          "price": 3
+        },
+        {
+          "id": "side-quests-02-option-09",
+          "name": "维修总动员",
+          "price": 8
+        },
+        {
+          "id": "side-quests-02-option-10",
+          "name": "漏网之虫",
+          "price": 3
+        },
+        {
+          "id": "side-quests-02-option-11",
+          "name": "古董无人机",
+          "price": 3
+        },
+        {
+          "id": "side-quests-02-option-12",
+          "name": "消失的爱人",
+          "price": 3
+        },
+        {
+          "id": "side-quests-02-option-13",
+          "name": "追逐的脚步",
+          "price": 8
+        },
+        {
+          "id": "side-quests-02-option-14",
+          "name": "钟鸣三到（需要 1000 息壤）",
+          "price": 3
+        },
+        {
+          "id": "side-quests-02-option-15",
+          "name": "出师三剑",
+          "price": 3
+        },
+        {
+          "id": "side-quests-02-option-16",
+          "name": "检修无小事",
+          "price": 3
+        },
+        {
+          "id": "side-quests-02-option-17",
+          "name": "水中诡事",
+          "price": 8
+        },
+        {
+          "id": "side-quests-02-option-18",
+          "name": "安桩不易",
+          "price": 3
+        },
+        {
+          "id": "side-quests-02-option-19",
+          "name": "池中宝（需抽水）",
+          "price": 15
+        },
+        {
+          "id": "side-quests-02-option-20",
+          "name": "侵蚀中的呼救",
+          "price": 3
+        },
+        {
+          "id": "side-quests-02-option-21",
+          "name": "粉丝见面会",
+          "price": 5
+        },
+        {
+          "id": "side-quests-02-option-22",
+          "name": "致后来人",
+          "price": 3
+        },
+        {
+          "id": "side-quests-02-option-23",
+          "name": "分忧解难（需抽水）",
+          "price": 15
+        },
+        {
+          "id": "side-quests-02-option-24",
+          "name": "谷崖论剑",
+          "price": 3
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "side-quests-03",
+      "name": "角色故事",
+      "description": "角色故事",
+      "presentation": "collapsible",
+      "Expanded": true,
+      "options": [
+        {
+          "id": "side-quests-03-option-01",
+          "name": "离群之狼",
+          "price": 20
+        },
+        {
+          "id": "side-quests-03-option-02",
+          "name": "爱呐喊和原型机",
+          "price": 20
+        },
+        {
+          "id": "side-quests-03-option-03",
+          "name": "追忆之痕（比较长）",
+          "price": 25
+        },
+        {
+          "id": "side-quests-03-option-04",
+          "name": "信使的信",
+          "price": 20
+        },
+        {
+          "id": "side-quests-03-option-05",
+          "name": "红骑士",
+          "price": 20
+        },
+        {
+          "id": "side-quests-03-option-06",
+          "name": "以拳问心",
+          "price": 20
+        }
+      ]
+    }
+  ]
+}

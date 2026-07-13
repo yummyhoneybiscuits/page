@@ -78,3 +78,50 @@ button {
 .site-watermark.is-visible {
     opacity: 1;
 }
+
+.json-reveal {
+    opacity: 1;
+    transition: opacity 800ms ease-out;
+}
+
+.json-reveal.is-json-loading {
+    opacity: 0;
+}
+
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root) {
+    animation: scale-out 140ms ease-in both;
+}
+
+::view-transition-new(root) {
+    animation: scale-in 180ms ease-out both;
+}
+
+@keyframes scale-out {
+    to {
+        opacity: 0;
+        transform: scale(0.985);
+    }
+}
+
+@keyframes scale-in {
+    from {
+        opacity: 0;
+        transform: scale(0.985);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .json-reveal {
+        opacity: 1;
+        transition: none;
+    }
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none;
+    }
+}

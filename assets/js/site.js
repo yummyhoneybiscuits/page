@@ -18,6 +18,16 @@ export async function fetchJson(url) {
     return response.json();
 }
 
+export function revealJsonContent(element) {
+    if (!element) return;
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            element.classList.remove('is-json-loading');
+            element.removeAttribute('aria-busy');
+        });
+    });
+}
+
 export async function copyText(text) {
     try {
         await navigator.clipboard.writeText(text);

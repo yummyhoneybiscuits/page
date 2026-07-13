@@ -1,5 +1,3 @@
-import { CODE_VERSION } from './core.js';
-
 function requireString(value, location) {
     if (typeof value !== 'string' || value.trim() === '') {
         throw new TypeError(`${location} must be a non-empty string.`);
@@ -22,21 +20,14 @@ function registerEntry(entry, entriesById) {
     return entry;
 }
 
-function registerAlias(alias, entry, entriesById, aliases) {
-    if (entriesById.has(alias) || aliases.has(alias)) {
-        throw new TypeError(`Duplicate alias "${alias}".`);
-    }
-    aliases.set(alias, entry);
-}
-
 function normalizeDiscount(rawDiscount) {
     if (!rawDiscount || rawDiscount.enabled === false) {
         return { enabled: false, label: '', rate: 1 };
     }
 
     const rate = Number(rawDiscount.rate);
-    if (!Number.isFinite(rate) || rate <= 0 || rate >= 100) {
-        throw new TypeError('Dropdown discount rate must be greater than 0 and less than 1.');
+    if (!Number.isFinite(rate) || rate <= 0 || rate > 1) {
+        throw new TypeError('Complete selection discount multiplier must be greater than 0 and at most 1.');
     }
 
     return {
@@ -64,7 +55,6 @@ function normalizeDropdown(
     defaults,
     entriesById,
     dropdownsById,
-    aliases,
     nextSortIndex
 ) {
     if (!Array.isArray(rawEntry.options) || rawEntry.options.length === 0) {
@@ -96,7 +86,6 @@ function normalizeDropdown(
             price: requirePrice(rawEntry.offer.price, `${location}.offer.price`)
         };
         if (!rawEntry.label) dropdown.label = dropdown.offer.label;
-        registerAlias(dropdown.offer.id, dropdown, entriesById, aliases);
     }
 
     dropdown.options = rawEntry.options.map((rawOption, optionIndex) =>
@@ -105,6 +94,7 @@ function normalizeDropdown(
             type: 'dropdown-option',
             label: requireString(rawOption.label, `${location}.options[${optionIndex}].label`),
             price: requirePrice(rawOption.price, `${location}.options[${optionIndex}].price`),
+            description: typeof rawOption.description === 'string' ? rawOption.description.trim() : '',
             maxQuantity: 1,
             categoryId: common.categoryId,
             categoryTitle: common.categoryTitle,
@@ -135,7 +125,7 @@ function normalizeChoices(rawEntry, common, location, entriesById, nextSortIndex
             type: 'choice-option',
             label: requireString(rawOption.label, `${location}.options[${optionIndex}].label`),
             price: requirePrice(rawOption.price, `${location}.options[${optionIndex}].price`),
-            priceText: typeof rawOption.priceText === 'string' ? rawOption.priceText.trim() : '',
+            description: typeof rawOption.description === 'string' ? rawOption.description.trim() : '',
             maxQuantity: 1,
             categoryId: common.categoryId,
             categoryTitle: common.categoryTitle,
@@ -179,7 +169,7 @@ function normalizePackageMatrix(rawEntry, common, location, entriesById, nextSor
             type: 'package-option',
             label: requireString(rawOption.label, `${location}.options[${optionIndex}].label`),
             price: requirePrice(rawOption.price, `${location}.options[${optionIndex}].price`),
-            priceText: typeof rawOption.priceText === 'string' ? rawOption.priceText.trim() : '',
+            description: typeof rawOption.description === 'string' ? rawOption.description.trim() : '',
             features: optionFeatures,
             maxQuantity: 1,
             categoryId: common.categoryId,
@@ -194,7 +184,7 @@ function normalizePackageMatrix(rawEntry, common, location, entriesById, nextSor
     return matrix;
 }
 
-function normalizeFormula(rawEntry, common, location, entriesById, aliases) {
+function normalizeFormula(rawEntry, common, location, entriesById) {
     const minimum = Number.isFinite(rawEntry.minimum) ? rawEntry.minimum : 0;
     const totalQuantity = rawEntry.totalQuantity;
     const maximum = Number.isFinite(rawEntry.maximum)
@@ -218,32 +208,20 @@ function normalizeFormula(rawEntry, common, location, entriesById, aliases) {
         maxQuantity: 1
     }, entriesById);
 
-    if (Array.isArray(rawEntry.aliases)) {
-        rawEntry.aliases.forEach((alias, aliasIndex) => {
-            registerAlias(
-                requireString(alias, `${location}.aliases[${aliasIndex}]`),
-                formula,
-                entriesById,
-                aliases
-            );
-        });
-    }
-
     return formula;
 }
 
-export function normalizeCatalog(rawCatalog) {
-    if (!rawCatalog || rawCatalog.version !== CODE_VERSION || !Array.isArray(rawCatalog.categories)) {
-        throw new TypeError(`Config version must be ${CODE_VERSION}.`);
+export function normalizePricingData(rawData) {
+    if (!rawData || !Array.isArray(rawData.categories)) {
+        throw new TypeError('Pricing data categories must be an array.');
     }
 
     const entriesById = new Map();
     const dropdownsById = new Map();
-    const aliases = new Map();
     let sortIndex = 0;
     const nextSortIndex = () => sortIndex++;
 
-    const categories = rawCatalog.categories.map((rawCategory, categoryIndex) => {
+    const categories = rawData.categories.map((rawCategory, categoryIndex) => {
         const category = {
             id: requireString(rawCategory.id, `categories[${categoryIndex}].id`),
             title: requireString(rawCategory.title, `categories[${categoryIndex}].title`),
@@ -274,10 +252,9 @@ export function normalizeCatalog(rawCatalog) {
                     rawEntry,
                     common,
                     location,
-                    rawCatalog.defaults,
+                    rawData.defaults,
                     entriesById,
                     dropdownsById,
-                    aliases,
                     nextSortIndex
                 );
             }
@@ -288,7 +265,7 @@ export function normalizeCatalog(rawCatalog) {
                 return normalizePackageMatrix(rawEntry, common, location, entriesById, nextSortIndex);
             }
             if (common.type === 'formula') {
-                return normalizeFormula(rawEntry, common, location, entriesById, aliases);
+                return normalizeFormula(rawEntry, common, location, entriesById);
             }
 
             throw new TypeError(`Unknown entry type "${common.type}" at ${location}.`);
@@ -297,20 +274,12 @@ export function normalizeCatalog(rawCatalog) {
         return category;
     });
 
-    aliases.forEach((entry, alias) => {
-        if (entriesById.has(alias)) {
-            throw new TypeError(`Alias "${alias}" conflicts with a selectable id.`);
-        }
-    });
-
     return {
         config: {
-            version: CODE_VERSION,
-            currency: typeof rawCatalog.currency === 'string' ? rawCatalog.currency : '¥'
+            currency: typeof rawData.currency === 'string' ? rawData.currency : '¥'
         },
         categories,
         entriesById,
-        dropdownsById,
-        aliases
+        dropdownsById
     };
 }

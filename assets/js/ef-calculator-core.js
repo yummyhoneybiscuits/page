@@ -1,13 +1,12 @@
-import { escapeHtml } from '../site.js';
+import { escapeHtml } from './site.js';
 
-export const CODE_VERSION = 2;
+export const CODE_VERSION = 3;
 
 export const state = {
     config: null,
     categories: [],
     entriesById: new Map(),
     dropdownsById: new Map(),
-    aliases: new Map(),
     cart: new Map(),
     openCategories: new Set(),
     openDropdowns: new Set(),
@@ -230,8 +229,7 @@ function buildCart(records) {
         if (!id || !Number.isInteger(quantity) || quantity <= 0) return;
 
         const entry = state.entriesById.get(id)
-            || state.dropdownsById.get(id)
-            || state.aliases.get(id);
+            || state.dropdownsById.get(id);
         if (!entry) return;
 
         addResolvedEntry(cart, formulaValues, entry, quantity, Number(record.inputValue));
@@ -245,46 +243,29 @@ function buildCart(records) {
     return cart;
 }
 
-function parseCompactRecords(decoded) {
-    return decoded.split(',').map(token => {
-        const [id, quantity = '1', inputValue] = token.split('.');
-        return { id, quantity, inputValue };
-    });
-}
-
-function parseLegacyPairRecords(decoded) {
-    return decoded.split(',').map(pair => {
-        const [id, quantity] = pair.split(':');
-        return { id, quantity };
-    });
-}
-
-function parseLegacyArrayRecords(entries) {
-    return entries
-        .filter(entry => Array.isArray(entry) && entry.length >= 2)
-        .map(([id, quantity]) => ({ id, quantity }));
-}
-
 export function encodePricingCode() {
     const foldedOptionIds = new Set();
-    const tokens = [];
+    const items = [];
 
     state.dropdownsById.forEach(dropdown => {
         if (!isDropdownFullySelected(dropdown)) return;
-        tokens.push(dropdown.id);
+        items.push({ id: dropdown.id, quantity: 1 });
         dropdown.options.forEach(option => foldedOptionIds.add(option.id));
     });
 
     state.cart.forEach((line, id) => {
         if (foldedOptionIds.has(id)) return;
-        if (Number.isFinite(line.inputValue)) {
-            tokens.push(`${id}.${line.quantity}.${line.inputValue}`);
-            return;
-        }
-        tokens.push(line.quantity === 1 ? id : `${id}.${line.quantity}`);
+        items.push({
+            id,
+            quantity: line.quantity,
+            ...(Number.isFinite(line.inputValue) ? { inputValue: line.inputValue } : {})
+        });
     });
 
-    return window.btoa(unescape(encodeURIComponent(tokens.join(','))));
+    return window.btoa(unescape(encodeURIComponent(JSON.stringify({
+        version: CODE_VERSION,
+        items
+    }))));
 }
 
 export function parsePricingCode(code) {
@@ -293,23 +274,11 @@ export function parsePricingCode(code) {
         throw new TypeError('Pricing code is empty.');
     }
 
-    if (decoded.startsWith('[')) {
-        return buildCart(parseLegacyArrayRecords(JSON.parse(decoded)));
+    const payload = JSON.parse(decoded);
+    if (payload.version !== CODE_VERSION || !Array.isArray(payload.items)) {
+        throw new TypeError('Unsupported pricing code version.');
     }
-
-    if (decoded.startsWith('{')) {
-        const payload = JSON.parse(decoded);
-        if (!Array.isArray(payload.items)) {
-            throw new TypeError('Unsupported pricing code version.');
-        }
-        return buildCart(payload.items);
-    }
-
-    return buildCart(
-        decoded.includes(':')
-            ? parseLegacyPairRecords(decoded)
-            : parseCompactRecords(decoded)
-    );
+    return buildCart(payload.items);
 }
 
 function renderSaleRow(item) {

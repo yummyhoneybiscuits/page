@@ -7,13 +7,13 @@
     <link rel="icon" href="./assets/favicon.png" type="image/png">
     <link rel="stylesheet" href="./assets/css/base.css">
     <link rel="stylesheet" href="./assets/css/editor.css">
-    <title>Catalog Editor</title>
+    <title>Editor 260713</title>
 </head>
 <body class="editor-page">
     <header class="editor-header">
         <div>
             <a class="editor-back" href="./index.html">&lt; BACK</a>
-            <h1>Catalog Editor</h1>
+            <h1>Editor</h1>
         </div>
         <div class="editor-actions">
             <button class="editor-button" type="button" data-editor-command="reload">RELOAD</button>
@@ -23,19 +23,18 @@
         </div>
     </header>
 
-    <main class="editor-layout">
+    <main class="editor-layout json-reveal">
         <aside class="editor-sidebar">
             <section class="editor-panel">
                 <h2>Categories</h2>
                 <div id="categoryList" class="editor-list" aria-live="polite"></div>
             </section>
             <section class="editor-panel">
-                <h2>Entries</h2>
+                <h2>Items</h2>
                 <div class="editor-entry-actions">
                     <button class="editor-button" type="button" data-add-entry="item">+ ITEM</button>
-                    <button class="editor-button" type="button" data-add-entry="dropdown">+ DROPDOWN</button>
-                    <button class="editor-button" type="button" data-add-entry="choices">+ CHOICES</button>
-                    <button class="editor-button" type="button" data-add-entry="package-matrix">+ PACKAGE MATRIX</button>
+                    <button class="editor-button" type="button" data-add-entry="dropdown">+ ITEMS</button>
+                    <button class="editor-button" type="button" data-add-entry="package-matrix">+ LIST</button>
                     <button class="editor-button" type="button" data-add-entry="formula">+ FORMULA</button>
                 </div>
                 <div id="entryList" class="editor-list" aria-live="polite"></div>
@@ -48,14 +47,11 @@
                 <form id="categoryForm" class="editor-form"></form>
             </section>
             <section class="editor-panel">
-                <h2>Entry</h2>
-                <div class="editor-entry-actions">
-                    <button class="editor-button editor-button--danger" type="button" data-editor-command="delete-entry">DELETE ENTRY</button>
-                </div>
+                <h2>Item</h2>
                 <form id="entryForm" class="editor-form"></form>
             </section>
             <section class="editor-panel">
-                <h2>Preview JSON</h2>
+                <h2>Data Preview</h2>
                 <div class="editor-preview-actions">
                     <button class="editor-button" type="button" data-editor-command="show-manifest">SHOW MANIFEST</button>
                     <button class="editor-button" type="button" data-editor-command="show-category">SHOW CATEGORY</button>

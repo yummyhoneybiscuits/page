@@ -1,0 +1,33 @@
+{
+  "currencycode": "CNY",
+  "currencysymbol": "¥",
+  "offsymbol": true,
+  "offlabel": "SALE",
+  "offrate": 1,
+  "categoryFiles": [
+    {
+      "id": "updates",
+      "path": "categories/updates.json"
+    },
+    {
+      "id": "routine",
+      "path": "categories/routine.json"
+    },
+    {
+      "id": "main-story",
+      "path": "categories/main-story.json"
+    },
+    {
+      "id": "side-quests",
+      "path": "categories/side-quests.json"
+    },
+    {
+      "id": "permanent-events",
+      "path": "categories/permanent-events.json"
+    },
+    {
+      "id": "world-exploration",
+      "path": "categories/world-exploration.json"
+    }
+  ]
+}

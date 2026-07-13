@@ -1,0 +1,376 @@
+{
+  "id": "main-story",
+  "name": "主线剧情任务",
+  "Expanded": true,
+  "items": [
+    {
+      "kind": "Item",
+      "id": "main-story-01",
+      "name": "主线全包",
+      "price": 468,
+      "maxQuantity": 1
+    },
+    {
+      "kind": "Item",
+      "id": "main-story-02",
+      "name": "序章",
+      "price": 15,
+      "maxQuantity": 1
+    },
+    {
+      "kind": "Items",
+      "id": "main-story-03",
+      "name": "第一章进程一",
+      "description": "[1.0]到罗丹boss",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "options": [
+        {
+          "id": "main-story-03-option-01",
+          "name": "基地解围",
+          "price": 5
+        },
+        {
+          "id": "main-story-03-option-02",
+          "name": "谷地重启",
+          "price": 5
+        },
+        {
+          "id": "main-story-03-option-03",
+          "name": "重整旗鼓",
+          "price": 10
+        },
+        {
+          "id": "main-story-03-option-04",
+          "name": "西行入谷",
+          "price": 5
+        },
+        {
+          "id": "main-story-03-option-05",
+          "name": "庇护之所",
+          "price": 5
+        },
+        {
+          "id": "main-story-03-option-06",
+          "name": "建立据点",
+          "price": 5
+        },
+        {
+          "id": "main-story-03-option-07",
+          "name": "踏破雾火",
+          "price": 5
+        },
+        {
+          "id": "main-story-03-option-08",
+          "name": "要塞决战",
+          "price": 10
+        },
+        {
+          "id": "main-story-03-option-09",
+          "name": "开拓前路",
+          "price": 5
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "main-story-04",
+      "name": "第一章进程二",
+      "description": "[1.0]帝江基建",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "options": [
+        {
+          "id": "main-story-04-option-01",
+          "name": "修缮进展",
+          "price": 10
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "main-story-05",
+      "name": "第一章进程三",
+      "description": "[1.0]三位一体boss",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "options": [
+        {
+          "id": "main-story-05-option-01",
+          "name": "再度启程",
+          "price": 5
+        },
+        {
+          "id": "main-story-05-option-02",
+          "name": "穿越研究园",
+          "price": 5
+        },
+        {
+          "id": "main-story-05-option-03",
+          "name": "推开园门",
+          "price": 5
+        },
+        {
+          "id": "main-story-05-option-04",
+          "name": "园区穿行",
+          "price": 5
+        },
+        {
+          "id": "main-story-05-option-05",
+          "name": "诡楼寻踪",
+          "price": 15
+        },
+        {
+          "id": "main-story-05-option-06",
+          "name": "山道下行",
+          "price": 5
+        },
+        {
+          "id": "main-story-05-option-07",
+          "name": "矿脉断章",
+          "price": 15
+        },
+        {
+          "id": "main-story-05-option-08",
+          "name": "踏足矿脉",
+          "price": 10
+        },
+        {
+          "id": "main-story-05-option-09",
+          "name": "世代摇篮",
+          "price": 15
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "main-story-06",
+      "name": "第一章进程四",
+      "description": "[1.0]白垩boss",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "options": [
+        {
+          "id": "main-story-06-option-01",
+          "name": "初入终局",
+          "price": 5
+        },
+        {
+          "id": "main-story-06-option-02",
+          "name": "酝酿反击",
+          "price": 5
+        },
+        {
+          "id": "main-story-06-option-03",
+          "name": "烙铁灼痕",
+          "price": 10
+        },
+        {
+          "id": "main-story-06-option-04",
+          "name": "前线奔袭",
+          "price": 10
+        },
+        {
+          "id": "main-story-06-option-05",
+          "name": "未熄火种",
+          "price": 20
+        },
+        {
+          "id": "main-story-06-option-06",
+          "name": "余波暂平",
+          "price": 5
+        },
+        {
+          "id": "main-story-06-option-07",
+          "name": "神秘信号",
+          "price": 10
+        },
+        {
+          "id": "main-story-06-option-08",
+          "name": "四方会议",
+          "price": 10
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "main-story-07",
+      "name": "第二章进程一",
+      "description": "[1.0]初入武陵",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "options": [
+        {
+          "id": "main-story-07-option-01",
+          "name": "初探武陵",
+          "price": 15
+        },
+        {
+          "id": "main-story-07-option-02",
+          "name": "初入清波寨",
+          "price": 10
+        },
+        {
+          "id": "main-story-07-option-03",
+          "name": "前往武陵城",
+          "price": 10
+        },
+        {
+          "id": "main-story-07-option-04",
+          "name": "惊鸿一瞥",
+          "price": 15
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "main-story-08",
+      "name": "第二章进程二",
+      "description": "[1.0]清波寨基地解锁",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "options": [
+        {
+          "id": "main-story-08-option-01",
+          "name": "东风就绪",
+          "price": 10
+        },
+        {
+          "id": "main-story-08-option-02",
+          "name": "穆如清风",
+          "price": 20
+        },
+        {
+          "id": "main-story-08-option-03",
+          "name": "潮涌汹汹",
+          "price": 20
+        },
+        {
+          "id": "main-story-08-option-04",
+          "name": "无患之患",
+          "price": 5
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "main-story-09",
+      "name": "第二章进程三",
+      "description": "[1.1]清波寨 + 阮一boss",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "options": [
+        {
+          "id": "main-story-09-option-01",
+          "name": "意外来袭",
+          "price": 5
+        },
+        {
+          "id": "main-story-09-option-02",
+          "name": "深入迷途",
+          "price": 5
+        },
+        {
+          "id": "main-story-09-option-03",
+          "name": "分道扬镳",
+          "price": 15
+        },
+        {
+          "id": "main-story-09-option-04",
+          "name": "风平水不平",
+          "price": 5
+        },
+        {
+          "id": "main-story-09-option-05",
+          "name": "又是一波起",
+          "price": 5
+        },
+        {
+          "id": "main-story-09-option-06",
+          "name": "逐波向水中",
+          "price": 5
+        },
+        {
+          "id": "main-story-09-option-07",
+          "name": "水清顽石现",
+          "price": 10
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "main-story-10",
+      "name": "第二章进程四",
+      "description": "[1.2]首墩副基地解锁",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "options": [
+        {
+          "id": "main-story-10-option-01",
+          "name": "水火不容",
+          "price": 5
+        },
+        {
+          "id": "main-story-10-option-02",
+          "name": "致命邀约",
+          "price": 5
+        },
+        {
+          "id": "main-story-10-option-03",
+          "name": "片缕幻影",
+          "price": 5
+        },
+        {
+          "id": "main-story-10-option-04",
+          "name": "静候光临",
+          "price": 5
+        },
+        {
+          "id": "main-story-10-option-05",
+          "name": "自由意志",
+          "price": 5
+        },
+        {
+          "id": "main-story-10-option-06",
+          "name": "浪白风初起",
+          "price": 5
+        },
+        {
+          "id": "main-story-10-option-07",
+          "name": "阵外潮起声犹震",
+          "price": 25
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "main-story-11",
+      "name": "第二章进程五,六",
+      "description": "[1.2]聂菲斯boss + 庄剧情",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "options": [
+        {
+          "id": "main-story-11-option-01",
+          "name": "当时携手处",
+          "price": 5
+        },
+        {
+          "id": "main-story-11-option-02",
+          "name": "墙崩因隙",
+          "price": 10
+        },
+        {
+          "id": "main-story-11-option-03",
+          "name": "大器晚成",
+          "price": 5
+        },
+        {
+          "id": "main-story-11-option-04",
+          "name": "志同道合",
+          "price": 20
+        }
+      ]
+    }
+  ]
+}

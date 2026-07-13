@@ -1,0 +1,135 @@
+{
+  "id": "routine",
+  "name": "日常托管",
+  "Expanded": true,
+  "items": [
+    {
+      "kind": "List",
+      "id": "routine-01",
+      "name": "套餐服务 (理智养成可指定)",
+      "features": [
+        {
+          "id": "routine-01-feature-01",
+          "name": "日活"
+        },
+        {
+          "id": "routine-01-feature-02",
+          "name": "周常"
+        },
+        {
+          "id": "routine-01-feature-03",
+          "name": "帝江号"
+        },
+        {
+          "id": "routine-01-feature-04",
+          "name": "信用点"
+        },
+        {
+          "id": "routine-01-feature-05",
+          "name": "理智"
+        },
+        {
+          "id": "routine-01-feature-06",
+          "name": "倒货+稳定物质"
+        },
+        {
+          "id": "routine-01-feature-07",
+          "name": "送货+拍照+演武台"
+        },
+        {
+          "id": "routine-01-feature-08",
+          "name": "武陵稀有材料"
+        },
+        {
+          "id": "routine-01-feature-09",
+          "name": "版本限时活动"
+        },
+        {
+          "id": "routine-01-feature-10",
+          "name": "资源规划"
+        },
+        {
+          "id": "routine-01-feature-11",
+          "name": "角色养成"
+        }
+      ],
+      "options": [
+        {
+          "id": "routine-01-option-01",
+          "name": "基础体托",
+          "price": 60,
+          "description": "60￥/月",
+          "includedFeatureIds": [
+            "routine-01-feature-01",
+            "routine-01-feature-02",
+            "routine-01-feature-03",
+            "routine-01-feature-04",
+            "routine-01-feature-05"
+          ]
+        },
+        {
+          "id": "routine-01-option-02",
+          "name": "进阶精托",
+          "price": 80,
+          "description": "80￥/月",
+          "includedFeatureIds": [
+            "routine-01-feature-01",
+            "routine-01-feature-02",
+            "routine-01-feature-03",
+            "routine-01-feature-04",
+            "routine-01-feature-05",
+            "routine-01-feature-06",
+            "routine-01-feature-07"
+          ]
+        },
+        {
+          "id": "routine-01-option-03",
+          "name": "终极全托",
+          "price": 180,
+          "description": "180￥/月",
+          "includedFeatureIds": [
+            "routine-01-feature-01",
+            "routine-01-feature-02",
+            "routine-01-feature-03",
+            "routine-01-feature-04",
+            "routine-01-feature-05",
+            "routine-01-feature-06",
+            "routine-01-feature-07",
+            "routine-01-feature-08",
+            "routine-01-feature-09",
+            "routine-01-feature-10",
+            "routine-01-feature-11"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "routine-02",
+      "name": "<限时活动><收菜>均可单独算价",
+      "description": "<限时活动><收菜>均可单独算价",
+      "presentation": "inline",
+      "Expanded": false,
+      "options": [
+        {
+          "id": "routine-02-option-01",
+          "name": "种地",
+          "price": 15,
+          "description": "15￥/月"
+        },
+        {
+          "id": "routine-02-option-02",
+          "name": "稀有材料有滑索",
+          "price": 15,
+          "description": "15￥/趟"
+        },
+        {
+          "id": "routine-02-option-03",
+          "name": "稀有材料无滑索",
+          "price": 30,
+          "description": "30￥/趟"
+        }
+      ]
+    }
+  ]
+}

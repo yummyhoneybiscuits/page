@@ -10,7 +10,7 @@
     <title>moe</title>
 </head>
 <body class="home-page">
-    <output id="homeWord" class="home-word" aria-live="polite">Ceobe</output>
+    <output id="homeWord" class="home-word" aria-live="polite">Ceobe.moe</output>
     <main class="home-links" aria-label="Tools">
         <a href="./menu.html">
             <span>价格表</span>
@@ -24,11 +24,11 @@
     </main>
     <script>
         const word = document.getElementById('homeWord');
-        const frames = ['Ceobe.moe', 'cEobe.moe', 'ceObe.moe', 'ceoBe.moe', 'ceobE.moe', 'ceobe.Moe', 'ceobe.mOe', 'ceobe.moE', 'ceobe.moe'];
+        const frames = ['Ceobe.moe', 'cEobe.moe', 'ceObe.moe', 'ceoBe.moe', 'ceobE.moe', 'ceobe.Moe', 'ceobe.mOe', 'ceobe.moE'];
         let frame = 0;
         const animationTimer = window.setInterval(() => {
             frame += 1;
-            if (frame >= 50) {
+            if (frame >= frames.length * 4) {
                 window.clearInterval(animationTimer);
                 window.location.href = './ef-calculator.html';
                 return;

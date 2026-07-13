@@ -1,0 +1,290 @@
+{
+  "id": "permanent-events",
+  "name": "版本常驻活动",
+  "Expanded": true,
+  "items": [
+    {
+      "kind": "Items",
+      "id": "permanent-events-01",
+      "name": "蚀像寻遗",
+      "description": "任务 刻度 宝箱全清",
+      "presentation": "collapsible",
+      "Expanded": true,
+      "allPrice": 95,
+      "options": [
+        {
+          "id": "permanent-events-01-option-01",
+          "name": "1-3区",
+          "price": 45
+        },
+        {
+          "id": "permanent-events-01-option-02",
+          "name": "4 区",
+          "price": 15
+        },
+        {
+          "id": "permanent-events-01-option-03",
+          "name": "5-6区",
+          "price": 40
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "permanent-events-02",
+      "name": "[一期] 密境行者",
+      "description": "密境行者 - 密境初显",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "allPrice": 27,
+      "options": [
+        {
+          "id": "permanent-events-02-option-01",
+          "name": "压力感应",
+          "price": 3
+        },
+        {
+          "id": "permanent-events-02-option-02",
+          "name": "吊装辅助",
+          "price": 3
+        },
+        {
+          "id": "permanent-events-02-option-03",
+          "name": "乘风",
+          "price": 3
+        },
+        {
+          "id": "permanent-events-02-option-04",
+          "name": "工业化迷宫",
+          "price": 3
+        },
+        {
+          "id": "permanent-events-02-option-05",
+          "name": "高热拦截",
+          "price": 3
+        },
+        {
+          "id": "permanent-events-02-option-06",
+          "name": "外部起爆",
+          "price": 3
+        },
+        {
+          "id": "permanent-events-02-option-07",
+          "name": "长耳兽的邀请",
+          "price": 3
+        },
+        {
+          "id": "permanent-events-02-option-08",
+          "name": "轰鸣喜乐",
+          "price": 3
+        },
+        {
+          "id": "permanent-events-02-option-09",
+          "name": "游于光焰",
+          "price": 3
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "permanent-events-03",
+      "name": "[二期] 密境行者",
+      "description": "密境行者 - 行探险窟",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "allPrice": 30,
+      "options": [
+        {
+          "id": "permanent-events-03-option-01",
+          "name": "驱水行路",
+          "price": 5
+        },
+        {
+          "id": "permanent-events-03-option-02",
+          "name": "需水阵列",
+          "price": 5
+        },
+        {
+          "id": "permanent-events-03-option-03",
+          "name": "转轮与桥梁",
+          "price": 5
+        },
+        {
+          "id": "permanent-events-03-option-04",
+          "name": "秋水横渡",
+          "price": 5
+        },
+        {
+          "id": "permanent-events-03-option-05",
+          "name": "归家",
+          "price": 5
+        },
+        {
+          "id": "permanent-events-03-option-06",
+          "name": "小虫之旅",
+          "price": 5
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "permanent-events-04",
+      "name": "[一期] 影拓丰碑",
+      "description": "影拓丰碑 - 大地的弃子",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "allPrice": 12,
+      "options": [
+        {
+          "id": "permanent-events-04-option-01",
+          "name": "毒雾求生",
+          "price": 4
+        },
+        {
+          "id": "permanent-events-04-option-02",
+          "name": "旁门外道",
+          "price": 4
+        },
+        {
+          "id": "permanent-events-04-option-03",
+          "name": "弩斧相应",
+          "price": 4
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "permanent-events-05",
+      "name": "[二期] 影拓丰碑",
+      "description": "影拓丰碑 - 无机造物",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "allPrice": 12,
+      "options": [
+        {
+          "id": "permanent-events-05-option-01",
+          "name": "矢影环伺",
+          "price": 4
+        },
+        {
+          "id": "permanent-events-05-option-02",
+          "name": "狂冲盾止",
+          "price": 4
+        },
+        {
+          "id": "permanent-events-05-option-03",
+          "name": "安于磐石",
+          "price": 4
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "permanent-events-06",
+      "name": "[三期] 影拓丰碑",
+      "description": "影拓丰碑 - 灼痛疤痕",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "allPrice": 12,
+      "options": [
+        {
+          "id": "permanent-events-06-option-01",
+          "name": "怨憎雾海",
+          "price": 4
+        },
+        {
+          "id": "permanent-events-06-option-02",
+          "name": "血肉熔点",
+          "price": 4
+        },
+        {
+          "id": "permanent-events-06-option-03",
+          "name": "呼吼炽焰",
+          "price": 4
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "permanent-events-07",
+      "name": "[四期] 影拓丰碑",
+      "description": "影拓丰碑 - 浊流具现",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "allPrice": 24,
+      "options": [
+        {
+          "id": "permanent-events-07-option-01",
+          "name": "沉寂视界",
+          "price": 4
+        },
+        {
+          "id": "permanent-events-07-option-02",
+          "name": "枯竭海退",
+          "price": 4
+        },
+        {
+          "id": "permanent-events-07-option-03",
+          "name": "潮涌遗恨",
+          "price": 4
+        },
+        {
+          "id": "permanent-events-07-option-04",
+          "name": "污浊血脉",
+          "price": 4
+        },
+        {
+          "id": "permanent-events-07-option-05",
+          "name": "潜流绝窟",
+          "price": 4
+        },
+        {
+          "id": "permanent-events-07-option-06",
+          "name": "霜冻联结",
+          "price": 4
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "permanent-events-08",
+      "name": "[五期] 影拓丰碑",
+      "description": "影拓丰碑 - 死寂争鸣",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "allPrice": 24,
+      "options": [
+        {
+          "id": "permanent-events-08-option-01",
+          "name": "刺痛盾阵",
+          "price": 4
+        },
+        {
+          "id": "permanent-events-08-option-02",
+          "name": "溶解窥看",
+          "price": 4
+        },
+        {
+          "id": "permanent-events-08-option-03",
+          "name": "仪式旋流",
+          "price": 4
+        },
+        {
+          "id": "permanent-events-08-option-04",
+          "name": "冯河断水",
+          "price": 4
+        },
+        {
+          "id": "permanent-events-08-option-05",
+          "name": "死寂表象",
+          "price": 4
+        },
+        {
+          "id": "permanent-events-08-option-06",
+          "name": "忿鼓咆声",
+          "price": 4
+        }
+      ]
+    }
+  ]
+}

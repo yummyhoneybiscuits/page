@@ -1,8 +1,8 @@
-import { loadRawCatalog } from './catalog-loader.js';
+import { loadPricingData } from './data-loader.js';
 import { escapeHtml, loadHtml2Canvas } from './site.js';
 
 const WATERMARK_TEXT = 'wechat@ shiroi333';
-const catalogElement = document.getElementById('menuCatalog');
+const dataElement = document.getElementById('menuData');
 const exportButton = document.getElementById('menuExportButton');
 const exportDialog = document.getElementById('menuExportDialog');
 const exportForm = document.getElementById('menuExportForm');
@@ -64,7 +64,7 @@ function renderDropdown(entry, currency, defaults) {
     const items = `
         <div class="menu-group__items">
             ${entry.options.map(option =>
-                renderPriceLine(option.label, formatPrice(option.price, currency), currency)
+                renderPriceLine(option.label, option.description || formatPrice(option.price, currency), currency)
             ).join('')}
         </div>
     `;
@@ -77,7 +77,7 @@ function renderChoices(entry, currency) {
             ${entry.options.map(option =>
                 renderPriceLine(
                     option.label,
-                    option.priceText || formatPrice(option.price, currency),
+                    option.description || formatPrice(option.price, currency),
                     currency
                 )
             ).join('')}
@@ -93,7 +93,7 @@ function renderPackages(entry, currency) {
                     <section class="menu-package">
                         <div class="menu-package__heading">
                             <h4>${escapeHtml(option.label)}</h4>
-                            <strong>${escapeHtml(option.priceText || formatPrice(option.price, currency))}</strong>
+                            <strong>${escapeHtml(option.description || formatPrice(option.price, currency))}</strong>
                         </div>
                         <ul>
                             ${(option.features || []).map(feature => `<li>${escapeHtml(feature)}</li>`).join('')}
@@ -123,8 +123,8 @@ function renderEntry(entry, currency, defaults) {
 
 async function initialize() {
     try {
-        const catalog = await loadRawCatalog();
-        const currency = catalog.currency || '¥';
+        const data = await loadPricingData();
+        const currency = data.currency || '¥';
         const renderCategory = (category, index) => `
             <section id="${escapeHtml(category.id)}" class="menu-section" style="--menu-order: ${index}">
                 <header class="menu-section__header">
@@ -133,13 +133,13 @@ async function initialize() {
                     ${category.badge ? `<small>${escapeHtml(category.badge)}</small>` : ''}
                 </header>
                 <div class="menu-section__content">
-                    ${category.entries.map(entry => renderEntry(entry, currency, catalog.defaults)).join('')}
+                    ${category.entries.map(entry => renderEntry(entry, currency, data.defaults)).join('')}
                 </div>
             </section>
         `;
-        catalogElement.innerHTML = [0, 1].map(column => `
+        dataElement.innerHTML = [0, 1].map(column => `
             <div class="menu-column">
-                ${catalog.categories
+                ${data.categories
                     .map((category, index) => ({ category, index }))
                     .filter(item => item.index % 2 === column)
                     .map(item => renderCategory(item.category, item.index))
@@ -148,7 +148,7 @@ async function initialize() {
         `).join('');
     } catch (error) {
         console.error('Failed to load menu:', error);
-        catalogElement.innerHTML = '<p class="menu-error" role="status">FAILED TO LOAD MENU</p>';
+        dataElement.innerHTML = '<p class="menu-error" role="status">FAILED TO LOAD MENU DATA</p>';
     }
 }
 
@@ -156,18 +156,18 @@ async function exportMenu(selectedIds) {
     exportButton.disabled = true;
     const sheet = document.createElement('div');
     sheet.className = 'menu-export-sheet';
-    const catalogClone = catalogElement.cloneNode(true);
-    const totalSectionCount = catalogClone.querySelectorAll('.menu-section').length;
-    catalogClone.querySelectorAll('.menu-section').forEach(section => {
+    const dataClone = dataElement.cloneNode(true);
+    const totalSectionCount = dataClone.querySelectorAll('.menu-section').length;
+    dataClone.querySelectorAll('.menu-section').forEach(section => {
         if (!selectedIds.has(section.id)) section.remove();
     });
-    catalogClone.querySelectorAll('.menu-column').forEach(column => {
+    dataClone.querySelectorAll('.menu-column').forEach(column => {
         if (!column.querySelector('.menu-section')) column.remove();
     });
-    const sectionCount = catalogClone.querySelectorAll('.menu-section').length;
+    const sectionCount = dataClone.querySelectorAll('.menu-section').length;
     sheet.classList.toggle('is-partial', sectionCount < totalSectionCount);
     sheet.classList.toggle('is-single-section', sectionCount === 1);
-    catalogClone.querySelectorAll('details.menu-group').forEach(details => {
+    dataClone.querySelectorAll('details.menu-group').forEach(details => {
         const group = document.createElement('div');
         group.className = `${details.className}${details.open ? ' is-open' : ''}`;
 
@@ -185,7 +185,7 @@ async function exportMenu(selectedIds) {
         }
         details.replaceWith(group);
     });
-    sheet.append(catalogClone);
+    sheet.append(dataClone);
     const watermark = document.createElement('div');
     watermark.className = 'menu-export-watermark';
     watermark.setAttribute('aria-hidden', 'true');
@@ -220,7 +220,7 @@ async function exportMenu(selectedIds) {
 }
 
 function openExportDialog() {
-    exportAreas.innerHTML = [...catalogElement.querySelectorAll('.menu-section')].map(section => {
+    exportAreas.innerHTML = [...dataElement.querySelectorAll('.menu-section')].map(section => {
         const number = section.querySelector('.menu-section__header > span')?.textContent || '';
         const title = section.querySelector('.menu-section__header h2')?.textContent || section.id;
         return `

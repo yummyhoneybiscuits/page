@@ -6,12 +6,12 @@ html {
     min-height: 100vh;
     padding: 14px;
 }
-.menu-catalog,
+.menu-data,
 .menu-footer {
     width: min(100%, 1100px);
     margin-inline: auto;
 }
-.menu-catalog {
+.menu-data {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 24px;
@@ -353,7 +353,7 @@ html {
     background: var(--color-background);
     color: var(--color-text);
 }
-.menu-export-sheet .menu-catalog {
+.menu-export-sheet .menu-data {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -368,7 +368,7 @@ html {
     width: 560px;
 }
 
-.menu-export-sheet .menu-catalog:has(.menu-column:only-child) {
+.menu-export-sheet .menu-data:has(.menu-column:only-child) {
     grid-template-columns: 1fr;
 }
 
@@ -413,7 +413,7 @@ html {
         padding: 12px;
     }
 
-    .menu-catalog {
+    .menu-data {
         display: flex;
         flex-direction: column;
         gap: 0;

@@ -1,0 +1,191 @@
+{
+  "id": "world-exploration",
+  "name": "大世界收集探索",
+  "Expanded": true,
+  "items": [
+    {
+      "kind": "Formula",
+      "id": "world-exploration-01",
+      "name": "已拥有档案补差",
+      "totalQuantity": 406,
+      "unitPrice": 0.6,
+      "minValue": 0,
+      "maxValue": 406,
+      "defaultValue": 0
+    },
+    {
+      "kind": "Items",
+      "id": "world-exploration-02",
+      "name": "四号谷地基础探索",
+      "description": "基础探索 包括宝箱,谜质,采录桩,[大情报],机器人",
+      "presentation": "collapsible",
+      "Expanded": true,
+      "allPrice": 178,
+      "options": [
+        {
+          "id": "world-exploration-02-option-01",
+          "name": "谷地通道",
+          "price": 10
+        },
+        {
+          "id": "world-exploration-02-option-02",
+          "name": "枢纽区",
+          "price": 60
+        },
+        {
+          "id": "world-exploration-02-option-03",
+          "name": "采石场",
+          "price": 20
+        },
+        {
+          "id": "world-exploration-02-option-04",
+          "name": "源石研究园",
+          "price": 30
+        },
+        {
+          "id": "world-exploration-02-option-05",
+          "name": "矿脉源区",
+          "price": 40
+        },
+        {
+          "id": "world-exploration-02-option-06",
+          "name": "供能高地",
+          "price": 25
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "world-exploration-03",
+      "name": "武陵基础探索",
+      "description": "基础探索 包括宝箱,谜质,采录桩,[大情报],机器人",
+      "presentation": "collapsible",
+      "Expanded": true,
+      "allPrice": 268,
+      "options": [
+        {
+          "id": "world-exploration-03-option-01",
+          "name": "武陵城",
+          "price": 90
+        },
+        {
+          "id": "world-exploration-03-option-02",
+          "name": "景玉谷",
+          "price": 35
+        },
+        {
+          "id": "world-exploration-03-option-03",
+          "name": "清波寨",
+          "price": 35
+        },
+        {
+          "id": "world-exploration-03-option-04",
+          "name": "首墩",
+          "price": 40
+        },
+        {
+          "id": "world-exploration-03-option-05",
+          "name": "武陵城新区域",
+          "price": 10
+        },
+        {
+          "id": "world-exploration-03-option-06",
+          "name": "试验园区",
+          "price": 30
+        },
+        {
+          "id": "world-exploration-03-option-07",
+          "name": "藏剑谷",
+          "price": 30
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "world-exploration-04",
+      "name": "四号谷地终极探索",
+      "description": "包括宝箱,谜质,采录桩,大情报,[小情报],机器人,[采集点]",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "allPrice": 258,
+      "options": [
+        {
+          "id": "world-exploration-04-option-01",
+          "name": "谷地通道",
+          "price": 20
+        },
+        {
+          "id": "world-exploration-04-option-02",
+          "name": "枢纽区",
+          "price": 80
+        },
+        {
+          "id": "world-exploration-04-option-03",
+          "name": "采石场",
+          "price": 30
+        },
+        {
+          "id": "world-exploration-04-option-04",
+          "name": "源石研究园",
+          "price": 45
+        },
+        {
+          "id": "world-exploration-04-option-05",
+          "name": "矿脉源区",
+          "price": 55
+        },
+        {
+          "id": "world-exploration-04-option-06",
+          "name": "供能高地",
+          "price": 40
+        }
+      ]
+    },
+    {
+      "kind": "Items",
+      "id": "world-exploration-05",
+      "name": "武陵终极探索",
+      "description": " 包括宝箱,谜质,采录桩,大情报,[小情报],机器人,[采集点]",
+      "presentation": "collapsible",
+      "Expanded": false,
+      "allPrice": 358,
+      "options": [
+        {
+          "id": "world-exploration-05-option-01",
+          "name": "武陵城",
+          "price": 130
+        },
+        {
+          "id": "world-exploration-05-option-02",
+          "name": "景玉谷",
+          "price": 45
+        },
+        {
+          "id": "world-exploration-05-option-03",
+          "name": "清波寨",
+          "price": 45
+        },
+        {
+          "id": "world-exploration-05-option-04",
+          "name": "首墩",
+          "price": 50
+        },
+        {
+          "id": "world-exploration-05-option-05",
+          "name": "武陵城新区域",
+          "price": 15
+        },
+        {
+          "id": "world-exploration-05-option-06",
+          "name": "试验园区",
+          "price": 40
+        },
+        {
+          "id": "world-exploration-05-option-07",
+          "name": "藏剑谷",
+          "price": 40
+        }
+      ]
+    }
+  ]
+}

@@ -11,7 +11,7 @@
 </head>
 <body class="calculator-page">
     <main class="calculator-layout">
-        <section class="catalog-panel" aria-label="Services">
+        <section class="data-panel" aria-label="Services">
             <div class="search-box">
                 <label class="visually-hidden" for="searchInput">Search</label>
                 <input
@@ -45,8 +45,8 @@
                     <p><code>.* 任意内容</code><span>剧情.*探索 匹配剧情后面还有探索</span></p>
                 </div>
             </section>
-            <div id="catalogStatus" class="status-message" role="status">LOADING...</div>
-            <div class="catalog-browser">
+            <div id="dataStatus" class="status-message" role="status">LOADING...</div>
+            <div class="data-browser json-reveal">
                 <nav class="category-nav" aria-label="Categories">
                     <div id="categoryNavItems" class="category-nav__items"></div>
                     <div class="category-nav__actions">
@@ -54,7 +54,7 @@
                         <button id="openCartButton" class="button button--export" type="button">cart &gt;</button>
                     </div>
                 </nav>
-                <div id="catalogContainer" class="catalog-content"></div>
+                <div id="pricingData" class="data-content"></div>
             </div>
         </section>
     </main>
@@ -110,7 +110,7 @@
         </div>
     </dialog>
 
-    <script src="./assets/js/ef-calculator/app.js" type="module"></script>
+    <script src="./assets/js/ef-calculator.js" type="module"></script>
     <script src="./assets/js/watermark.js" type="module"></script>
 </body>
 </html>

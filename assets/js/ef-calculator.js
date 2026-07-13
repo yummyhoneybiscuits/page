@@ -1,6 +1,6 @@
-import { loadRawCatalog } from '../catalog-loader.js';
-import { copyText, loadHtml2Canvas } from '../site.js';
-import { normalizeCatalog } from './normalize-catalog.js';
+import { loadPricingData } from './data-loader.js';
+import { copyText, loadHtml2Canvas, revealJsonContent } from './site.js';
+import { normalizePricingData } from './data-normalize.js';
 import {
     clampFormulaInput,
     findDropdown,
@@ -13,14 +13,15 @@ import {
     flash,
     formatPrice,
     setStatus
-} from './core.js';
-import { renderCatalog } from './render-catalog.js';
+} from './ef-calculator-core.js';
+import { renderPricingData } from './data-render.js';
 
 function getCalculatorElements() {
     const selectors = {
-        catalog: '#catalogContainer',
+        data: '#pricingData',
+        dataBrowser: '.data-browser',
         categoryNav: '#categoryNavItems',
-        catalogStatus: '#catalogStatus',
+        dataStatus: '#dataStatus',
         search: '#searchInput',
         regexHelpButton: '#regexHelpButton',
         regexHelpPanel: '#regexHelpPanel',
@@ -53,7 +54,7 @@ function getCalculatorElements() {
 const elements = getCalculatorElements();
 
 function refresh() {
-    renderCatalog(elements);
+    renderPricingData(elements);
     renderCart(elements);
 }
 
@@ -128,7 +129,7 @@ function toggleCategory(button) {
     state.openCategories.has(categoryId)
         ? state.openCategories.delete(categoryId)
         : state.openCategories.add(categoryId);
-    renderCatalog(elements);
+    renderPricingData(elements);
 }
 
 function toggleDropdown(button) {
@@ -151,7 +152,7 @@ function toggleDropdown(button) {
     }
 }
 
-function handleCatalogClick(event) {
+function handleDataClick(event) {
     const button = event.target.closest('button[data-action]');
     if (!button) return;
 
@@ -185,7 +186,7 @@ function handleCatalogClick(event) {
     }
 }
 
-function handleCatalogInput(event) {
+function handleDataInput(event) {
     const input = event.target.closest('[data-action="formula-input"]');
     if (!input) return;
 
@@ -284,30 +285,33 @@ function hydrateInitialUiState() {
     });
 }
 
-async function loadCatalog() {
-    setStatus(elements.catalogStatus, 'LOADING...');
+async function loadData() {
+    elements.dataBrowser.classList.add('is-json-loading');
+    elements.dataBrowser.setAttribute('aria-busy', 'true');
+    setStatus(elements.dataStatus, 'LOADING...');
     try {
-        const normalized = normalizeCatalog(await loadRawCatalog());
+        const normalized = normalizePricingData(await loadPricingData());
         state.config = normalized.config;
         state.categories = normalized.categories;
         state.entriesById = normalized.entriesById;
         state.dropdownsById = normalized.dropdownsById;
-        state.aliases = normalized.aliases;
         hydrateInitialUiState();
         refresh();
     } catch (error) {
-        console.error('Failed to load catalog:', error);
-        setStatus(elements.catalogStatus, 'FAILED TO LOAD CATALOG', true);
+        console.error('Failed to load pricing data:', error);
+        setStatus(elements.dataStatus, 'FAILED TO LOAD DATA', true);
+    } finally {
+        revealJsonContent(elements.dataBrowser);
     }
 }
 
 function bindEvents() {
-    elements.search.addEventListener('input', () => renderCatalog(elements));
+    elements.search.addEventListener('input', () => renderPricingData(elements));
     elements.categoryNav.addEventListener('click', event => {
         const button = event.target.closest('button[data-category-nav]');
         if (!button) return;
         state.openCategories.add(button.dataset.categoryNav);
-        renderCatalog(elements);
+        renderPricingData(elements);
         requestAnimationFrame(() => {
             const heading = document.getElementById(`category-${button.dataset.categoryNav}`);
             const group = heading?.closest('.group');
@@ -329,8 +333,8 @@ function bindEvents() {
         }
         elements.regexHelpButton.setAttribute('aria-expanded', String(isHidden));
     });
-    elements.catalog.addEventListener('click', handleCatalogClick);
-    elements.catalog.addEventListener('input', handleCatalogInput);
+    elements.data.addEventListener('click', handleDataClick);
+    elements.data.addEventListener('input', handleDataInput);
     elements.cart.addEventListener('click', handleCartClick);
     elements.clearButton.addEventListener('click', () => {
         state.cart.clear();
@@ -350,4 +354,4 @@ function bindEvents() {
 }
 
 bindEvents();
-loadCatalog();
+loadData();

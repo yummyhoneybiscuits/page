@@ -20,23 +20,6 @@ function registerEntry(entry, entriesById) {
     return entry;
 }
 
-function normalizeDiscount(rawDiscount) {
-    if (!rawDiscount || rawDiscount.enabled === false) {
-        return { enabled: false, label: '', rate: 1 };
-    }
-
-    const rate = Number(rawDiscount.rate);
-    if (!Number.isFinite(rate) || rate <= 0 || rate > 1) {
-        throw new TypeError('Complete selection discount multiplier must be greater than 0 and at most 1.');
-    }
-
-    return {
-        enabled: true,
-        label: typeof rawDiscount.label === 'string' ? rawDiscount.label : 'SALE',
-        rate
-    };
-}
-
 function normalizeItem(rawEntry, common, location, entriesById) {
     return registerEntry({
         ...common,
@@ -52,7 +35,6 @@ function normalizeDropdown(
     rawEntry,
     common,
     location,
-    defaults,
     entriesById,
     dropdownsById,
     nextSortIndex
@@ -69,24 +51,13 @@ function normalizeDropdown(
             ? rawEntry.label.trim()
             : title,
         expanded: Boolean(rawEntry.expanded),
-        discount: normalizeDiscount(
-            rawEntry.fullSelectionDiscount
-            ?? defaults?.dropdownFullSelectionDiscount
-        ),
-        offer: null,
+        headerPrice: rawEntry.headerPrice === 'selected' ? 'selected' : 'total',
+        price: Number.isFinite(rawEntry.price) ? rawEntry.price : null,
+        discountRules: Array.isArray(rawEntry.discountRules)
+            ? rawEntry.discountRules.map(rule => ({ ...rule }))
+            : [],
         options: []
     };
-
-    if (rawEntry.offer) {
-        dropdown.offer = {
-            id: requireString(rawEntry.offer.id, `${location}.offer.id`),
-            label: typeof rawEntry.offer.label === 'string' && rawEntry.offer.label.trim()
-                ? rawEntry.offer.label.trim()
-                : dropdown.label,
-            price: requirePrice(rawEntry.offer.price, `${location}.offer.price`)
-        };
-        if (!rawEntry.label) dropdown.label = dropdown.offer.label;
-    }
 
     dropdown.options = rawEntry.options.map((rawOption, optionIndex) =>
         registerEntry({
@@ -108,7 +79,7 @@ function normalizeDropdown(
     return dropdown;
 }
 
-function normalizeChoices(rawEntry, common, location, entriesById, nextSortIndex) {
+function normalizeChoices(rawEntry, common, location, entriesById, dropdownsById, nextSortIndex) {
     if (!Array.isArray(rawEntry.options) || rawEntry.options.length === 0) {
         throw new TypeError(`${location}.options must contain at least one option.`);
     }
@@ -116,6 +87,14 @@ function normalizeChoices(rawEntry, common, location, entriesById, nextSortIndex
     const choices = {
         ...common,
         title: requireString(rawEntry.title, `${location}.title`),
+        label: typeof rawEntry.label === 'string' && rawEntry.label.trim()
+            ? rawEntry.label.trim()
+            : rawEntry.title,
+        headerPrice: rawEntry.headerPrice === 'selected' ? 'selected' : 'total',
+        price: Number.isFinite(rawEntry.price) ? rawEntry.price : null,
+        discountRules: Array.isArray(rawEntry.discountRules)
+            ? rawEntry.discountRules.map(rule => ({ ...rule }))
+            : [],
         options: []
     };
 
@@ -135,6 +114,7 @@ function normalizeChoices(rawEntry, common, location, entriesById, nextSortIndex
         }, entriesById)
     );
 
+    dropdownsById.set(choices.id, choices);
     return choices;
 }
 
@@ -252,14 +232,13 @@ export function normalizePricingData(rawData) {
                     rawEntry,
                     common,
                     location,
-                    rawData.defaults,
                     entriesById,
                     dropdownsById,
                     nextSortIndex
                 );
             }
             if (common.type === 'choices') {
-                return normalizeChoices(rawEntry, common, location, entriesById, nextSortIndex);
+                return normalizeChoices(rawEntry, common, location, entriesById, dropdownsById, nextSortIndex);
             }
             if (common.type === 'package-matrix') {
                 return normalizePackageMatrix(rawEntry, common, location, entriesById, nextSortIndex);

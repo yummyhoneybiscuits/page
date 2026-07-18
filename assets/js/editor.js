@@ -251,6 +251,55 @@ function renderOptionRow(option, index) {
     `;
 }
 
+function renderDiscountRules(entry) {
+    return `
+        <section class="editor-discount-rules">
+            <div class="editor-discount-rules__header">
+                <h3>Discount Rules</h3>
+                <button class="editor-button" type="button" data-action="add-discount-rule">+ RULE</button>
+            </div>
+            ${(entry.discountRules || []).map((rule, ruleIndex) => `
+                <div class="editor-discount-rule">
+                    <div class="editor-form-grid editor-form-grid--discount-rule">
+                        <div class="editor-field">
+                            <label>Type</label>
+                            <select data-discount-rule-index="${ruleIndex}" data-discount-rule-field="type">
+                                <option value="combination"${rule.type === 'combination' ? ' selected' : ''}>combination</option>
+                                <option value="threshold"${rule.type === 'threshold' ? ' selected' : ''}>price threshold</option>
+                            </select>
+                        </div>
+                        ${rule.type === 'threshold' ? `
+                            <div class="editor-field">
+                                <label>Minimum Price</label>
+                                <input type="number" min="0" step="0.01" data-discount-rule-index="${ruleIndex}" data-discount-rule-field="minimumPrice" value="${escapeHtml(rule.minimumPrice ?? '')}">
+                            </div>
+                        ` : ''}
+                        <div class="editor-field">
+                            <label>Label</label>
+                            <input data-discount-rule-index="${ruleIndex}" data-discount-rule-field="label" value="${escapeHtml(rule.label || '')}">
+                        </div>
+                        <div class="editor-field">
+                            <label>Multiplier</label>
+                            <input type="number" min="0.01" max="1" step="0.01" data-discount-rule-index="${ruleIndex}" data-discount-rule-field="multiplier" value="${escapeHtml(rule.multiplier ?? '')}">
+                        </div>
+                        <button class="editor-button editor-button--danger" type="button" data-action="remove-discount-rule" data-discount-rule-index="${ruleIndex}">REMOVE</button>
+                    </div>
+                    ${rule.type === 'combination' ? `
+                        <div class="editor-discount-options">
+                            ${entry.options.map(option => `
+                                <label>
+                                    <input type="checkbox" data-discount-rule-index="${ruleIndex}" data-discount-option-id="${escapeHtml(option.id)}"${rule.optionIds?.includes(option.id) ? ' checked' : ''}>
+                                    <span>${escapeHtml(option.label)}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('') || '<p class="editor-empty">No discount rules.</p>'}
+        </section>
+    `;
+}
+
 function renderEntryForm() {
     const entry = getSelectedEntry();
     if (!entry) {
@@ -346,7 +395,6 @@ function renderEntryForm() {
         return;
     }
 
-    const offer = entry.offer || {};
     elements.entryForm.innerHTML = `
         <div class="editor-form-grid">
         <div class="editor-field">
@@ -365,18 +413,15 @@ function renderEntryForm() {
             </select>
         </div>
         </div>
-        ${entry.type === 'dropdown' ? `
-            <section class="editor-settings">
-                <h3>Settings</h3>
-                <div class="editor-form-grid editor-form-grid--dropdown-settings">
-                    <div class="editor-field"><label for="entryExpanded">Expanded</label><select id="entryExpanded" data-entry-field="expanded"><option value="true"${entry.expanded ? ' selected' : ''}>true</option><option value="false"${!entry.expanded ? ' selected' : ''}>false</option></select></div>
-                    <div class="editor-field"><label for="entryOfferPrice">All Price</label><input id="entryOfferPrice" data-entry-field="offerPrice" type="number" step="0.01" value="${escapeHtml(offer.price ?? '')}"></div>
-                    <div class="editor-field"><label for="entryDiscountEnabled">Discount</label><select id="entryDiscountEnabled" data-entry-field="discountEnabled"><option value="inherit"${entry.inheritsDiscount ? ' selected' : ''}>inherit default</option><option value="true"${!entry.inheritsDiscount && entry.fullSelectionDiscount?.enabled === true ? ' selected' : ''}>enabled</option><option value="false"${!entry.inheritsDiscount && entry.fullSelectionDiscount?.enabled === false ? ' selected' : ''}>disabled</option></select></div>
-                    <div class="editor-field"><label for="entryDiscountLabel">Discount Label</label><input id="entryDiscountLabel" data-entry-field="discountLabel" value="${escapeHtml(entry.fullSelectionDiscount?.label || '')}"></div>
-                    <div class="editor-field"><label for="entryDiscountRate">Multiplier</label><input id="entryDiscountRate" data-entry-field="discountRate" type="number" step="0.01" min="0" max="1" value="${escapeHtml(entry.fullSelectionDiscount?.rate ?? '')}"></div>
-                </div>
-            </section>
-        ` : ''}
+        <section class="editor-settings">
+            <h3>Price</h3>
+            <div class="editor-form-grid editor-form-grid--dropdown-settings">
+                ${entry.type === 'dropdown' ? `<div class="editor-field"><label for="entryExpanded">Expanded</label><select id="entryExpanded" data-entry-field="expanded"><option value="true"${entry.expanded ? ' selected' : ''}>true</option><option value="false"${!entry.expanded ? ' selected' : ''}>false</option></select></div>` : ''}
+                <div class="editor-field"><label for="entryHeaderPrice">Header Price</label><select id="entryHeaderPrice" data-entry-field="headerPrice"><option value="total"${entry.headerPrice !== 'selected' ? ' selected' : ''}>total price</option><option value="selected"${entry.headerPrice === 'selected' ? ' selected' : ''}>selected items</option></select></div>
+                <div class="editor-field"><label for="entryItemsPrice">Price</label><input id="entryItemsPrice" data-entry-field="itemsPrice" type="number" min="0" step="0.01" placeholder="dynamic" value="${escapeHtml(entry.headerPrice === 'selected' ? '' : entry.price ?? '')}"${entry.headerPrice === 'selected' ? ' disabled' : ''}></div>
+            </div>
+        </section>
+        ${renderDiscountRules(entry)}
         <div class="editor-option-list">
             <div class="editor-option-list__header">
                 <span>#</span>
@@ -521,15 +566,28 @@ function validateDataForExport() {
 
             if (type === 'dropdown' || type === 'choices') {
                 requireExportString(entry.title, `${location}.title`, errors);
-                if (type === 'dropdown' && entry.fullSelectionDiscount && entry.fullSelectionDiscount.enabled !== false) {
-                    const rate = Number(entry.fullSelectionDiscount.rate);
-                    if (!Number.isFinite(rate) || rate <= 0 || rate > 1) {
-                        errors.push(`${location}.discount.multiplier must be greater than 0 and at most 1.`);
+                if (entry.price !== undefined) requireExportPrice(entry.price, `${location}.price`, errors);
+                entry.discountRules?.forEach((rule, ruleIndex) => {
+                    const ruleLocation = `${location}.discountRules[${ruleIndex}]`;
+                    if (!['combination', 'threshold'].includes(rule.type)) {
+                        errors.push(`${ruleLocation}.type is not supported.`);
                     }
-                }
-                if (type === 'dropdown' && entry.offer) {
-                    requireExportPrice(entry.offer.price, `${location}.offer.price`, errors);
-                }
+                    if (!Number.isFinite(rule.multiplier) || rule.multiplier <= 0 || rule.multiplier > 1) {
+                        errors.push(`${ruleLocation}.multiplier must be greater than 0 and at most 1.`);
+                    }
+                    if (rule.type === 'combination') {
+                        if (!Array.isArray(rule.optionIds) || rule.optionIds.length < 2) {
+                            errors.push(`${ruleLocation} must select at least two options.`);
+                        } else if (new Set(rule.optionIds).size !== rule.optionIds.length) {
+                            errors.push(`${ruleLocation}.optionIds must be unique.`);
+                        } else if (rule.optionIds.some(id => !entry.options.some(option => option.id === id))) {
+                            errors.push(`${ruleLocation} references an unknown option.`);
+                        }
+                    }
+                    if (rule.type === 'threshold' && (!Number.isFinite(rule.minimumPrice) || rule.minimumPrice < 0)) {
+                        errors.push(`${ruleLocation}.minimumPrice must be non-negative.`);
+                    }
+                });
                 if (!Array.isArray(entry.options) || entry.options.length === 0) {
                     errors.push(`${location}.options must contain at least one option.`);
                 } else {
@@ -604,13 +662,21 @@ function createDefaultOption(entryId, index) {
 }
 
 function renumberEntryChildren(entry) {
+    const optionIds = new Map(entry.options?.map((option, index) => [
+        option.id,
+        `${entry.id}-option-${String(index + 1).padStart(2, '0')}`
+    ]) || []);
     entry.options?.forEach((option, index) => {
         option.id = `${entry.id}-option-${String(index + 1).padStart(2, '0')}`;
+    });
+    entry.discountRules?.forEach(rule => {
+        if (rule.type === 'combination') {
+            rule.optionIds = (rule.optionIds || []).map(id => optionIds.get(id)).filter(Boolean);
+        }
     });
     entry.featureIds?.forEach((_, index) => {
         entry.featureIds[index] = `${entry.id}-feature-${String(index + 1).padStart(2, '0')}`;
     });
-    if (entry.offer) entry.offer.id = `${entry.id}-complete-selection`;
 }
 
 function renumberCategoryItems(category) {
@@ -674,6 +740,8 @@ function createEntryTemplate(type) {
         label: type === 'dropdown' ? 'New Items' : 'New Inline Items',
         title: type === 'dropdown' ? 'New Description' : 'New Inline Items',
         ...(type === 'dropdown' ? { expanded: false } : {}),
+        headerPrice: 'total',
+        discountRules: [],
         options: [createDefaultOption(entryId, 1)]
     };
 }
@@ -698,6 +766,28 @@ function addOption() {
     renumberEntryChildren(entry);
     refreshEntryEditor();
     setStatus('Option added');
+}
+
+function addDiscountRule() {
+    const entry = getSelectedEntry();
+    if (!entry || !['dropdown', 'choices'].includes(entry.type)) return;
+    if (!Array.isArray(entry.discountRules)) entry.discountRules = [];
+    entry.discountRules.push({
+        type: 'combination',
+        optionIds: [],
+        label: 'SALE',
+        multiplier: 0.9
+    });
+    refreshEntryEditor();
+    setStatus('Discount rule added');
+}
+
+function removeDiscountRule(index) {
+    const entry = getSelectedEntry();
+    if (!entry?.discountRules?.[index]) return;
+    entry.discountRules.splice(index, 1);
+    refreshEntryEditor();
+    setStatus('Discount rule removed');
 }
 
 function addFeature() {
@@ -944,6 +1034,35 @@ function handleEntryFormInput(event) {
     const entry = getSelectedEntry();
     if (!entry) return;
 
+    const discountRuleIndex = event.target.dataset.discountRuleIndex;
+    const discountRuleField = event.target.dataset.discountRuleField;
+    const discountOptionId = event.target.dataset.discountOptionId;
+    if (discountRuleIndex !== undefined) {
+        const rule = entry.discountRules?.[Number(discountRuleIndex)];
+        if (!rule) return;
+        if (discountOptionId) {
+            const ids = new Set(rule.optionIds || []);
+            event.target.checked ? ids.add(discountOptionId) : ids.delete(discountOptionId);
+            rule.optionIds = [...ids];
+        } else if (discountRuleField === 'type') {
+            rule.type = event.target.value;
+            if (rule.type === 'combination') {
+                rule.optionIds = [];
+                delete rule.minimumPrice;
+            } else {
+                rule.minimumPrice = 0;
+                delete rule.optionIds;
+            }
+            renderEntryForm();
+        } else if (discountRuleField) {
+            rule[discountRuleField] = ['minimumPrice', 'multiplier'].includes(discountRuleField)
+                ? parseNumber(event.target.value)
+                : event.target.value;
+        }
+        renderPreview();
+        return;
+    }
+
     const listField = event.target.dataset.listField;
     const listIndex = event.target.dataset.listIndex;
     if (listField && listIndex !== undefined) {
@@ -992,43 +1111,21 @@ function handleEntryFormInput(event) {
             entry.type = event.target.value === 'inline' ? 'choices' : 'dropdown';
             if (entry.type === 'choices') {
                 delete entry.expanded;
-                delete entry.offer;
-                delete entry.fullSelectionDiscount;
-                delete entry.inheritsDiscount;
             } else {
                 entry.expanded = false;
-                entry.inheritsDiscount = true;
             }
             renderEntryForm();
             break;
-        case 'discountEnabled':
-            if (event.target.value === 'inherit') {
-                delete entry.fullSelectionDiscount;
-                entry.inheritsDiscount = true;
-            } else {
-                entry.inheritsDiscount = false;
-                entry.fullSelectionDiscount = {
-                    ...(entry.fullSelectionDiscount || {}),
-                    enabled: event.target.value === 'true'
-                };
-            }
+        case 'headerPrice':
+            entry.headerPrice = event.target.value;
+            if (entry.headerPrice === 'selected') delete entry.price;
+            renderEntryForm();
             break;
-        case 'discountLabel':
-            entry.inheritsDiscount = false;
-            if (!entry.fullSelectionDiscount) entry.fullSelectionDiscount = { enabled: true };
-            entry.fullSelectionDiscount.label = event.target.value;
-            break;
-        case 'discountRate':
-            entry.inheritsDiscount = false;
-            if (!entry.fullSelectionDiscount) entry.fullSelectionDiscount = { enabled: true };
-            entry.fullSelectionDiscount.rate = parseNumber(event.target.value);
-            break;
-        case 'offerPrice':
+        case 'itemsPrice':
             if (event.target.value.trim() === '') {
-                delete entry.offer;
+                delete entry.price;
             } else {
-                if (!entry.offer) entry.offer = {};
-                entry.offer.price = parseNumber(event.target.value);
+                entry.price = parseNumber(event.target.value);
             }
             break;
         default:
@@ -1458,7 +1555,9 @@ elements.entryForm.addEventListener('click', event => {
 
     const actions = {
         'add-option': addOption,
-        'add-feature': addFeature
+        'add-feature': addFeature,
+        'add-discount-rule': addDiscountRule,
+        'remove-discount-rule': () => removeDiscountRule(Number(button.dataset.discountRuleIndex))
     };
     actions[button.dataset.action]?.();
 });

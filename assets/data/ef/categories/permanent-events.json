@@ -10,7 +10,7 @@
       "description": "任务 刻度 宝箱全清",
       "presentation": "collapsible",
       "Expanded": true,
-      "allPrice": 95,
+      "price": 95,
       "options": [
         {
           "id": "permanent-events-01-option-01",
@@ -36,7 +36,7 @@
       "description": "密境行者 - 密境初显",
       "presentation": "collapsible",
       "Expanded": false,
-      "allPrice": 27,
+      "price": 27,
       "options": [
         {
           "id": "permanent-events-02-option-01",
@@ -92,7 +92,7 @@
       "description": "密境行者 - 行探险窟",
       "presentation": "collapsible",
       "Expanded": false,
-      "allPrice": 30,
+      "price": 30,
       "options": [
         {
           "id": "permanent-events-03-option-01",
@@ -133,7 +133,7 @@
       "description": "影拓丰碑 - 大地的弃子",
       "presentation": "collapsible",
       "Expanded": false,
-      "allPrice": 12,
+      "price": 12,
       "options": [
         {
           "id": "permanent-events-04-option-01",
@@ -159,7 +159,7 @@
       "description": "影拓丰碑 - 无机造物",
       "presentation": "collapsible",
       "Expanded": false,
-      "allPrice": 12,
+      "price": 12,
       "options": [
         {
           "id": "permanent-events-05-option-01",
@@ -185,7 +185,7 @@
       "description": "影拓丰碑 - 灼痛疤痕",
       "presentation": "collapsible",
       "Expanded": false,
-      "allPrice": 12,
+      "price": 12,
       "options": [
         {
           "id": "permanent-events-06-option-01",
@@ -211,7 +211,7 @@
       "description": "影拓丰碑 - 浊流具现",
       "presentation": "collapsible",
       "Expanded": false,
-      "allPrice": 24,
+      "price": 24,
       "options": [
         {
           "id": "permanent-events-07-option-01",
@@ -252,7 +252,7 @@
       "description": "影拓丰碑 - 死寂争鸣",
       "presentation": "collapsible",
       "Expanded": false,
-      "allPrice": 24,
+      "price": 24,
       "options": [
         {
           "id": "permanent-events-08-option-01",

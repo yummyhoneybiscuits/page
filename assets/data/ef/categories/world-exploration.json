@@ -20,7 +20,7 @@
       "description": "基础探索 包括宝箱,谜质,采录桩,[大情报],机器人",
       "presentation": "collapsible",
       "Expanded": true,
-      "allPrice": 178,
+      "price": 178,
       "options": [
         {
           "id": "world-exploration-02-option-01",
@@ -61,7 +61,7 @@
       "description": "基础探索 包括宝箱,谜质,采录桩,[大情报],机器人",
       "presentation": "collapsible",
       "Expanded": true,
-      "allPrice": 268,
+      "price": 268,
       "options": [
         {
           "id": "world-exploration-03-option-01",
@@ -107,7 +107,7 @@
       "description": "包括宝箱,谜质,采录桩,大情报,[小情报],机器人,[采集点]",
       "presentation": "collapsible",
       "Expanded": false,
-      "allPrice": 258,
+      "price": 258,
       "options": [
         {
           "id": "world-exploration-04-option-01",
@@ -148,7 +148,7 @@
       "description": " 包括宝箱,谜质,采录桩,大情报,[小情报],机器人,[采集点]",
       "presentation": "collapsible",
       "Expanded": false,
-      "allPrice": 358,
+      "price": 358,
       "options": [
         {
           "id": "world-exploration-05-option-01",

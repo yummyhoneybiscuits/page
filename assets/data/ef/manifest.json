@@ -1,9 +1,6 @@
 {
   "currencycode": "CNY",
   "currencysymbol": "¥",
-  "offsymbol": true,
-  "offlabel": "SALE",
-  "offrate": 1,
   "categoryFiles": [
     {
       "id": "updates",

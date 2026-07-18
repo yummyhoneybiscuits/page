@@ -70,9 +70,6 @@ routine-01-feature-01
 {
   "currencycode": "CNY",
   "currencysymbol": "¥",
-  "offsymbol": true,
-  "offlabel": "SALE",
-  "offrate": 1,
   "categoryFiles": [
     {
       "id": "updates",
@@ -86,9 +83,6 @@ routine-01-feature-01
 | --- | --- | --- |
 | `currencycode` | string | 三位货币代码，当前为 `CNY`。 |
 | `currencysymbol` | string | 页面显示的货币符号。 |
-| `offsymbol` | boolean | 是否默认启用全选折扣。 |
-| `offlabel` | string | 折扣标签。 |
-| `offrate` | number | 价格倍率，例如 `0.9` 表示原价的 90%。 |
 | `categoryFiles` | array | 有序分类文件列表。 |
 | `categoryFiles[].id` | ID | 必须与分类文件根 ID 相同。 |
 | `categoryFiles[].path` | string | 相对分类文件路径。 |
@@ -157,6 +151,7 @@ Formula
   "name": "第一章进程一",
   "description": "[1.0]到罗丹boss",
   "presentation": "collapsible",
+  "headerPrice": "selected",
   "Expanded": false,
   "options": [
     {
@@ -175,25 +170,67 @@ Formula
 | `collapsible` | 可折叠 Option Group，原 Dropdown。 |
 | `inline` | 直接显示 Option，原 Choices。 |
 
-可选的完整选择价格：
+### 表头价格
+
+`headerPrice` 可选值：
+
+| 值 | 说明 |
+| --- | --- |
+| `total` | 默认显示全部 Option 的总价；选择 Option 后显示当前已选 Option 的实时总价。省略字段时使用此值。 |
+| `selected` | 显示当前已选 Option 的实时总价；没有选择时表头价格位置留空，Editor 的 Price 也留空并禁用。 |
+
+可选的 `price` 是选中全部 Option 时使用的固定总价：
 
 ```json
 {
-  "allPrice": 95,
-  "discount": {
-    "enabled": true,
-    "label": "SALE",
-    "multiplier": 0.9
-  }
+  "price": 95
 }
 ```
 
-规则：
+- `price` 留空或省略时，根据已选 Option 和折扣规则动态计算。
+- `headerPrice` 为 `selected` 时不使用也不导出 `price`。
+- `price` 只在全部 Option 被选中时生效，并优先于折扣规则。
 
-- `allPrice`：选中该 Group 全部 Option 时使用的明确总价。
-- `discount`：覆盖 manifest 的默认全选折扣。
-- 不写 `discount` 时继承 manifest 默认值。
-- 不写 `allPrice` 时，根据 Option 总价和折扣倍率计算。
+### 折扣规则
+
+指定 Option 组合折扣：
+
+```json
+{
+  "type": "combination",
+  "optionIds": [
+    "main-story-03-option-01",
+    "main-story-03-option-02"
+  ],
+  "label": "COMBO",
+  "multiplier": 0.9
+}
+```
+
+达到所选商品金额门槛后折扣：
+
+```json
+{
+  "type": "threshold",
+  "minimumPrice": 100,
+  "label": "OVER 100",
+  "multiplier": 0.85
+}
+```
+
+规则放在 Items 的 `discountRules` 数组中：
+
+```json
+{
+  "discountRules": []
+}
+```
+
+- `combination`：列出的 Option 全部选中时，只对这些 Option 应用倍率。
+- `threshold`：当前 Items 已选 Option 原价小计达到 `minimumPrice` 时，对当前已选 Option 应用倍率。
+- `multiplier` 必须大于 `0` 且小于或等于 `1`，例如 `0.9` 表示九折。
+- 多条规则同时命中时，每个 Option 使用对它最优惠的倍率，不重复叠乘。
+- Editor 在 Option 排序后会同步更新组合规则中的 Option ID。
 
 ## Option
 

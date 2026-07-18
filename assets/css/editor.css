@@ -129,7 +129,7 @@
 }
 
 .editor-form-grid--dropdown-settings {
-    grid-template-columns: 110px minmax(150px, 1fr) 110px minmax(150px, 1fr);
+    grid-template-columns: repeat(3, minmax(120px, 1fr));
 }
 
 .editor-field--wide {
@@ -148,6 +148,52 @@
 .editor-settings h3 {
     margin: 0 0 10px;
     font-size: 0.9rem;
+}
+
+.editor-discount-rules {
+    display: grid;
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid var(--color-border);
+}
+
+.editor-discount-rules__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.editor-discount-rules__header h3,
+.editor-empty {
+    margin: 0;
+}
+
+.editor-discount-rule {
+    display: grid;
+    gap: 8px;
+    padding: 8px;
+    border: 1px solid var(--color-border);
+}
+
+.editor-form-grid--discount-rule {
+    grid-template-columns: repeat(3, minmax(100px, 1fr)) auto;
+    align-items: end;
+}
+
+.editor-discount-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.editor-discount-options label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    border: 1px solid var(--color-border);
+    cursor: pointer;
 }
 
 .editor-list.is-delete-target,
@@ -598,6 +644,10 @@
         grid-template-columns: repeat(2, minmax(120px, 1fr));
     }
 
+    .editor-form-grid--discount-rule {
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+    }
+
     .editor-preview {
         max-height: 52vh;
     }
@@ -647,7 +697,8 @@
 
     .editor-form-grid,
     .editor-entry-grid--shared,
-    .editor-option-grid {
+    .editor-option-grid,
+    .editor-form-grid--discount-rule {
         grid-template-columns: 1fr;
     }
 

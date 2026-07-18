@@ -11,7 +11,24 @@
       "description": "主支线任务",
       "presentation": "collapsible",
       "Expanded": true,
-      "allPrice": 108,
+      "price": 100,
+      "discountRules": [
+        {
+          "type": "combination",
+          "optionIds": [
+            "updates-01-option-01",
+            "updates-01-option-02"
+          ],
+          "label": "SALE",
+          "multiplier": 0.9
+        },
+        {
+          "type": "threshold",
+          "minimumPrice": 90,
+          "label": "SALE",
+          "multiplier": 0.9
+        }
+      ],
       "options": [
         {
           "id": "updates-01-option-01",
@@ -62,41 +79,72 @@
       "description": "全收集基建探索",
       "presentation": "collapsible",
       "Expanded": true,
-      "allPrice": 248,
+      "headerPrice": "selected",
+      "discountRules": [
+        {
+          "type": "combination",
+          "optionIds": [
+            "updates-02-option-06",
+            "updates-02-option-08"
+          ],
+          "label": "SALE",
+          "multiplier": 0.9
+        },
+        {
+          "type": "combination",
+          "optionIds": [
+            "updates-02-option-02",
+            "updates-02-option-01"
+          ],
+          "label": "SALE",
+          "multiplier": 0.9
+        },
+        {
+          "type": "threshold",
+          "minimumPrice": 130,
+          "label": "SALE",
+          "multiplier": 0.9
+        }
+      ],
       "options": [
         {
           "id": "updates-02-option-01",
+          "name": "1.3升1.4基建 (毕业产线+塔防+升级任务)",
+          "price": 20
+        },
+        {
+          "id": "updates-02-option-02",
           "name": "拉线(赤铜 息壤气 惰气)",
           "price": 18
         },
         {
-          "id": "updates-02-option-02",
+          "id": "updates-02-option-03",
           "name": "应龙关滑索",
           "price": 12
         },
         {
-          "id": "updates-02-option-03",
+          "id": "updates-02-option-04",
           "name": "北部禁区滑索",
           "price": 20
         },
         {
-          "id": "updates-02-option-04",
-          "name": "应龙关收集(宝箱醚质塔晶等带玉收集物)",
+          "id": "updates-02-option-05",
+          "name": "[1]应龙关收集(宝箱醚质塔晶等带玉收集物)",
           "price": 25
         },
         {
-          "id": "updates-02-option-05",
-          "name": "应龙关收集plus(普通+所有小情报)",
+          "id": "updates-02-option-06",
+          "name": "[2]应龙关收集plus(普通+调查点+小情报)",
           "price": 35
         },
         {
-          "id": "updates-02-option-06",
-          "name": "北部禁区收集(宝箱醚质塔晶等带玉收集物)",
+          "id": "updates-02-option-07",
+          "name": "[1]北部禁区收集(宝箱醚质塔晶等带玉收集物)",
           "price": 65
         },
         {
-          "id": "updates-02-option-07",
-          "name": "北部禁区收集plus(普通+所有小情报)",
+          "id": "updates-02-option-08",
+          "name": "[2]北部禁区收集plus(普通+调查点+小情报)",
           "price": 85
         }
       ]

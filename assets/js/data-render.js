@@ -3,11 +3,9 @@ import {
     formatPrice,
     formatFormulaExpression,
     getFormulaInput,
-    getDropdownOriginalTotal,
-    getDropdownSaleTotal,
+    getItemsPricing,
     getUnitPrice,
     isDropdownFullySelected,
-    roundPrice,
     setStatus,
     state
 } from './ef-calculator-core.js';
@@ -18,7 +16,8 @@ const packageMatrixSelectionHistory = new Map();
 function renderPrice(entry) {
     if (entry.description) return `<span class="price-current">${escapeHtml(entry.description)}</span>`;
     const effectivePrice = getUnitPrice(entry);
-    const hasDiscount = entry.type === 'dropdown-option' && effectivePrice !== entry.price;
+    const hasDiscount = ['dropdown-option', 'choice-option'].includes(entry.type)
+        && effectivePrice !== entry.price;
 
     if (!hasDiscount) {
         return `<span class="price-current">${formatPrice(effectivePrice)}</span>`;
@@ -82,13 +81,12 @@ function renderDropdown(dropdown, context) {
             parentMatches || context.matches(option.label)
         )
         : dropdown.options;
-    const offerPrice = dropdown.offer
-        ? dropdown.offer.price
-        : roundPrice(dropdown.options.reduce((total, option) => total + option.price, 0));
-    const originalTotal = getDropdownOriginalTotal(dropdown);
-    const selectedTotal = getDropdownSaleTotal(dropdown);
-    const displayPrice = fullySelected ? selectedTotal : offerPrice;
-    const hasSale = fullySelected && displayPrice < originalTotal;
+    const selectedPricing = getItemsPricing(dropdown);
+    const pricing = selectedPricing.selectedCount > 0
+        ? selectedPricing
+        : getItemsPricing(dropdown, new Set(dropdown.options.map(option => option.id)));
+    const showPrice = dropdown.headerPrice !== 'selected' || selectedPricing.selectedCount > 0;
+    const hasSale = pricing.total < pricing.originalTotal;
 
     return `
         <section class="dropdown-card${isOpen ? ' is-open' : ''}${parentMatches ? ' is-highlighted' : ''}" data-dropdown-id="${escapeHtml(dropdown.id)}">
@@ -110,15 +108,15 @@ function renderDropdown(dropdown, context) {
                     </button>
                 </div>
                 <div class="dropdown-summary__price">
-                    ${hasSale
+                    ${!showPrice ? '' : hasSale
                         ? `
                             <span class="original-price-wrap">
-                                <span class="sale-label">${escapeHtml(dropdown.discount.label)}</span>
-                                <span class="price-original">${formatPrice(originalTotal)}</span>
+                                <span class="sale-label">${escapeHtml(pricing.label || 'SALE')}</span>
+                                <span class="price-original">${formatPrice(pricing.originalTotal)}</span>
                             </span>
-                            <strong class="price-sale">${formatPrice(displayPrice)}</strong>
+                            <strong class="price-sale">${formatPrice(pricing.total)}</strong>
                         `
-                        : `<strong class="price-current">${formatPrice(displayPrice)}</strong>`
+                        : `<strong class="price-current">${formatPrice(pricing.total)}</strong>`
                     }
                 </div>
                 <div class="dropdown-summary__actions">
@@ -147,9 +145,20 @@ function renderDropdown(dropdown, context) {
 }
 
 function renderChoices(entry, context) {
+    const selectedPricing = getItemsPricing(entry);
+    const pricing = selectedPricing.selectedCount > 0
+        ? selectedPricing
+        : getItemsPricing(entry, new Set(entry.options.map(option => option.id)));
+    const showPrice = entry.headerPrice !== 'selected' || selectedPricing.selectedCount > 0;
+    const hasSale = pricing.total < pricing.originalTotal;
     return `
         <section class="choice-entry${context.highlighted ? ' is-highlighted' : ''}">
-            <h4 class="entry-title">${escapeHtml(entry.title)}</h4>
+            <div class="choice-entry__heading">
+                <h4 class="entry-title">${escapeHtml(entry.title)}</h4>
+                ${!showPrice ? '' : hasSale
+                    ? `<span class="original-price-wrap"><small class="sale-label">${escapeHtml(pricing.label || 'SALE')}</small><del>${formatPrice(pricing.originalTotal)}</del> <strong class="price-sale">${formatPrice(pricing.total)}</strong></span>`
+                    : `<strong class="price-current">${formatPrice(pricing.total)}</strong>`}
+            </div>
             <div class="choice-options">
                 ${entry.options.map(option => `
                     <button
@@ -160,7 +169,7 @@ function renderChoices(entry, context) {
                         aria-pressed="${state.cart.has(option.id)}"
                     >
                         <span>${escapeHtml(option.label)}</span>
-                        <span>${escapeHtml(option.description || formatPrice(option.price))}</span>
+                        <span>${renderPrice(option)}</span>
                     </button>
                 `).join('')}
             </div>

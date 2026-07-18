@@ -1080,6 +1080,13 @@ hr {
     }
 }
 
+.choice-entry__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
 @media (max-width: 760px) {
     .calculator-page {
         padding: 12px;

@@ -51,9 +51,11 @@ function validateCategory(category, ids) {
         if (item.kind === 'Items' && !['collapsible', 'inline'].includes(item.presentation)) {
             throw new TypeError(`${location}.presentation is not supported.`);
         }
-        if (item.allPrice !== undefined
-            && (!Number.isFinite(item.allPrice) || item.allPrice < 0)) {
-            throw new TypeError(`${location}.allPrice must be non-negative.`);
+        if (item.headerPrice !== undefined && !['total', 'selected'].includes(item.headerPrice)) {
+            throw new TypeError(`${location}.headerPrice must be "total" or "selected".`);
+        }
+        if (item.price !== undefined && (!Number.isFinite(item.price) || item.price < 0)) {
+            throw new TypeError(`${location}.price must be non-negative.`);
         }
         if (item.kind === 'Items' || item.kind === 'List') {
             requireArray(item.options, `${location}.options`).forEach((option, optionIndex) => {
@@ -71,11 +73,31 @@ function validateCategory(category, ids) {
                 }
             });
         }
-        const discount = item.discount;
-        if (discount && (!Number.isFinite(discount.multiplier)
-            || discount.multiplier <= 0
-            || discount.multiplier > 1)) {
-            throw new TypeError(`${location}.discount.multiplier must be greater than 0 and at most 1.`);
+        if (item.kind === 'Items') {
+            requireArray(item.discountRules || [], `${location}.discountRules`).forEach((rule, ruleIndex) => {
+                const ruleLocation = `${location}.discountRules[${ruleIndex}]`;
+                if (!['combination', 'threshold'].includes(rule.type)) {
+                    throw new TypeError(`${ruleLocation}.type is not supported.`);
+                }
+                if (!Number.isFinite(rule.multiplier) || rule.multiplier <= 0 || rule.multiplier > 1) {
+                    throw new TypeError(`${ruleLocation}.multiplier must be greater than 0 and at most 1.`);
+                }
+                if (rule.type === 'combination') {
+                    const optionIds = requireArray(rule.optionIds, `${ruleLocation}.optionIds`);
+                    if (optionIds.length < 2 || new Set(optionIds).size !== optionIds.length) {
+                        throw new TypeError(`${ruleLocation}.optionIds must contain at least two unique ids.`);
+                    }
+                    optionIds.forEach(optionId => {
+                        if (!item.options.some(option => option.id === optionId)) {
+                            throw new TypeError(`${ruleLocation} references unknown option "${optionId}".`);
+                        }
+                    });
+                }
+                if (rule.type === 'threshold'
+                    && (!Number.isFinite(rule.minimumPrice) || rule.minimumPrice < 0)) {
+                    throw new TypeError(`${ruleLocation}.minimumPrice must be non-negative.`);
+                }
+            });
         }
         if (item.kind === 'List') {
             const featureIds = new Set();
@@ -114,7 +136,7 @@ function toRuntimeOption(option) {
     };
 }
 
-function toRuntimeItem(item, defaults) {
+function toRuntimeItem(item) {
     if (item.kind === 'Item') {
         return {
             type: 'item',
@@ -154,43 +176,30 @@ function toRuntimeItem(item, defaults) {
     }
 
     if (item.kind === 'Items') {
-        const discount = item.discount ?? defaults.discount;
         return {
             type: item.presentation === 'inline' ? 'choices' : 'dropdown',
             id: item.id,
             label: item.name,
             title: item.description || item.name,
             expanded: Boolean(item.Expanded),
-            inheritsDiscount: item.discount === undefined,
+            headerPrice: item.headerPrice || 'total',
             options: item.options.map(option => toRuntimeOption(option)),
-            ...(item.allPrice === undefined ? {} : {
-                offer: {
-                    id: `${item.id}-complete-selection`,
-                    label: item.name,
-                    price: item.allPrice
-                }
-            }),
-            ...(discount ? {
-                fullSelectionDiscount: {
-                    enabled: discount.enabled,
-                    label: discount.label,
-                    rate: discount.multiplier
-                }
-            } : {})
+            ...(item.price === undefined ? {} : { price: item.price }),
+            discountRules: (item.discountRules || []).map(rule => ({ ...rule }))
         };
     }
 
     throw new TypeError(`Unknown data item kind "${item.kind}".`);
 }
 
-function toRuntimeCategory(category, defaults) {
+function toRuntimeCategory(category) {
     return {
         id: category.id,
         title: category.name,
         badge: category.badge || '',
         expanded: Boolean(category.Expanded),
         entries: requireArray(category.items, `${category.id}.items`)
-            .map(item => toRuntimeItem(item, defaults))
+            .map(item => toRuntimeItem(item))
     };
 }
 
@@ -253,13 +262,16 @@ function toDataItem(entry) {
         description: entry.title || entry.label || '',
         presentation: entry.type === 'choices' ? 'inline' : 'collapsible',
         Expanded: Boolean(entry.expanded),
-        ...(entry.offer ? { allPrice: entry.offer.price } : {}),
-        ...(!entry.inheritsDiscount && entry.fullSelectionDiscount ? {
-            discount: {
-                enabled: entry.fullSelectionDiscount.enabled,
-                label: entry.fullSelectionDiscount.label || 'SALE',
-                multiplier: entry.fullSelectionDiscount.rate
-            }
+        ...(entry.headerPrice === 'selected' ? { headerPrice: 'selected' } : {}),
+        ...(entry.headerPrice === 'selected' || entry.price === undefined ? {} : { price: entry.price }),
+        ...(entry.discountRules?.length ? {
+            discountRules: entry.discountRules.map(rule => ({
+                type: rule.type,
+                ...(rule.type === 'combination' ? { optionIds: rule.optionIds } : {}),
+                ...(rule.type === 'threshold' ? { minimumPrice: rule.minimumPrice } : {}),
+                label: rule.label || 'SALE',
+                multiplier: rule.multiplier
+            }))
         } : {}),
         options: entry.options.map(option => toDataOption(option))
     };
@@ -279,9 +291,6 @@ export function serializeDataManifest(manifest, categories) {
     return {
         currencycode: manifest.currencyCode || 'CNY',
         currencysymbol: manifest.currency || '¥',
-        offsymbol: manifest.defaults?.dropdownFullSelectionDiscount?.enabled !== false,
-        offlabel: manifest.defaults?.dropdownFullSelectionDiscount?.label || 'SALE',
-        offrate: manifest.defaults?.dropdownFullSelectionDiscount?.rate ?? 1,
         categoryFiles: categories.map(category => ({
             id: category.data.id,
             path: category.file
@@ -308,29 +317,15 @@ export async function loadDataFiles(manifestUrl = DATA_MANIFEST_URL) {
 
 export async function loadEditableDataFiles(manifestUrl = DATA_MANIFEST_URL) {
     const { manifest: rawManifest, categories: rawCategories } = await loadDataFiles(manifestUrl);
-    const defaults = {
-        discount: {
-            enabled: rawManifest.offsymbol !== false,
-            label: rawManifest.offlabel || 'SALE',
-            multiplier: rawManifest.offrate ?? 1
-        }
-    };
     return {
         manifest: {
             currency: rawManifest.currencysymbol || '¥',
             currencyCode: rawManifest.currencycode || 'CNY',
-            defaults: {
-                dropdownFullSelectionDiscount: {
-                    enabled: defaults.discount.enabled,
-                    label: defaults.discount.label,
-                    rate: defaults.discount.multiplier
-                }
-            },
             categories: rawCategories.map(category => ({ file: category.file }))
         },
         categories: rawCategories.map(category => ({
             file: category.file,
-            data: toRuntimeCategory(category.data, defaults)
+            data: toRuntimeCategory(category.data)
         }))
     };
 }
@@ -339,7 +334,6 @@ export async function loadPricingData(manifestUrl = DATA_MANIFEST_URL) {
     const { manifest, categories } = await loadEditableDataFiles(manifestUrl);
     return {
         currency: manifest.currency,
-        defaults: manifest.defaults,
         categories: categories.map(category => category.data)
     };
 }

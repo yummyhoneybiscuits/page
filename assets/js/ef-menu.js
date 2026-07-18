@@ -1,4 +1,5 @@
 import { loadPricingData } from './data-loader.js';
+import { getItemsPricing } from './ef-calculator-core.js';
 import { escapeHtml, loadHtml2Canvas } from './site.js';
 
 const WATERMARK_TEXT = 'wechat@ shiroi333';
@@ -43,11 +44,9 @@ function renderGroup(title, meta, content, expanded = false, className = '') {
     `;
 }
 
-function renderDropdown(entry, currency, defaults) {
+function renderDropdown(entry, currency) {
     const originalTotal = entry.options.reduce((sum, option) => sum + option.price, 0);
-    const discount = entry.fullSelectionDiscount ?? defaults?.dropdownFullSelectionDiscount;
-    const salePrice = entry.offer?.price
-        ?? (discount?.enabled === false ? originalTotal : originalTotal * Number(discount?.rate ?? 1));
+    const salePrice = getItemsPricing(entry, new Set(entry.options.map(option => option.id))).total;
     const hasSale = Number.isFinite(salePrice) && salePrice < originalTotal;
     const price = hasSale
         ? `
@@ -72,6 +71,13 @@ function renderDropdown(entry, currency, defaults) {
 }
 
 function renderChoices(entry, currency) {
+    const originalTotal = entry.options.reduce((sum, option) => sum + option.price, 0);
+    const total = getItemsPricing(entry, new Set(entry.options.map(option => option.id))).total;
+    const meta = entry.headerPrice === 'selected'
+        ? ''
+        : total < originalTotal
+            ? `<del>${formatPrice(originalTotal, currency)}</del> <strong>${formatPrice(total, currency)}</strong>`
+            : `<strong>${formatPrice(total, currency)}</strong>`;
     const items = `
         <div class="menu-group__items">
             ${entry.options.map(option =>
@@ -83,7 +89,7 @@ function renderChoices(entry, currency) {
             ).join('')}
         </div>
     `;
-    return renderGroup(`<strong>${escapeHtml(entry.title)}</strong>`, '任选', items, true);
+    return renderGroup(`<strong>${escapeHtml(entry.title)}</strong>`, meta, items, true);
 }
 
 function renderPackages(entry, currency) {
@@ -110,11 +116,11 @@ function renderFormula(entry, currency) {
     return renderPriceLine(entry.title, '按量计价', currency, detail);
 }
 
-function renderEntry(entry, currency, defaults) {
+function renderEntry(entry, currency) {
     if (entry.type === 'item') {
         return renderPriceLine(entry.label, formatPrice(entry.price, currency), currency);
     }
-    if (entry.type === 'dropdown') return renderDropdown(entry, currency, defaults);
+    if (entry.type === 'dropdown') return renderDropdown(entry, currency);
     if (entry.type === 'choices') return renderChoices(entry, currency);
     if (entry.type === 'package-matrix') return renderPackages(entry, currency);
     if (entry.type === 'formula') return renderFormula(entry, currency);
@@ -133,7 +139,7 @@ async function initialize() {
                     ${category.badge ? `<small>${escapeHtml(category.badge)}</small>` : ''}
                 </header>
                 <div class="menu-section__content">
-                    ${category.entries.map(entry => renderEntry(entry, currency, data.defaults)).join('')}
+                    ${category.entries.map(entry => renderEntry(entry, currency)).join('')}
                 </div>
             </section>
         `;

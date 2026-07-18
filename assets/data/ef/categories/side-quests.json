@@ -268,33 +268,38 @@
       "options": [
         {
           "id": "side-quests-03-option-01",
-          "name": "离群之狼",
+          "name": "[狼卫]离群之狼",
           "price": 20
         },
         {
           "id": "side-quests-03-option-02",
-          "name": "爱呐喊和原型机",
+          "name": "[伊冯]爱呐喊和原型机",
           "price": 20
         },
         {
           "id": "side-quests-03-option-03",
-          "name": "追忆之痕（比较长）",
+          "name": "[莱]追忆之痕（比较长）",
           "price": 25
         },
         {
           "id": "side-quests-03-option-04",
-          "name": "信使的信",
+          "name": "[杰]信使的信",
           "price": 20
         },
         {
           "id": "side-quests-03-option-05",
-          "name": "红骑士",
+          "name": "[洛茜]红骑士",
           "price": 20
         },
         {
           "id": "side-quests-03-option-06",
-          "name": "以拳问心",
+          "name": "[弥弗]以拳问心",
           "price": 20
+        },
+        {
+          "id": "side-quests-03-option-07",
+          "name": "[卡缪]亡者之舞",
+          "price": 0
         }
       ]
     }

@@ -1,69 +1,111 @@
 {
   "id": "updates",
-  "name": "1.3新增内容",
+  "name": "1.4新增内容",
   "badge": "NEW!",
   "Expanded": true,
   "items": [
     {
       "kind": "Items",
       "id": "updates-01",
-      "name": "[1.3]剧情故事",
+      "name": "[1.4]剧情故事",
       "description": "主支线任务",
       "presentation": "collapsible",
       "Expanded": true,
+      "allPrice": 108,
       "options": [
         {
           "id": "updates-01-option-01",
-          "name": "[主线] 藏剑与谷",
-          "price": 20
+          "name": "[主线] 墟烟",
+          "price": 65
         },
         {
           "id": "updates-01-option-02",
-          "name": "[弥弗个人剧情] 疑云",
-          "price": 20
+          "name": "[支线] 填隙柱地(解锁左上右上地图 解锁后有2处息壤气矿)",
+          "price": 25
         },
         {
           "id": "updates-01-option-03",
-          "name": "[支线] 古崖论剑",
-          "price": 3
+          "name": "[支线] 月往日来",
+          "price": 8
         },
         {
           "id": "updates-01-option-04",
-          "name": "[卡缪个人剧情] 亡者之舞",
-          "price": 25
+          "name": "[支线] 悲伤总无声(第2天)",
+          "price": 5
+        },
+        {
+          "id": "updates-01-option-05",
+          "name": "[支线] 有家难奔",
+          "price": 3
+        },
+        {
+          "id": "updates-01-option-06",
+          "name": "[支线] 刀剑无名(其一二三)",
+          "price": 5
+        },
+        {
+          "id": "updates-01-option-07",
+          "name": "[支线] 观蚀影记",
+          "price": 3
+        },
+        {
+          "id": "updates-01-option-08",
+          "name": "[支线] 往日珍瑰",
+          "price": 5
         }
       ]
     },
     {
       "kind": "Items",
       "id": "updates-02",
-      "name": "藏剑谷探索",
+      "name": "新地图探索",
       "description": "全收集基建探索",
       "presentation": "collapsible",
       "Expanded": true,
+      "allPrice": 248,
       "options": [
         {
           "id": "updates-02-option-01",
-          "name": "地图全收集",
-          "price": 40
+          "name": "拉线(赤铜 息壤气 惰气)",
+          "price": 18
         },
         {
           "id": "updates-02-option-02",
-          "name": "拉线",
+          "name": "应龙关滑索",
           "price": 12
         },
         {
           "id": "updates-02-option-03",
-          "name": "滑索 材料点",
+          "name": "北部禁区滑索",
           "price": 20
+        },
+        {
+          "id": "updates-02-option-04",
+          "name": "应龙关收集(宝箱醚质塔晶等带玉收集物)",
+          "price": 25
+        },
+        {
+          "id": "updates-02-option-05",
+          "name": "应龙关收集plus(普通+所有小情报)",
+          "price": 35
+        },
+        {
+          "id": "updates-02-option-06",
+          "name": "北部禁区收集(宝箱醚质塔晶等带玉收集物)",
+          "price": 65
+        },
+        {
+          "id": "updates-02-option-07",
+          "name": "北部禁区收集plus(普通+所有小情报)",
+          "price": 85
         }
       ]
     },
     {
       "kind": "Item",
       "id": "updates-03",
-      "name": "基建进度需 1.2毕业 (具体看账号进度)",
-      "price": 5,
+      "name": "基建进度需 1.4毕业 (具体看账号进度)",
+      "price": 1,
       "maxQuantity": 1
     }
   ]
